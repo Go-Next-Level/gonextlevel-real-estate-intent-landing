@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+// REPLACE: Customize this 404 page to match the site's design system
+---
+
+<BaseLayout title="Page Not Found — Business Name" description="The page you're looking for doesn't exist.">
+  <main style="min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:2rem;">
+    <div>
+      <h1 style="font-size:6rem;font-weight:900;line-height:1;margin:0;">404</h1>
+      <p style="font-size:1.25rem;margin:1rem 0 2rem;">That page doesn't exist.</p>
+      <a href="/" style="display:inline-block;padding:0.75rem 2rem;background:currentColor;color:white;text-decoration:none;border-radius:0.5rem;">
+        Back to Home
+      </a>
+    </div>
+  </main>
+</BaseLayout>

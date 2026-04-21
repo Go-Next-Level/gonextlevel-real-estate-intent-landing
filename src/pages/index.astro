@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// REPLACE: Update all placeholder values with actual client data
+const businessName = "Business Name";
+const tagline = "Your compelling tagline goes here";
+const description = "A clear, benefit-focused description of what this business does and who they serve.";
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "name": businessName,
+      "url": Astro.site ?? Astro.url.origin,
+      "logo": `${Astro.site ?? Astro.url.origin}/favicon.svg`,
+    },
+    {
+      "@type": "LocalBusiness",
+      "name": businessName,
+      "description": description,
+      "url": Astro.site ?? Astro.url.origin,
+    }
+  ]
+};
+---
+
+<BaseLayout
+  title={`${businessName} — ${tagline}`}
+  description={description}
+  structuredData={structuredData}
+>
+  <!-- REPLACE: Build all page sections here using 21st.dev components + design system -->
+  <!-- Phase 1: Run /frontend-design, /ui-ux-pro-max, /taste-skill, /emil-design-eng first -->
+  <!-- Phase 2: Check 21st.dev Magic (/ui) for each section before building from scratch -->
+  <!-- Phase 3: Run tier-specific skills, then /polish and /audit -->
+
+  <main>
+    <h1>{businessName}</h1>
+    <p>{description}</p>
+  </main>
+</BaseLayout>

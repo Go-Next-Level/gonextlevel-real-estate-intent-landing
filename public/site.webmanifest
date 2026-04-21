@@ -1,0 +1,17 @@
+{
+  "name": "REPLACE_WITH_BUSINESS_NAME",
+  "short_name": "REPLACE_SHORT",
+  "description": "REPLACE_WITH_DESCRIPTION",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
