@@ -2,12 +2,12 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Topbar from '../components/Topbar.astro';
 import Logo from '../components/Logo.astro';
-import HeroMockup from '../components/HeroMockup.astro';
+import ParticleField from '../components/ParticleField.astro';
+import SignalTicker from '../components/SignalTicker.astro';
 
 const businessName = "Real Estate Intent";
 const tagline = "Behavioral Audience Intelligence for Real Estate";
-const description = "Identify buyers, sellers, and distressed homeowners who are actively showing intent right now — before they hit Zillow. Verified contacts built from real behavioral signals. Start your 7-day free trial.";
-
+const description = "Identify buyers, sellers, and distressed homeowners who are actively showing intent — before they hit Zillow. 60B+ behavioral signals weekly. 7-day free trial.";
 const siteUrl = (Astro.site ?? Astro.url.origin).toString();
 
 const structuredData = {
@@ -35,123 +35,63 @@ const structuredData = {
   ]
 };
 
-const stats = [
-  { value: "12.4B", label: "behavioral signals scanned weekly", delta: "+8.2%" },
-  { value: "4.2M",  label: "verified contacts delivered", delta: "+12.1%" },
-  { value: "384",   label: "U.S. markets covered", delta: null },
-  { value: "< 60s", label: "average list build time", delta: null },
+const behaviors = [
+  {
+    accent: "distress", title: "Distress",
+    desc: "Actively engaging with pre-foreclosure content, loan modification, and financial hardship resources.",
+    stat: "820", unit: "avg contacts / market / mo",
+    spark: "M 0 28 L 10 24 L 18 26 L 28 18 L 38 22 L 48 14 L 58 18 L 68 10 L 80 14 L 92 6 L 100 8",
+  },
+  {
+    accent: "seller", title: "Seller",
+    desc: "Browsing listing platforms, researching home values, comparing agent reviews.",
+    stat: "1,340", unit: "avg contacts / market / mo",
+    spark: "M 0 24 L 12 20 L 22 22 L 32 16 L 44 18 L 54 12 L 64 14 L 74 8 L 86 10 L 100 4",
+  },
+  {
+    accent: "buyer", title: "Buyer",
+    desc: "Saving listings, attending virtual open houses, researching neighborhoods.",
+    stat: "2,180", unit: "avg contacts / market / mo",
+    spark: "M 0 26 L 10 18 L 22 22 L 32 14 L 42 16 L 54 8 L 64 12 L 76 6 L 88 10 L 100 4",
+  },
+  {
+    accent: "mortgage", title: "Mortgage",
+    desc: "Running affordability calculators, comparing lenders, engaging with refinance tools.",
+    stat: "910", unit: "avg contacts / market / mo",
+    spark: "M 0 22 L 12 24 L 22 18 L 34 20 L 44 14 L 56 16 L 66 10 L 78 12 L 90 6 L 100 10",
+  },
 ];
 
 const steps = [
-  {
-    n: "01",
-    title: "Monitor",
-    body: "We scan billions of real online behaviors every week — the listings being browsed, the mortgage rates being compared, the distress content being consumed. These are real actions, not modeled guesses.",
-  },
-  {
-    n: "02",
-    title: "Filter",
-    body: "Slice by intent category, geography, and recency. Target homeowners actively showing distress signals, owners researching listings right now, buyers browsing in your market today.",
-  },
-  {
-    n: "03",
-    title: "Export",
-    body: "Push directly to your CRM or download as CSV. Every contact includes verified name, phone, and email. Lists auto-refresh weekly with net-new contacts only — you're never charged twice for the same person.",
-  },
+  { n: "01", title: "Monitor", body: "60B+ real behaviors scanned weekly. Never sampled, never modeled." },
+  { n: "02", title: "Filter",  body: "Category. Market. Recency. Export-ready in under a minute." },
+  { n: "03", title: "Export",  body: "CSV or direct CRM push. Refresh weekly, only pay for net-new." },
 ];
 
-const categories = [
-  {
-    accent: "distress",
-    color: "#F87171",
-    title: "Distress",
-    body: "Homeowners actively engaging with content around missed payments, pre-foreclosure filings, loan modification, and financial hardship. They're looking for options.",
-    volume: "avg 820 contacts / market / mo",
-  },
-  {
-    accent: "seller",
-    color: "#FBBF24",
-    title: "Seller",
-    body: "Owners browsing listing platforms, researching home values, reading \"how to sell\" guides, and comparing agent reviews. They're getting ready to list.",
-    volume: "avg 1,340 contacts / market / mo",
-  },
-  {
-    accent: "buyer",
-    color: "#4ADE80",
-    title: "Buyer",
-    body: "Consumers actively browsing listings, saving properties, attending virtual open houses, and researching neighborhoods. They're in the market now.",
-    volume: "avg 2,180 contacts / market / mo",
-  },
-  {
-    accent: "mortgage",
-    color: "#A78BFA",
-    title: "Mortgage",
-    body: "Shoppers running affordability calculators, comparing lenders, reading rate content, and engaging with refinance tools. They're actively shopping.",
-    volume: "avg 910 contacts / market / mo",
-  },
+const exportCats = [
+  { cat: "distress", color: "#F87171" },
+  { cat: "buyer",    color: "#4ADE80" },
+  { cat: "seller",   color: "#FBBF24" },
+  { cat: "mortgage", color: "#A78BFA" },
+  { cat: "buyer",    color: "#4ADE80" },
+  { cat: "seller",   color: "#FBBF24" },
+  { cat: "distress", color: "#F87171" },
+  { cat: "buyer",    color: "#4ADE80" },
 ];
-
-const features = [
-  {
-    title: "Verified contact data",
-    body: "Every lead includes a confirmed name, phone number, and email address matched against our 280M+ consumer profile database. No guesses, no gaps.",
-    icon: "check",
-  },
-  {
-    title: "Weekly behavioral refresh",
-    body: "Signals are re-scanned weekly. Your lists update automatically with net-new contacts showing fresh intent — and you're only billed for contacts you haven't seen before.",
-    icon: "refresh",
-  },
-  {
-    title: "60-second list builder",
-    body: "Select an intent category, drop in a market or zip code, set a date range. Done. Export to CSV or push straight to your CRM.",
-    icon: "bolt",
-  },
-];
+const exportRows = exportCats.map((r, i) => ({
+  cat: r.cat.toUpperCase(),
+  color: r.color,
+  y: 90 + i * 28,
+  id: String(9142 + i).padStart(5, "0"),
+}));
 
 const plans = [
-  {
-    name: "Starter",
-    price: "$1,000",
-    contacts: "1,000",
-    seats: "1",
-    featured: false,
-    features: [
-      "All four intent categories",
-      "CSV export + CRM push",
-      "Weekly behavioral refresh",
-      "7-day free trial",
-    ],
-    cta: "Start free trial",
-  },
-  {
-    name: "Growth",
-    price: "$2,500",
-    contacts: "3,500",
-    seats: "3",
-    featured: true,
-    features: [
-      "Everything in Starter",
-      "Auto-refreshing lists",
-      "Multi-market builds",
-      "Priority support",
-    ],
-    cta: "Start free trial",
-  },
-  {
-    name: "Scale",
-    price: "$5,000",
-    contacts: "10,000",
-    seats: "10",
-    featured: false,
-    features: [
-      "Everything in Growth",
-      "Dedicated success manager",
-      "Custom CRM integrations",
-      "Volume pricing",
-    ],
-    cta: "Start free trial",
-  },
+  { name: "Starter", price: "$1,000", contacts: "1,000", seats: "1", featured: false,
+    features: ["All four intent categories", "CSV export + CRM push", "Weekly behavioral refresh", "7-day free trial"] },
+  { name: "Growth",  price: "$2,500", contacts: "3,500", seats: "3", featured: true,
+    features: ["Everything in Starter", "Auto-refreshing lists", "Multi-market builds", "Priority support"] },
+  { name: "Scale",   price: "$5,000", contacts: "10,000", seats: "10", featured: false,
+    features: ["Everything in Growth", "Dedicated success manager", "Custom CRM integrations", "Volume pricing"] },
 ];
 ---
 
@@ -160,215 +100,214 @@ const plans = [
   description={description}
   structuredData={structuredData}
 >
+  <!-- Custom cursor -->
+  <div class="cursor-ring" aria-hidden="true"></div>
+  <div class="cursor-dot" aria-hidden="true"></div>
+
   <Topbar />
 
-  <main id="main">
-    <!-- HERO -->
-    <section class="hero">
-      <div class="grid-bg"></div>
+  <main>
+    <!-- 1. HERO -->
+    <section class="hero" id="hero">
       <div class="hero-glow"></div>
+      <ParticleField />
+      <div class="hero-vignette"></div>
 
       <div class="container hero-inner">
-        <span class="eyebrow reveal hero-eyebrow">Audience intelligence for real estate</span>
+        <span class="chip" data-reveal>
+          <span style="width:6px;height:6px;border-radius:50%;background:var(--brand);box-shadow:0 0 8px var(--brand);"></span>
+          Audience intelligence for real estate
+        </span>
 
-        <h1 class="hero-h1 reveal">
+        <h1 class="hero-h1" data-reveal>
           Real behaviors. Real contacts. <em class="gradient-text">Before</em> they hit Zillow.
         </h1>
 
-        <p class="hero-lead lead reveal">
-          Real Estate Intent monitors billions of real online behaviors — listings browsed, mortgage
-          calculators run, distress signals triggered — and turns them into verified, contactable leads
-          sliced by intent category and market. Build a list in 60 seconds. Export it to your CRM. Refresh it weekly.
+        <p class="lead hero-lead" data-reveal>
+          We monitor 60B+ weekly behavioral signals and turn them into verified, contactable leads — sliced by intent category and market.
         </p>
 
-        <div class="reveal" style="display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:20px;">
+        <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;" data-reveal>
           <span class="chip chip-live">
             <span class="pulse-dot"></span>
             live · 1,247 signals/min
           </span>
-          <span class="chip">
-            <span style="width:6px; height:6px; border-radius:50%; background:var(--brand-2);"></span>
-            384 markets
-          </span>
-          <span class="chip">
-            <span style="width:6px; height:6px; border-radius:50%; background:var(--brand);"></span>
-            280M+ profiles
-          </span>
         </div>
 
-        <div class="cta-row reveal" style="margin-top:24px;">
-          <a href="/signup" class="btn btn-primary">
+        <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;" data-reveal>
+          <a href="/signup" class="btn btn-primary" data-magnetic>
             Start 7-day free trial
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
           <a href="/signup" class="btn btn-secondary">Sign in</a>
         </div>
-        <p class="reveal" style="margin-top:12px; font-size:12.5px; color:var(--text-3);">
-          No credit card required · Full access for 7 days
-        </p>
+      </div>
+    </section>
 
-        <div class="hero-visual reveal">
-          <HeroMockup />
+    <SignalTicker />
+
+    <!-- 2. FOUR BEHAVIORS -->
+    <section class="section" id="behaviors">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow" data-reveal>Four behaviors. One contact list.</span>
+          <h2 class="section-title" data-reveal>
+            Not <em class="gradient-text">who</em> they are. <em class="gradient-text">What</em> they're doing.
+          </h2>
+        </div>
+
+        <div class="behaviors-grid">
+          {behaviors.map((b) => (
+            <article class="behavior-card" data-accent={b.accent} data-reveal>
+              <div class="behavior-top">
+                <span class={`tag tag-${b.accent}`}>{b.title}</span>
+                <span class="caption" style={`color:var(--${b.accent});`}>
+                  <span class="pulse-dot" style={`background:var(--${b.accent}); box-shadow:0 0 8px var(--${b.accent}); width:6px; height:6px;`}></span>
+                </span>
+              </div>
+              <div class="behavior-body">
+                <h3 class="behavior-title">{b.title}</h3>
+                <p class="behavior-desc">{b.desc}</p>
+              </div>
+              <div class="behavior-foot">
+                <div class="behavior-stat">
+                  <strong class="mono" data-count-to={b.stat}>{b.stat}</strong>
+                  <span style="color:var(--text-3); display:block; font-size:11px; letter-spacing:0.04em; text-transform:uppercase; margin-top:2px;">{b.unit}</span>
+                </div>
+                <svg class="sparkline" viewBox="0 0 100 36" preserveAspectRatio="none">
+                  <path d={b.spark} />
+                </svg>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>
 
-    <!-- SOCIAL PROOF -->
-    <section class="section section-tight">
-      <div class="container">
-        <p class="caption reveal" style="text-align:center; margin-bottom:18px;">
-          Trusted by agents and brokerages across 384 markets
-        </p>
-        <div class="stat-grid">
-          {stats.map((s) => (
-            <div class="stat-card card reveal">
-              <div class="card-inner">
-                <div class="stat">
-                  <div style="display:flex; align-items:baseline; gap:8px;">
-                    <span class="stat-value" data-count-to={s.value}>{s.value}</span>
-                    {s.delta && <span class="mono" style="font-size:12px; color:var(--success);">{s.delta}</span>}
-                  </div>
-                  <span class="stat-label">{s.label}</span>
+    <!-- 3. HOW IT WORKS (pinned) -->
+    <section class="how" id="how">
+      <div class="how-pin" data-pin>
+        <div class="container">
+          <div class="section-head" style="margin-bottom:40px;" data-reveal>
+            <span class="eyebrow">How it works</span>
+            <h2 class="section-title">
+              From signal to verified contact in <em class="gradient-text">60 seconds</em>.
+            </h2>
+          </div>
+
+          <div class="how-grid">
+            <div class="how-stage" data-reveal>
+              <div class="how-stage-inner">
+                <!-- Panel 1: Monitor -->
+                <div class="stage-panel is-active" data-panel="0">
+                  <svg width="100%" height="100%" viewBox="0 0 360 360" preserveAspectRatio="xMidYMid meet">
+                    <defs>
+                      <radialGradient id="mg" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="rgba(167,139,250,0.22)"/><stop offset="1" stop-color="rgba(167,139,250,0)"/></radialGradient>
+                    </defs>
+                    <rect x="0" y="0" width="360" height="360" fill="url(#mg)"/>
+                    <g class="mon-particles">
+                      {[...Array(40)].map((_, i) => {
+                        const cx = 20 + (i * 37) % 320;
+                        const cy = 20 + ((i * 53) % 320);
+                        const r = 1 + (i % 3);
+                        const colors = ["#F87171","#FBBF24","#4ADE80","#A78BFA","#7DD3FC"];
+                        return <circle cx={cx} cy={cy} r={r} fill={colors[i % 5]} opacity="0.7" />;
+                      })}
+                    </g>
+                    <g stroke="rgba(255,255,255,0.08)" stroke-width="1">
+                      <line x1="0" y1="180" x2="360" y2="180" />
+                      <line x1="180" y1="0" x2="180" y2="360" />
+                    </g>
+                  </svg>
+                </div>
+                <!-- Panel 2: Filter (funnel) -->
+                <div class="stage-panel" data-panel="1">
+                  <svg width="100%" height="100%" viewBox="0 0 360 360" preserveAspectRatio="xMidYMid meet">
+                    <g class="filter-bars">
+                      <rect x="40"  y="60"  width="280" height="44" rx="8" fill="rgba(167,139,250,0.15)" stroke="rgba(167,139,250,0.35)" />
+                      <rect x="80"  y="130" width="200" height="44" rx="8" fill="rgba(125,211,252,0.15)" stroke="rgba(125,211,252,0.35)" />
+                      <rect x="120" y="200" width="120" height="44" rx="8" fill="rgba(74,222,128,0.18)"  stroke="rgba(74,222,128,0.45)" />
+                      <rect x="150" y="270" width="60"  height="44" rx="8" fill="rgba(251,191,36,0.22)"  stroke="rgba(251,191,36,0.5)" />
+                    </g>
+                    <g font-family="JetBrains Mono" font-size="11" fill="rgba(255,255,255,0.55)">
+                      <text x="56" y="87">CATEGORY · 12,482 signals</text>
+                      <text x="96" y="157">MARKET · 4,921 signals</text>
+                      <text x="136" y="227">RECENCY · 1,204 signals</text>
+                      <text x="160" y="297" fill="#FBBF24">284 net-new</text>
+                    </g>
+                  </svg>
+                </div>
+                <!-- Panel 3: Export -->
+                <div class="stage-panel" data-panel="2">
+                  <svg width="100%" height="100%" viewBox="0 0 360 360" preserveAspectRatio="xMidYMid meet">
+                    <rect x="40" y="40" width="280" height="280" rx="10" fill="rgba(23,23,26,0.8)" stroke="rgba(255,255,255,0.08)"/>
+                    <rect x="40" y="40" width="280" height="30" fill="rgba(30,30,34,0.9)"/>
+                    <text x="54" y="60" font-family="JetBrains Mono" font-size="10" fill="rgba(255,255,255,0.55)" letter-spacing="1">list-2026-04-21.csv</text>
+                    {exportRows.map((row) => (
+                      <g>
+                        <rect x="50" y={row.y} width="56" height="16" rx="8" fill={`${row.color}22`} stroke={`${row.color}55`}/>
+                        <text x="58" y={row.y + 11} font-family="JetBrains Mono" font-size="8" fill={row.color} letter-spacing="1">{row.cat}</text>
+                        <text x="118" y={row.y + 11} font-family="JetBrains Mono" font-size="10" fill="rgba(255,255,255,0.82)">contact_{row.id}</text>
+                        <text x="240" y={row.y + 11} font-family="JetBrains Mono" font-size="10" fill="#4ADE80">verified</text>
+                      </g>
+                    ))}
+                  </svg>
                 </div>
               </div>
             </div>
-          ))}
-        </div>
-      </div>
-    </section>
 
-    <!-- HOW IT WORKS -->
-    <section class="section" id="how">
-      <div class="container">
-        <div class="section-head reveal">
-          <span class="eyebrow">How it works</span>
-          <h2 class="section-title">From behavioral signal to verified contact <em class="gradient-text">in 60 seconds</em>.</h2>
-        </div>
-
-        <div class="steps-grid">
-          {steps.map((s) => (
-            <article class="card reveal step-card">
-              <div class="card-inner">
-                <div class="step-num mono">{s.n}</div>
-                <h3 class="step-title">{s.title}</h3>
-                <p class="step-body">{s.body}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- INTENT CATEGORIES -->
-    <section class="section" id="categories">
-      <div class="container">
-        <div class="section-head reveal">
-          <span class="eyebrow">Intent categories</span>
-          <h2 class="section-title">Four behaviors. <em class="gradient-text">One platform</em>.</h2>
-          <p class="lead" style="max-width:620px; margin-top:10px;">
-            Every contact is tied to a specific, observable behavior — not a demographic profile or a modeled score.
-          </p>
-        </div>
-
-        <div class="cat-page-grid">
-          {categories.map((c) => (
-            <article class="card category-card reveal" data-accent={c.accent} style={`--accent:${c.color};`}>
-              <div class="card-inner">
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
-                  <span class={`tag tag-${c.accent}`}>{c.title}</span>
-                  <span class="cat-bar" aria-hidden="true">
-                    <span style={`background:${c.color};`}></span>
-                  </span>
+            <div class="how-steps" data-how-steps>
+              {steps.map((s, i) => (
+                <div class={`how-step ${i === 0 ? "is-active" : ""}`} data-step={i}>
+                  <div class="how-step-head">
+                    <span class="how-step-num mono">{s.n}</span>
+                    <span class="how-step-title">{s.title}</span>
+                  </div>
+                  <p class="how-step-body">{s.body}</p>
                 </div>
-                <h3 class="cat-title">{c.title}</h3>
-                <p class="cat-body">{c.body}</p>
-                <div class="cat-volume">
-                  <span class="caption" style={`color:${c.color};`}>Signal volume</span>
-                  <span class="mono cat-volume-num">{c.volume}</span>
-                </div>
-              </div>
-            </article>
-          ))}
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- PRODUCT FEATURES -->
-    <section class="section" id="features">
-      <div class="container">
-        <div class="section-head reveal">
-          <span class="eyebrow">Built for agents</span>
-          <h2 class="section-title">Every detail engineered for <em class="gradient-text">speed</em>.</h2>
-        </div>
-
-        <div class="feat-grid">
-          {features.map((f) => (
-            <article class="card reveal">
-              <div class="card-inner">
-                <div class="feat-icon" aria-hidden="true">
-                  {f.icon === "check" && (
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  )}
-                  {f.icon === "refresh" && (
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 12a9 9 0 10-3 6.7M21 5v6h-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  )}
-                  {f.icon === "bolt" && (
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
-                  )}
-                </div>
-                <h3 class="feat-title">{f.title}</h3>
-                <p class="feat-body">{f.body}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- PRICING -->
+    <!-- 4. PRICING -->
     <section class="section" id="pricing">
       <div class="container">
-        <div class="section-head reveal">
-          <span class="eyebrow">Pricing</span>
-          <h2 class="section-title">Start free. <em class="gradient-text">Scale when you're ready</em>.</h2>
-          <p class="lead" style="max-width:620px; margin-top:10px;">
-            7-day free trial on every plan. No credit card required.
-          </p>
+        <div class="section-head" style="text-align:center; align-items:center; margin-left:auto; margin-right:auto;">
+          <span class="eyebrow" data-reveal>Pricing</span>
+          <h2 class="section-title" data-reveal>Start free. <em class="gradient-text">Scale</em> when you're ready.</h2>
+          <p class="lead" data-reveal style="max-width:500px;">7-day free trial on every plan.</p>
         </div>
 
-        <div class="plan-picker-grid">
+        <div class="plan-grid">
           {plans.map((p) => (
-            <article class="plan-card reveal" data-featured={p.featured}>
-              {p.featured && (
-                <div class="plan-badge">
-                  <span class="caption" style="color:var(--brand);">Most popular</span>
-                </div>
-              )}
+            <article class="plan-card" data-featured={p.featured} data-reveal>
+              {p.featured && <span class="plan-badge">Most popular</span>}
               <div>
-                <div style="display:flex; align-items:center; justify-content:space-between;">
-                  <h3 class="plan-name">{p.name}</h3>
-                </div>
-                <div style="display:flex; align-items:baseline; gap:6px; margin-top:12px;">
+                <h3 class="plan-name">{p.name}</h3>
+                <div class="plan-price">
                   <span class="price">{p.price}</span>
                   <span class="price-suffix">/ mo</span>
                 </div>
               </div>
 
-              <div class="plan-row">
+              <div class="plan-meta-row">
                 <div>
-                  <div class="caption">Contacts</div>
-                  <div class="mono plan-meta">{p.contacts}<span style="color:var(--text-3);"> / mo</span></div>
+                  <div class="plan-meta-label">Contacts</div>
+                  <div class="plan-meta-value">{p.contacts}<span> / mo</span></div>
                 </div>
                 <div>
-                  <div class="caption">Seats</div>
-                  <div class="mono plan-meta">{p.seats}</div>
+                  <div class="plan-meta-label">Seats</div>
+                  <div class="plan-meta-value">{p.seats}</div>
                 </div>
               </div>
 
-              <ul class="feature-list">
+              <ul class="plan-features">
                 {p.features.map((f) => (
                   <li>
-                    <span class="check">
+                    <span class="plan-check">
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </span>
                     {f}
@@ -376,520 +315,248 @@ const plans = [
                 ))}
               </ul>
 
-              <a href="/signup" class={p.featured ? "btn btn-primary" : "btn btn-secondary"} style="width:100%; margin-top:auto;">
-                {p.cta}
-                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <a href="/signup" class={p.featured ? "btn btn-primary" : "btn btn-secondary"} style="width:100%;" data-magnetic={p.featured ? "true" : null}>
+                Start free trial
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </a>
             </article>
           ))}
         </div>
 
-        <div class="enterprise-card reveal">
-          <div class="enterprise-left">
-            <span class="caption" style="color:var(--brand);">Enterprise</span>
-            <h3 class="enterprise-title">Running a multi-market brokerage?</h3>
-            <p class="enterprise-body">Talk to us about custom volume, dedicated data feeds, and integrations.</p>
+        <div class="enterprise-row" data-reveal>
+          <div class="enterprise-row-left">
+            <div class="enterprise-title">Multi-market brokerage? Custom volume & integrations.</div>
+            <div class="enterprise-note">Lists refresh weekly — <span>only net-new contacts count against your cap.</span></div>
           </div>
           <a href="mailto:sales@realestateintent.com" class="btn btn-secondary">
             Contact sales
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </div>
       </div>
     </section>
 
-    <!-- BILLING TRANSPARENCY -->
-    <section class="section section-tight">
+    <!-- 5. FINAL CTA -->
+    <section class="cta" id="cta">
+      <div class="cta-glow"></div>
       <div class="container">
-        <div class="billing-card reveal">
-          <div class="billing-icon" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-          </div>
-          <div>
-            <h3 class="billing-title">You only pay for what's new.</h3>
-            <p class="billing-body">
-              Lists refresh weekly with the latest behavioral signals. When a contact already appeared in a previous list,
-              they don't count against your monthly cap — only net-new contacts do. Re-export, re-filter, refresh as often as you want.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FINAL CTA -->
-    <section class="section section-cta">
-      <div class="cta-glow" aria-hidden="true"></div>
-      <div class="container" style="position:relative; z-index:1;">
-        <div class="cta-box reveal">
-          <span class="eyebrow">Start today</span>
-          <h2 class="cta-h2">
-            The signal is already there. <em class="gradient-text">You just need to see it.</em>
+        <div class="cta-inner">
+          <h2 class="cta-h2" data-reveal>
+            The signal is already there. <em data-reveal-em>You just need to see it.</em>
           </h2>
-          <p class="lead" style="max-width:600px; margin:0 auto;">
-            Thousands of homeowners, buyers, and sellers in your market are showing behavioral intent right now.
-            Real Estate Intent puts verified contacts in your hands before anyone else gets there.
-          </p>
-          <div class="cta-row" style="justify-content:center; margin-top:20px;">
-            <a href="/signup" class="btn btn-primary">
+          <div style="display:flex; justify-content:center; margin-top:8px;">
+            <a href="/signup" class="btn btn-primary" data-magnetic>
               Start 7-day free trial
-              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
           </div>
-          <p style="font-size:12.5px; color:var(--text-3); margin-top:10px;">No credit card required</p>
         </div>
       </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="site-footer">
-      <div class="container footer-inner">
-        <div class="footer-left">
+    <!-- 6. FOOTER -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-row">
           <Logo />
+          <nav class="footer-nav" aria-label="Footer">
+            <a href="#pricing">pricing</a>
+            <a href="/signup">sign in</a>
+            <a href="/signup">start trial</a>
+          </nav>
+          <div class="caption">powered by <a href="https://gonextlevel.ai" style="color:var(--text-2);">Go Next Level</a></div>
         </div>
-        <nav class="footer-center" aria-label="Footer">
-          <a href="#pricing">pricing</a>
-          <a href="/signup">sign in</a>
-          <a href="/signup">start free trial</a>
-        </nav>
-        <div class="footer-right caption">
-          powered by <a href="https://gonextlevel.ai" style="color:var(--text-2);">Go Next Level</a>
+        <div class="footer-legal">
+          <span>© 2025 Real Estate Intent</span>
+          <span><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span>
         </div>
-      </div>
-      <div class="container footer-bottom">
-        <p>© 2025 Real Estate Intent · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></p>
       </div>
     </footer>
   </main>
-</BaseLayout>
 
-<style>
-  .section { padding: 96px 0; position: relative; }
-  .section-tight { padding: 48px 0; }
+  <!-- GSAP CDN -->
+  <script is:inline src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script is:inline src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 
-  @media (max-width: 768px) {
-    .section { padding: 64px 0; }
-  }
+  <script>
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isTouch = window.matchMedia("(hover: none), (pointer: coarse)").matches;
 
-  .section-head {
-    max-width: 720px;
-    margin-bottom: 36px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
+    // @ts-ignore
+    const gsap = (window as any).gsap;
+    // @ts-ignore
+    const ScrollTrigger = (window as any).ScrollTrigger;
+    if (gsap && ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
 
-  /* HERO */
-  .hero {
-    position: relative;
-    padding: 72px 0 96px;
-    overflow: hidden;
-    isolation: isolate;
-  }
+    /* ===== Topbar scrolled state ===== */
+    const topbar = document.querySelector<HTMLElement>(".topbar");
+    const onScroll = () => {
+      if (!topbar) return;
+      topbar.classList.toggle("is-scrolled", window.scrollY > 4);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
 
-  .hero-inner {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .hero-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    padding: 6px 12px;
-    border-radius: 999px;
-    background: var(--brand-bg);
-    border: 1px solid var(--brand-border);
-    color: var(--brand);
-  }
-
-  .hero-h1 {
-    font-size: clamp(36px, 5.6vw, 56px);
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    line-height: 1.05;
-    max-width: 900px;
-    margin-top: 20px;
-  }
-
-  .hero-h1 em { font-style: normal; }
-
-  .hero-lead {
-    max-width: 640px;
-    margin-top: 20px;
-  }
-
-  .hero-visual {
-    width: 100%;
-    margin-top: 56px;
-  }
-
-  @media (max-width: 768px) {
-    .hero { padding: 48px 0 72px; }
-    .hero-visual { margin-top: 40px; }
-  }
-
-  /* STATS */
-  .stat-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-  }
-
-  @media (max-width: 900px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 440px) { .stat-grid { grid-template-columns: 1fr; } }
-
-  .stat-card .card-inner { padding: 20px; }
-
-  /* STEPS */
-  .steps-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-
-  @media (max-width: 900px) { .steps-grid { grid-template-columns: 1fr; } }
-
-  .step-num {
-    color: var(--text-4);
-    font-size: 13px;
-    letter-spacing: 0.08em;
-    margin-bottom: 16px;
-  }
-
-  .step-title {
-    font-size: 18px;
-    font-weight: 600;
-    letter-spacing: -0.015em;
-    margin-bottom: 10px;
-  }
-
-  .step-body { font-size: 14px; line-height: 1.55; color: var(--text-2); }
-
-  /* CATEGORIES */
-  .cat-page-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
-
-  @media (max-width: 720px) { .cat-page-grid { grid-template-columns: 1fr; } }
-
-  .cat-title {
-    font-size: 22px;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    margin-bottom: 10px;
-  }
-
-  .cat-body { font-size: 14px; line-height: 1.55; color: var(--text-2); }
-
-  .cat-bar {
-    width: 48px; height: 4px;
-    border-radius: 999px;
-    display: block;
-    background: var(--surface-3);
-    overflow: hidden;
-  }
-  .cat-bar span {
-    display: block;
-    width: 60%; height: 100%;
-    border-radius: 999px;
-    transition: width 800ms cubic-bezier(0.22,1,0.36,1);
-  }
-  .category-card:hover .cat-bar span { width: 100%; }
-
-  .cat-volume {
-    margin-top: 18px;
-    padding-top: 16px;
-    border-top: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-  .cat-volume-num { font-size: 12.5px; color: var(--text-2); }
-
-  /* FEATURES */
-  .feat-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-  @media (max-width: 900px) { .feat-grid { grid-template-columns: 1fr; } }
-
-  .feat-icon {
-    width: 36px; height: 36px;
-    border-radius: 8px;
-    background: var(--brand-bg);
-    border: 1px solid var(--brand-border);
-    color: var(--brand);
-    display: grid; place-items: center;
-    margin-bottom: 14px;
-  }
-
-  .feat-title {
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: -0.015em;
-    margin-bottom: 8px;
-  }
-
-  .feat-body { font-size: 14px; line-height: 1.55; color: var(--text-2); }
-
-  /* PRICING */
-  .plan-badge {
-    position: absolute;
-    top: 16px; right: 16px;
-    padding: 4px 8px;
-    background: var(--brand-bg);
-    border: 1px solid var(--brand-border);
-    border-radius: 999px;
-  }
-
-  .plan-card { position: relative; }
-
-  .plan-name {
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: -0.015em;
-    color: var(--text);
-  }
-
-  .plan-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    padding: 14px 0;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .plan-meta {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text);
-    margin-top: 4px;
-    letter-spacing: -0.01em;
-  }
-
-  .enterprise-card {
-    margin-top: 24px;
-    padding: 22px 24px;
-    background:
-      linear-gradient(180deg, rgba(167, 139, 250, 0.06), transparent),
-      var(--surface-2);
-    border: 1px solid var(--brand-border);
-    border-radius: var(--r-xl);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-
-  .enterprise-left { flex: 1; min-width: 260px; }
-
-  .enterprise-title {
-    font-size: 18px;
-    font-weight: 600;
-    letter-spacing: -0.015em;
-    margin: 8px 0 4px;
-  }
-
-  .enterprise-body { color: var(--text-2); font-size: 14px; }
-
-  /* BILLING */
-  .billing-card {
-    background:
-      linear-gradient(135deg, rgba(167, 139, 250, 0.08), rgba(125, 211, 252, 0.04)),
-      var(--surface-2);
-    border: 1px solid var(--brand-border);
-    border-radius: var(--r-xl);
-    padding: 28px;
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-  }
-
-  .billing-icon {
-    width: 44px; height: 44px;
-    border-radius: var(--r);
-    display: grid; place-items: center;
-    background: var(--brand-bg);
-    color: var(--brand);
-    flex: none;
-  }
-
-  .billing-title {
-    font-size: 20px;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    margin-bottom: 8px;
-  }
-
-  .billing-body { color: var(--text-2); font-size: 14.5px; line-height: 1.55; max-width: 760px; }
-
-  @media (max-width: 600px) {
-    .billing-card { flex-direction: column; gap: 14px; }
-  }
-
-  /* FINAL CTA */
-  .section-cta { position: relative; overflow: hidden; padding: 96px 0 120px; }
-
-  .cta-glow {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(50% 50% at 50% 50%, rgba(167, 139, 250, 0.14), transparent 70%),
-      radial-gradient(40% 40% at 70% 50%, rgba(125, 211, 252, 0.10), transparent 70%);
-    z-index: 0;
-    pointer-events: none;
-  }
-
-  .cta-box {
-    max-width: 720px;
-    margin: 0 auto;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .cta-h2 {
-    font-size: clamp(30px, 4.4vw, 44px);
-    font-weight: 600;
-    letter-spacing: -0.025em;
-    line-height: 1.1;
-    max-width: 700px;
-  }
-
-  .cta-h2 em { font-style: normal; }
-
-  /* FOOTER */
-  .site-footer {
-    background: var(--surface-1);
-    border-top: 1px solid var(--border);
-    padding: 32px 0 24px;
-  }
-
-  .footer-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-
-  .footer-center {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    font-size: 13px;
-  }
-
-  .footer-center a {
-    color: var(--text-2);
-    transition: color 180ms ease;
-  }
-
-  .footer-center a:hover { color: var(--text); }
-
-  .footer-right a { transition: color 180ms ease; }
-  .footer-right a:hover { color: var(--text) !important; }
-
-  .footer-bottom {
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border);
-    font-size: 12px;
-    color: var(--text-3);
-  }
-
-  .footer-bottom a {
-    color: var(--text-3);
-    transition: color 180ms ease;
-  }
-  .footer-bottom a:hover { color: var(--text-2); }
-
-  @media (max-width: 640px) {
-    .footer-inner { flex-direction: column; align-items: flex-start; gap: 16px; }
-  }
-</style>
-
-<script>
-  // Scroll reveal — respecting prefers-reduced-motion
-  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const reveals = document.querySelectorAll<HTMLElement>(".reveal");
-
-  if (prefersReduced) {
-    reveals.forEach((el) => el.classList.add("is-in"));
-  } else if ("IntersectionObserver" in window) {
-    // Hero stagger
+    /* ===== Reveal (hero stagger + scroll-triggered) ===== */
     const hero = document.querySelector(".hero");
-    const heroReveals = hero ? Array.from(hero.querySelectorAll<HTMLElement>(".reveal")) : [];
-    heroReveals.forEach((el, i) => {
-      el.style.transitionDelay = `${i * 60}ms`;
-      requestAnimationFrame(() => el.classList.add("is-in"));
-    });
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            const el = entry.target as HTMLElement;
-            el.classList.add("is-in");
-            io.unobserve(el);
-          }
-        }
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -60px 0px" }
+    const heroReveals = hero ? Array.from(hero.querySelectorAll<HTMLElement>("[data-reveal]")) : [];
+    const otherReveals = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]")).filter(
+      (el) => !(hero && hero.contains(el))
     );
 
-    reveals.forEach((el) => {
-      if (hero && hero.contains(el)) return;
-      io.observe(el);
-    });
+    // Hero stagger
+    heroReveals.forEach((el) => el.classList.add("reveal"));
+    otherReveals.forEach((el) => el.classList.add("reveal"));
 
-    // Stat counters
-    const statEls = document.querySelectorAll<HTMLElement>("[data-count-to]");
-    const statObs = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          const el = entry.target as HTMLElement;
-          const target = el.dataset.countTo || "";
-          animateCounter(el, target);
-          statObs.unobserve(el);
-        }
-      },
-      { threshold: 0.4 }
-    );
-    statEls.forEach((el) => statObs.observe(el));
+    if (prefersReduced) {
+      document.querySelectorAll<HTMLElement>(".reveal").forEach((el) => el.classList.add("is-in"));
+    } else {
+      heroReveals.forEach((el, i) => {
+        (el as HTMLElement).style.transitionDelay = `${i * 80 + 80}ms`;
+        requestAnimationFrame(() => el.classList.add("is-in"));
+      });
 
-    function animateCounter(el: HTMLElement, final: string) {
-      const numericMatch = final.match(/[\d.]+/);
-      if (!numericMatch) return;
-      const raw = parseFloat(numericMatch[0]);
-      const prefix = final.slice(0, final.indexOf(numericMatch[0]));
-      const suffix = final.slice(final.indexOf(numericMatch[0]) + numericMatch[0].length);
-      const duration = 1100;
-      const start = performance.now();
-      const ease = (t: number) => 1 - Math.pow(1 - t, 3);
-      const step = (now: number) => {
-        const t = Math.min(1, (now - start) / duration);
-        const v = raw * ease(t);
-        const display = final.includes(".")
-          ? v.toFixed(1)
-          : Math.round(v).toString();
-        el.textContent = `${prefix}${display}${suffix}`;
-        if (t < 1) requestAnimationFrame(step);
-        else el.textContent = final;
-      };
-      requestAnimationFrame(step);
+      if ("IntersectionObserver" in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                (entry.target as HTMLElement).classList.add("is-in");
+                io.unobserve(entry.target);
+              }
+            }
+          },
+          { threshold: 0.12, rootMargin: "0px 0px -60px 0px" }
+        );
+        otherReveals.forEach((el) => io.observe(el));
+      }
     }
-  } else {
-    reveals.forEach((el) => el.classList.add("is-in"));
-  }
-</script>
+
+    /* ===== Counter animation ===== */
+    if (!prefersReduced && "IntersectionObserver" in window) {
+      const counters = document.querySelectorAll<HTMLElement>("[data-count-to]");
+      const counterIo = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            const el = entry.target as HTMLElement;
+            const target = el.dataset.countTo || "";
+            const numericMatch = target.match(/[\d,]+/);
+            if (numericMatch) {
+              const clean = parseFloat(numericMatch[0].replace(/,/g, ""));
+              const duration = 1100;
+              const start = performance.now();
+              const ease = (t: number) => 1 - Math.pow(1 - t, 3);
+              const step = (now: number) => {
+                const t = Math.min(1, (now - start) / duration);
+                const v = Math.round(clean * ease(t));
+                el.textContent = v.toLocaleString("en-US");
+                if (t < 1) requestAnimationFrame(step);
+                else el.textContent = target;
+              };
+              requestAnimationFrame(step);
+            }
+            counterIo.unobserve(el);
+          }
+        },
+        { threshold: 0.4 }
+      );
+      counters.forEach((el) => counterIo.observe(el));
+    }
+
+    /* ===== Custom cursor ===== */
+    if (!isTouch && !prefersReduced) {
+      const dot = document.querySelector<HTMLElement>(".cursor-dot");
+      const ring = document.querySelector<HTMLElement>(".cursor-ring");
+      if (dot && ring) {
+        let dx = 0, dy = 0, rx = 0, ry = 0, mx = 0, my = 0;
+        const setDot = gsap ? gsap.quickTo(dot, "x", { duration: 0.05, ease: "none" }) : null;
+        const setDotY = gsap ? gsap.quickTo(dot, "y", { duration: 0.05, ease: "none" }) : null;
+        const setRing = gsap ? gsap.quickTo(ring, "x", { duration: 0.28, ease: "power3" }) : null;
+        const setRingY = gsap ? gsap.quickTo(ring, "y", { duration: 0.28, ease: "power3" }) : null;
+
+        window.addEventListener("mousemove", (e) => {
+          mx = e.clientX; my = e.clientY;
+          document.body.classList.add("cursor-ready");
+          if (gsap && setDot && setDotY && setRing && setRingY) {
+            setDot(mx); setDotY(my);
+            setRing(mx); setRingY(my);
+          } else {
+            dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
+            ring.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
+          }
+        });
+
+        document.querySelectorAll<HTMLElement>("a, button, [data-magnetic]").forEach((el) => {
+          el.addEventListener("mouseenter", () => document.body.classList.add("cursor-hover"));
+          el.addEventListener("mouseleave", () => document.body.classList.remove("cursor-hover"));
+        });
+      }
+    }
+
+    /* ===== Magnetic buttons ===== */
+    if (!isTouch && !prefersReduced && gsap) {
+      document.querySelectorAll<HTMLElement>("[data-magnetic]").forEach((el) => {
+        const xTo = gsap.quickTo(el, "x", { duration: 0.45, ease: "elastic.out(1, 0.5)" });
+        const yTo = gsap.quickTo(el, "y", { duration: 0.45, ease: "elastic.out(1, 0.5)" });
+        el.addEventListener("mousemove", (e: MouseEvent) => {
+          const r = el.getBoundingClientRect();
+          const cx = r.left + r.width / 2;
+          const cy = r.top + r.height / 2;
+          const dx = (e.clientX - cx) * 0.3;
+          const dy = (e.clientY - cy) * 0.35;
+          xTo(dx); yTo(dy);
+        });
+        el.addEventListener("mouseleave", () => {
+          xTo(0); yTo(0);
+        });
+      });
+    }
+
+    /* ===== How It Works pinned scroll ===== */
+    if (gsap && ScrollTrigger && !prefersReduced && window.matchMedia("(min-width: 900px)").matches) {
+      const howPin = document.querySelector<HTMLElement>(".how-pin");
+      const panels = document.querySelectorAll<HTMLElement>("[data-panel]");
+      const stepEls = document.querySelectorAll<HTMLElement>(".how-step");
+
+      if (howPin && panels.length && stepEls.length) {
+        ScrollTrigger.create({
+          trigger: howPin,
+          start: "top top",
+          end: "+=1800",
+          pin: true,
+          scrub: 0.6,
+          onUpdate: (self: any) => {
+            const p = self.progress;
+            let idx = 0;
+            if (p > 0.66) idx = 2;
+            else if (p > 0.33) idx = 1;
+            else idx = 0;
+            panels.forEach((el, i) => el.classList.toggle("is-active", i === idx));
+            stepEls.forEach((el, i) => el.classList.toggle("is-active", i === idx));
+          },
+        });
+      }
+    }
+
+    /* ===== CTA gradient reveal ===== */
+    if (gsap && ScrollTrigger && !prefersReduced) {
+      const em = document.querySelector<HTMLElement>("[data-reveal-em]");
+      if (em) {
+        ScrollTrigger.create({
+          trigger: em,
+          start: "top 80%",
+          end: "top 30%",
+          scrub: 0.4,
+          onUpdate: (self: any) => {
+            em.style.setProperty("--reveal", String(self.progress));
+          },
+          onLeave: () => em.classList.add("reveal-done"),
+        });
+      }
+    } else {
+      const em = document.querySelector<HTMLElement>("[data-reveal-em]");
+      if (em) em.classList.add("reveal-done");
+    }
+  </script>
+</BaseLayout>

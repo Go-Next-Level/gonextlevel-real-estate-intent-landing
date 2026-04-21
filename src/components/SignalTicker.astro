@@ -1,0 +1,52 @@
+---
+const zips = ["90210", "33139", "78704", "10025", "60614", "94110", "85032", "27603", "02116", "30308", "98101", "80202", "11215", "75201", "48104"];
+const behaviors = [
+  { cat: "buyer",    label: "listings saved",      color: "#4ADE80" },
+  { cat: "mortgage", label: "rate calc run",       color: "#A78BFA" },
+  { cat: "seller",   label: "home value lookup",   color: "#FBBF24" },
+  { cat: "distress", label: "loan-mod search",     color: "#F87171" },
+  { cat: "buyer",    label: "open-house RSVP",     color: "#4ADE80" },
+  { cat: "mortgage", label: "lender compared",     color: "#A78BFA" },
+  { cat: "seller",   label: "agent reviews read",  color: "#FBBF24" },
+  { cat: "distress", label: "pre-foreclosure doc", color: "#F87171" },
+  { cat: "buyer",    label: "neighborhood browse", color: "#4ADE80" },
+  { cat: "mortgage", label: "refi tool engaged",   color: "#A78BFA" },
+  { cat: "seller",   label: "listing prep guide",  color: "#FBBF24" },
+];
+
+function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+const ROWS = 24;
+const items = Array.from({ length: ROWS }, (_, i) => {
+  const b = behaviors[i % behaviors.length];
+  const z = zips[(i * 3 + 7) % zips.length];
+  const seconds = 5 + ((i * 13) % 220);
+  const ago = seconds < 60 ? `${seconds}s ago` : `${Math.floor(seconds / 60)}m ${seconds % 60}s ago`;
+  return { ...b, zip: z, ago };
+});
+const loop = [...items, ...items];
+---
+
+<div class="ticker" aria-label="Live behavioral signal feed">
+  <div class="ticker-track">
+    {loop.map((item, i) => (
+      <span class="ticker-item">
+        <span class="ticker-dot" style={`background:${item.color};box-shadow:0 0 8px ${item.color}`}></span>
+        <span class="mono" style="color:var(--text-2);">zip {item.zip}</span>
+        <span class="ticker-sep"></span>
+        <span class="mono" style={`color:${item.color}`}>{item.cat}</span>
+        <span class="mono" style="color:var(--text-2);">· {item.label}</span>
+        <span class="ticker-sep"></span>
+        <span class="ticker-time mono">{item.ago}</span>
+        {i % 4 === 3 && <span class="ticker-sep" style="margin:0 6px;"></span>}
+      </span>
+    ))}
+  </div>
+</div>
