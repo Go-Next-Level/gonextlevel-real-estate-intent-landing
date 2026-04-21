@@ -1,10 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Topbar from '../components/Topbar.astro';
+import Logo from '../components/Logo.astro';
+import HeroMockup from '../components/HeroMockup.astro';
 
-// REPLACE: Update all placeholder values with actual client data
-const businessName = "Business Name";
-const tagline = "Your compelling tagline goes here";
-const description = "A clear, benefit-focused description of what this business does and who they serve.";
+const businessName = "Real Estate Intent";
+const tagline = "Behavioral Audience Intelligence for Real Estate";
+const description = "Identify buyers, sellers, and distressed homeowners who are actively showing intent right now — before they hit Zillow. Verified contacts built from real behavioral signals. Start your 7-day free trial.";
+
+const siteUrl = (Astro.site ?? Astro.url.origin).toString();
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -12,17 +16,143 @@ const structuredData = {
     {
       "@type": "Organization",
       "name": businessName,
-      "url": Astro.site ?? Astro.url.origin,
-      "logo": `${Astro.site ?? Astro.url.origin}/favicon.svg`,
+      "url": siteUrl,
+      "logo": `${siteUrl}favicon.svg`,
+      "parentOrganization": { "@type": "Organization", "name": "Go Next Level" }
     },
     {
-      "@type": "LocalBusiness",
+      "@type": "SoftwareApplication",
       "name": businessName,
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
       "description": description,
-      "url": Astro.site ?? Astro.url.origin,
+      "offers": [
+        { "@type": "Offer", "name": "Starter", "price": "1000", "priceCurrency": "USD" },
+        { "@type": "Offer", "name": "Growth", "price": "2500", "priceCurrency": "USD" },
+        { "@type": "Offer", "name": "Scale", "price": "5000", "priceCurrency": "USD" }
+      ]
     }
   ]
 };
+
+const stats = [
+  { value: "12.4B", label: "behavioral signals scanned weekly", delta: "+8.2%" },
+  { value: "4.2M",  label: "verified contacts delivered", delta: "+12.1%" },
+  { value: "384",   label: "U.S. markets covered", delta: null },
+  { value: "< 60s", label: "average list build time", delta: null },
+];
+
+const steps = [
+  {
+    n: "01",
+    title: "Monitor",
+    body: "We scan billions of real online behaviors every week — the listings being browsed, the mortgage rates being compared, the distress content being consumed. These are real actions, not modeled guesses.",
+  },
+  {
+    n: "02",
+    title: "Filter",
+    body: "Slice by intent category, geography, and recency. Target homeowners actively showing distress signals, owners researching listings right now, buyers browsing in your market today.",
+  },
+  {
+    n: "03",
+    title: "Export",
+    body: "Push directly to your CRM or download as CSV. Every contact includes verified name, phone, and email. Lists auto-refresh weekly with net-new contacts only — you're never charged twice for the same person.",
+  },
+];
+
+const categories = [
+  {
+    accent: "distress",
+    color: "#F87171",
+    title: "Distress",
+    body: "Homeowners actively engaging with content around missed payments, pre-foreclosure filings, loan modification, and financial hardship. They're looking for options.",
+    volume: "avg 820 contacts / market / mo",
+  },
+  {
+    accent: "seller",
+    color: "#FBBF24",
+    title: "Seller",
+    body: "Owners browsing listing platforms, researching home values, reading \"how to sell\" guides, and comparing agent reviews. They're getting ready to list.",
+    volume: "avg 1,340 contacts / market / mo",
+  },
+  {
+    accent: "buyer",
+    color: "#4ADE80",
+    title: "Buyer",
+    body: "Consumers actively browsing listings, saving properties, attending virtual open houses, and researching neighborhoods. They're in the market now.",
+    volume: "avg 2,180 contacts / market / mo",
+  },
+  {
+    accent: "mortgage",
+    color: "#A78BFA",
+    title: "Mortgage",
+    body: "Shoppers running affordability calculators, comparing lenders, reading rate content, and engaging with refinance tools. They're actively shopping.",
+    volume: "avg 910 contacts / market / mo",
+  },
+];
+
+const features = [
+  {
+    title: "Verified contact data",
+    body: "Every lead includes a confirmed name, phone number, and email address matched against our 280M+ consumer profile database. No guesses, no gaps.",
+    icon: "check",
+  },
+  {
+    title: "Weekly behavioral refresh",
+    body: "Signals are re-scanned weekly. Your lists update automatically with net-new contacts showing fresh intent — and you're only billed for contacts you haven't seen before.",
+    icon: "refresh",
+  },
+  {
+    title: "60-second list builder",
+    body: "Select an intent category, drop in a market or zip code, set a date range. Done. Export to CSV or push straight to your CRM.",
+    icon: "bolt",
+  },
+];
+
+const plans = [
+  {
+    name: "Starter",
+    price: "$1,000",
+    contacts: "1,000",
+    seats: "1",
+    featured: false,
+    features: [
+      "All four intent categories",
+      "CSV export + CRM push",
+      "Weekly behavioral refresh",
+      "7-day free trial",
+    ],
+    cta: "Start free trial",
+  },
+  {
+    name: "Growth",
+    price: "$2,500",
+    contacts: "3,500",
+    seats: "3",
+    featured: true,
+    features: [
+      "Everything in Starter",
+      "Auto-refreshing lists",
+      "Multi-market builds",
+      "Priority support",
+    ],
+    cta: "Start free trial",
+  },
+  {
+    name: "Scale",
+    price: "$5,000",
+    contacts: "10,000",
+    seats: "10",
+    featured: false,
+    features: [
+      "Everything in Growth",
+      "Dedicated success manager",
+      "Custom CRM integrations",
+      "Volume pricing",
+    ],
+    cta: "Start free trial",
+  },
+];
 ---
 
 <BaseLayout
@@ -30,13 +160,736 @@ const structuredData = {
   description={description}
   structuredData={structuredData}
 >
-  <!-- REPLACE: Build all page sections here using 21st.dev components + design system -->
-  <!-- Phase 1: Run /frontend-design, /ui-ux-pro-max, /taste-skill, /emil-design-eng first -->
-  <!-- Phase 2: Check 21st.dev Magic (/ui) for each section before building from scratch -->
-  <!-- Phase 3: Run tier-specific skills, then /polish and /audit -->
+  <Topbar />
 
-  <main>
-    <h1>{businessName}</h1>
-    <p>{description}</p>
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="grid-bg"></div>
+      <div class="hero-glow"></div>
+
+      <div class="container hero-inner">
+        <span class="eyebrow reveal hero-eyebrow">Audience intelligence for real estate</span>
+
+        <h1 class="hero-h1 reveal">
+          Real behaviors. Real contacts. <em class="gradient-text">Before</em> they hit Zillow.
+        </h1>
+
+        <p class="hero-lead lead reveal">
+          Real Estate Intent monitors billions of real online behaviors — listings browsed, mortgage
+          calculators run, distress signals triggered — and turns them into verified, contactable leads
+          sliced by intent category and market. Build a list in 60 seconds. Export it to your CRM. Refresh it weekly.
+        </p>
+
+        <div class="reveal" style="display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:20px;">
+          <span class="chip chip-live">
+            <span class="pulse-dot"></span>
+            live · 1,247 signals/min
+          </span>
+          <span class="chip">
+            <span style="width:6px; height:6px; border-radius:50%; background:var(--brand-2);"></span>
+            384 markets
+          </span>
+          <span class="chip">
+            <span style="width:6px; height:6px; border-radius:50%; background:var(--brand);"></span>
+            280M+ profiles
+          </span>
+        </div>
+
+        <div class="cta-row reveal" style="margin-top:24px;">
+          <a href="/signup" class="btn btn-primary">
+            Start 7-day free trial
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="/signup" class="btn btn-secondary">Sign in</a>
+        </div>
+        <p class="reveal" style="margin-top:12px; font-size:12.5px; color:var(--text-3);">
+          No credit card required · Full access for 7 days
+        </p>
+
+        <div class="hero-visual reveal">
+          <HeroMockup />
+        </div>
+      </div>
+    </section>
+
+    <!-- SOCIAL PROOF -->
+    <section class="section section-tight">
+      <div class="container">
+        <p class="caption reveal" style="text-align:center; margin-bottom:18px;">
+          Trusted by agents and brokerages across 384 markets
+        </p>
+        <div class="stat-grid">
+          {stats.map((s) => (
+            <div class="stat-card card reveal">
+              <div class="card-inner">
+                <div class="stat">
+                  <div style="display:flex; align-items:baseline; gap:8px;">
+                    <span class="stat-value" data-count-to={s.value}>{s.value}</span>
+                    {s.delta && <span class="mono" style="font-size:12px; color:var(--success);">{s.delta}</span>}
+                  </div>
+                  <span class="stat-label">{s.label}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section" id="how">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">How it works</span>
+          <h2 class="section-title">From behavioral signal to verified contact <em class="gradient-text">in 60 seconds</em>.</h2>
+        </div>
+
+        <div class="steps-grid">
+          {steps.map((s) => (
+            <article class="card reveal step-card">
+              <div class="card-inner">
+                <div class="step-num mono">{s.n}</div>
+                <h3 class="step-title">{s.title}</h3>
+                <p class="step-body">{s.body}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- INTENT CATEGORIES -->
+    <section class="section" id="categories">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Intent categories</span>
+          <h2 class="section-title">Four behaviors. <em class="gradient-text">One platform</em>.</h2>
+          <p class="lead" style="max-width:620px; margin-top:10px;">
+            Every contact is tied to a specific, observable behavior — not a demographic profile or a modeled score.
+          </p>
+        </div>
+
+        <div class="cat-page-grid">
+          {categories.map((c) => (
+            <article class="card category-card reveal" data-accent={c.accent} style={`--accent:${c.color};`}>
+              <div class="card-inner">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
+                  <span class={`tag tag-${c.accent}`}>{c.title}</span>
+                  <span class="cat-bar" aria-hidden="true">
+                    <span style={`background:${c.color};`}></span>
+                  </span>
+                </div>
+                <h3 class="cat-title">{c.title}</h3>
+                <p class="cat-body">{c.body}</p>
+                <div class="cat-volume">
+                  <span class="caption" style={`color:${c.color};`}>Signal volume</span>
+                  <span class="mono cat-volume-num">{c.volume}</span>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCT FEATURES -->
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Built for agents</span>
+          <h2 class="section-title">Every detail engineered for <em class="gradient-text">speed</em>.</h2>
+        </div>
+
+        <div class="feat-grid">
+          {features.map((f) => (
+            <article class="card reveal">
+              <div class="card-inner">
+                <div class="feat-icon" aria-hidden="true">
+                  {f.icon === "check" && (
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  )}
+                  {f.icon === "refresh" && (
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 12a9 9 0 10-3 6.7M21 5v6h-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  )}
+                  {f.icon === "bolt" && (
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                  )}
+                </div>
+                <h3 class="feat-title">{f.title}</h3>
+                <p class="feat-body">{f.body}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="section" id="pricing">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Pricing</span>
+          <h2 class="section-title">Start free. <em class="gradient-text">Scale when you're ready</em>.</h2>
+          <p class="lead" style="max-width:620px; margin-top:10px;">
+            7-day free trial on every plan. No credit card required.
+          </p>
+        </div>
+
+        <div class="plan-picker-grid">
+          {plans.map((p) => (
+            <article class="plan-card reveal" data-featured={p.featured}>
+              {p.featured && (
+                <div class="plan-badge">
+                  <span class="caption" style="color:var(--brand);">Most popular</span>
+                </div>
+              )}
+              <div>
+                <div style="display:flex; align-items:center; justify-content:space-between;">
+                  <h3 class="plan-name">{p.name}</h3>
+                </div>
+                <div style="display:flex; align-items:baseline; gap:6px; margin-top:12px;">
+                  <span class="price">{p.price}</span>
+                  <span class="price-suffix">/ mo</span>
+                </div>
+              </div>
+
+              <div class="plan-row">
+                <div>
+                  <div class="caption">Contacts</div>
+                  <div class="mono plan-meta">{p.contacts}<span style="color:var(--text-3);"> / mo</span></div>
+                </div>
+                <div>
+                  <div class="caption">Seats</div>
+                  <div class="mono plan-meta">{p.seats}</div>
+                </div>
+              </div>
+
+              <ul class="feature-list">
+                {p.features.map((f) => (
+                  <li>
+                    <span class="check">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+
+              <a href="/signup" class={p.featured ? "btn btn-primary" : "btn btn-secondary"} style="width:100%; margin-top:auto;">
+                {p.cta}
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </article>
+          ))}
+        </div>
+
+        <div class="enterprise-card reveal">
+          <div class="enterprise-left">
+            <span class="caption" style="color:var(--brand);">Enterprise</span>
+            <h3 class="enterprise-title">Running a multi-market brokerage?</h3>
+            <p class="enterprise-body">Talk to us about custom volume, dedicated data feeds, and integrations.</p>
+          </div>
+          <a href="mailto:sales@realestateintent.com" class="btn btn-secondary">
+            Contact sales
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- BILLING TRANSPARENCY -->
+    <section class="section section-tight">
+      <div class="container">
+        <div class="billing-card reveal">
+          <div class="billing-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+          <div>
+            <h3 class="billing-title">You only pay for what's new.</h3>
+            <p class="billing-body">
+              Lists refresh weekly with the latest behavioral signals. When a contact already appeared in a previous list,
+              they don't count against your monthly cap — only net-new contacts do. Re-export, re-filter, refresh as often as you want.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="section section-cta">
+      <div class="cta-glow" aria-hidden="true"></div>
+      <div class="container" style="position:relative; z-index:1;">
+        <div class="cta-box reveal">
+          <span class="eyebrow">Start today</span>
+          <h2 class="cta-h2">
+            The signal is already there. <em class="gradient-text">You just need to see it.</em>
+          </h2>
+          <p class="lead" style="max-width:600px; margin:0 auto;">
+            Thousands of homeowners, buyers, and sellers in your market are showing behavioral intent right now.
+            Real Estate Intent puts verified contacts in your hands before anyone else gets there.
+          </p>
+          <div class="cta-row" style="justify-content:center; margin-top:20px;">
+            <a href="/signup" class="btn btn-primary">
+              Start 7-day free trial
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+          <p style="font-size:12.5px; color:var(--text-3); margin-top:10px;">No credit card required</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-left">
+          <Logo />
+        </div>
+        <nav class="footer-center" aria-label="Footer">
+          <a href="#pricing">pricing</a>
+          <a href="/signup">sign in</a>
+          <a href="/signup">start free trial</a>
+        </nav>
+        <div class="footer-right caption">
+          powered by <a href="https://gonextlevel.ai" style="color:var(--text-2);">Go Next Level</a>
+        </div>
+      </div>
+      <div class="container footer-bottom">
+        <p>© 2025 Real Estate Intent · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></p>
+      </div>
+    </footer>
   </main>
 </BaseLayout>
+
+<style>
+  .section { padding: 96px 0; position: relative; }
+  .section-tight { padding: 48px 0; }
+
+  @media (max-width: 768px) {
+    .section { padding: 64px 0; }
+  }
+
+  .section-head {
+    max-width: 720px;
+    margin-bottom: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    padding: 72px 0 96px;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: var(--brand-bg);
+    border: 1px solid var(--brand-border);
+    color: var(--brand);
+  }
+
+  .hero-h1 {
+    font-size: clamp(36px, 5.6vw, 56px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    max-width: 900px;
+    margin-top: 20px;
+  }
+
+  .hero-h1 em { font-style: normal; }
+
+  .hero-lead {
+    max-width: 640px;
+    margin-top: 20px;
+  }
+
+  .hero-visual {
+    width: 100%;
+    margin-top: 56px;
+  }
+
+  @media (max-width: 768px) {
+    .hero { padding: 48px 0 72px; }
+    .hero-visual { margin-top: 40px; }
+  }
+
+  /* STATS */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  @media (max-width: 900px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 440px) { .stat-grid { grid-template-columns: 1fr; } }
+
+  .stat-card .card-inner { padding: 20px; }
+
+  /* STEPS */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  @media (max-width: 900px) { .steps-grid { grid-template-columns: 1fr; } }
+
+  .step-num {
+    color: var(--text-4);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+  }
+
+  .step-title {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin-bottom: 10px;
+  }
+
+  .step-body { font-size: 14px; line-height: 1.55; color: var(--text-2); }
+
+  /* CATEGORIES */
+  .cat-page-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  @media (max-width: 720px) { .cat-page-grid { grid-template-columns: 1fr; } }
+
+  .cat-title {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+
+  .cat-body { font-size: 14px; line-height: 1.55; color: var(--text-2); }
+
+  .cat-bar {
+    width: 48px; height: 4px;
+    border-radius: 999px;
+    display: block;
+    background: var(--surface-3);
+    overflow: hidden;
+  }
+  .cat-bar span {
+    display: block;
+    width: 60%; height: 100%;
+    border-radius: 999px;
+    transition: width 800ms cubic-bezier(0.22,1,0.36,1);
+  }
+  .category-card:hover .cat-bar span { width: 100%; }
+
+  .cat-volume {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .cat-volume-num { font-size: 12.5px; color: var(--text-2); }
+
+  /* FEATURES */
+  .feat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 900px) { .feat-grid { grid-template-columns: 1fr; } }
+
+  .feat-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: var(--brand-bg);
+    border: 1px solid var(--brand-border);
+    color: var(--brand);
+    display: grid; place-items: center;
+    margin-bottom: 14px;
+  }
+
+  .feat-title {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin-bottom: 8px;
+  }
+
+  .feat-body { font-size: 14px; line-height: 1.55; color: var(--text-2); }
+
+  /* PRICING */
+  .plan-badge {
+    position: absolute;
+    top: 16px; right: 16px;
+    padding: 4px 8px;
+    background: var(--brand-bg);
+    border: 1px solid var(--brand-border);
+    border-radius: 999px;
+  }
+
+  .plan-card { position: relative; }
+
+  .plan-name {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--text);
+  }
+
+  .plan-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    padding: 14px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .plan-meta {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-top: 4px;
+    letter-spacing: -0.01em;
+  }
+
+  .enterprise-card {
+    margin-top: 24px;
+    padding: 22px 24px;
+    background:
+      linear-gradient(180deg, rgba(167, 139, 250, 0.06), transparent),
+      var(--surface-2);
+    border: 1px solid var(--brand-border);
+    border-radius: var(--r-xl);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .enterprise-left { flex: 1; min-width: 260px; }
+
+  .enterprise-title {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin: 8px 0 4px;
+  }
+
+  .enterprise-body { color: var(--text-2); font-size: 14px; }
+
+  /* BILLING */
+  .billing-card {
+    background:
+      linear-gradient(135deg, rgba(167, 139, 250, 0.08), rgba(125, 211, 252, 0.04)),
+      var(--surface-2);
+    border: 1px solid var(--brand-border);
+    border-radius: var(--r-xl);
+    padding: 28px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .billing-icon {
+    width: 44px; height: 44px;
+    border-radius: var(--r);
+    display: grid; place-items: center;
+    background: var(--brand-bg);
+    color: var(--brand);
+    flex: none;
+  }
+
+  .billing-title {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+
+  .billing-body { color: var(--text-2); font-size: 14.5px; line-height: 1.55; max-width: 760px; }
+
+  @media (max-width: 600px) {
+    .billing-card { flex-direction: column; gap: 14px; }
+  }
+
+  /* FINAL CTA */
+  .section-cta { position: relative; overflow: hidden; padding: 96px 0 120px; }
+
+  .cta-glow {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(50% 50% at 50% 50%, rgba(167, 139, 250, 0.14), transparent 70%),
+      radial-gradient(40% 40% at 70% 50%, rgba(125, 211, 252, 0.10), transparent 70%);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .cta-box {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .cta-h2 {
+    font-size: clamp(30px, 4.4vw, 44px);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    max-width: 700px;
+  }
+
+  .cta-h2 em { font-style: normal; }
+
+  /* FOOTER */
+  .site-footer {
+    background: var(--surface-1);
+    border-top: 1px solid var(--border);
+    padding: 32px 0 24px;
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .footer-center {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-size: 13px;
+  }
+
+  .footer-center a {
+    color: var(--text-2);
+    transition: color 180ms ease;
+  }
+
+  .footer-center a:hover { color: var(--text); }
+
+  .footer-right a { transition: color 180ms ease; }
+  .footer-right a:hover { color: var(--text) !important; }
+
+  .footer-bottom {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-3);
+  }
+
+  .footer-bottom a {
+    color: var(--text-3);
+    transition: color 180ms ease;
+  }
+  .footer-bottom a:hover { color: var(--text-2); }
+
+  @media (max-width: 640px) {
+    .footer-inner { flex-direction: column; align-items: flex-start; gap: 16px; }
+  }
+</style>
+
+<script>
+  // Scroll reveal — respecting prefers-reduced-motion
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reveals = document.querySelectorAll<HTMLElement>(".reveal");
+
+  if (prefersReduced) {
+    reveals.forEach((el) => el.classList.add("is-in"));
+  } else if ("IntersectionObserver" in window) {
+    // Hero stagger
+    const hero = document.querySelector(".hero");
+    const heroReveals = hero ? Array.from(hero.querySelectorAll<HTMLElement>(".reveal")) : [];
+    heroReveals.forEach((el, i) => {
+      el.style.transitionDelay = `${i * 60}ms`;
+      requestAnimationFrame(() => el.classList.add("is-in"));
+    });
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement;
+            el.classList.add("is-in");
+            io.unobserve(el);
+          }
+        }
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -60px 0px" }
+    );
+
+    reveals.forEach((el) => {
+      if (hero && hero.contains(el)) return;
+      io.observe(el);
+    });
+
+    // Stat counters
+    const statEls = document.querySelectorAll<HTMLElement>("[data-count-to]");
+    const statObs = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const el = entry.target as HTMLElement;
+          const target = el.dataset.countTo || "";
+          animateCounter(el, target);
+          statObs.unobserve(el);
+        }
+      },
+      { threshold: 0.4 }
+    );
+    statEls.forEach((el) => statObs.observe(el));
+
+    function animateCounter(el: HTMLElement, final: string) {
+      const numericMatch = final.match(/[\d.]+/);
+      if (!numericMatch) return;
+      const raw = parseFloat(numericMatch[0]);
+      const prefix = final.slice(0, final.indexOf(numericMatch[0]));
+      const suffix = final.slice(final.indexOf(numericMatch[0]) + numericMatch[0].length);
+      const duration = 1100;
+      const start = performance.now();
+      const ease = (t: number) => 1 - Math.pow(1 - t, 3);
+      const step = (now: number) => {
+        const t = Math.min(1, (now - start) / duration);
+        const v = raw * ease(t);
+        const display = final.includes(".")
+          ? v.toFixed(1)
+          : Math.round(v).toString();
+        el.textContent = `${prefix}${display}${suffix}`;
+        if (t < 1) requestAnimationFrame(step);
+        else el.textContent = final;
+      };
+      requestAnimationFrame(step);
+    }
+  } else {
+    reveals.forEach((el) => el.classList.add("is-in"));
+  }
+</script>

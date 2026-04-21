@@ -1,0 +1,314 @@
+---
+const categories = [
+  { accent: "distress", tag: "DISTRESS", color: "#F87171", contacts: "2,481", city: "Phoenix, AZ", delta: "+18.4%", note: "pre-foreclosure + loan-mod" },
+  { accent: "seller",   tag: "SELLER",   color: "#FBBF24", contacts: "3,927", city: "Austin, TX",    delta: "+6.1%",  note: "value lookups + agent research" },
+  { accent: "buyer",    tag: "BUYER",    color: "#4ADE80", contacts: "5,142", city: "Tampa, FL",     delta: "+12.8%", note: "listing saves + open-house RSVP" },
+  { accent: "mortgage", tag: "MORTGAGE", color: "#A78BFA", contacts: "1,864", city: "Raleigh, NC",   delta: "+4.3%",  note: "rate compare + refi tools" },
+];
+---
+<div class="hero-mockup" aria-hidden="true">
+  <div class="mockup-shell">
+    <div class="mockup-topbar">
+      <div class="dots">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="mockup-address">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6l8-4z" stroke="currentColor" stroke-width="1.6"/></svg>
+        app.realestateintent.com / build
+      </div>
+      <div class="chip chip-live" style="height:22px; padding: 2px 8px; font-size:10px;">
+        <span class="pulse-dot"></span>
+        live · 1,247 signals/min
+      </div>
+    </div>
+
+    <div class="mockup-body">
+      <div class="mockup-sidebar">
+        <div class="caption" style="margin-bottom:10px;">BUILD</div>
+        <div class="sidebar-item active">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1" stroke="currentColor" stroke-width="1.6"/></svg>
+          intent
+        </div>
+        <div class="sidebar-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 7h18M3 12h18M3 17h18" stroke="currentColor" stroke-width="1.6"/></svg>
+          lists
+        </div>
+        <div class="sidebar-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 4h16v6H4zM4 14h16v6H4z" stroke="currentColor" stroke-width="1.6"/></svg>
+          exports
+        </div>
+        <div class="sidebar-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2v20M2 12h20" stroke="currentColor" stroke-width="1.6"/></svg>
+          billing
+        </div>
+
+        <div style="margin-top:16px; border-top:1px solid var(--border); padding-top:14px;">
+          <div class="caption">FILTERS</div>
+          <div class="filter-row"><span class="dot-accent" style="background:#F87171"></span> distress</div>
+          <div class="filter-row"><span class="dot-accent" style="background:#FBBF24"></span> seller</div>
+          <div class="filter-row"><span class="dot-accent" style="background:#4ADE80"></span> buyer</div>
+          <div class="filter-row"><span class="dot-accent" style="background:#A78BFA"></span> mortgage</div>
+        </div>
+      </div>
+
+      <div class="mockup-main">
+        <div class="mockup-header">
+          <div>
+            <div class="caption" style="margin-bottom:4px;">LIVE INTENT</div>
+            <div style="font-size:14px; font-weight:600;">This week · Top markets</div>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <div class="pill"><span class="mono">7d</span></div>
+            <div class="pill active"><span class="mono">30d</span></div>
+            <div class="pill"><span class="mono">90d</span></div>
+          </div>
+        </div>
+
+        <div class="cat-grid">
+          {categories.map((c, i) => (
+            <div class="cat-cell" style={`--accent:${c.color}; animation-delay:${i * 80}ms`}>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span class={`tag tag-${c.accent}`}>{c.tag}</span>
+                <span class="mono" style={`color:${c.color}; font-size:11px;`}>{c.delta}</span>
+              </div>
+              <div class="mono cat-count">{c.contacts}</div>
+              <div style="font-size:11px; color:var(--text-3); line-height:1.4;">{c.city}<br/>{c.note}</div>
+              <div class="sparkline">
+                <svg viewBox="0 0 100 24" preserveAspectRatio="none" width="100%" height="24">
+                  <path d={`M0 ${16 + i * 2} Q 20 ${6 + i}, 40 ${12 - i}, 60 ${8 + i*1.5}, 80 ${4 + i}, 100 ${2 + i*0.5}`} stroke={c.color} stroke-width="1.4" fill="none" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="mockup-table">
+          <div class="table-head">
+            <span>Recent verified contacts</span>
+            <span class="mono" style="color:var(--text-3);">12,341 total · 284 net-new today</span>
+          </div>
+          <div class="table-row">
+            <span class="tag tag-distress">DISTRESS</span>
+            <span>M. Alvarez</span>
+            <span class="mono table-dim">Phoenix, AZ · 85032</span>
+            <span class="mono" style="color:var(--success);">verified</span>
+          </div>
+          <div class="table-row">
+            <span class="tag tag-buyer">BUYER</span>
+            <span>J. Chen</span>
+            <span class="mono table-dim">Austin, TX · 78704</span>
+            <span class="mono" style="color:var(--success);">verified</span>
+          </div>
+          <div class="table-row">
+            <span class="tag tag-seller">SELLER</span>
+            <span>R. Okafor</span>
+            <span class="mono table-dim">Tampa, FL · 33606</span>
+            <span class="mono" style="color:var(--success);">verified</span>
+          </div>
+          <div class="table-row">
+            <span class="tag tag-mortgage">MORTGAGE</span>
+            <span>S. Patel</span>
+            <span class="mono table-dim">Raleigh, NC · 27603</span>
+            <span class="mono" style="color:var(--success);">verified</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mockup-glow" aria-hidden="true"></div>
+</div>
+
+<style>
+  .hero-mockup {
+    position: relative;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .mockup-glow {
+    position: absolute;
+    inset: -40px -40px 0 -40px;
+    background:
+      radial-gradient(60% 40% at 50% 0%, rgba(167,139,250,0.22), transparent 70%),
+      radial-gradient(40% 30% at 80% 20%, rgba(125,211,252,0.18), transparent 70%);
+    z-index: -1;
+    filter: blur(24px);
+    pointer-events: none;
+  }
+
+  .mockup-shell {
+    background: var(--surface-1);
+    border: 1px solid var(--border-strong);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.04) inset,
+      0 20px 60px rgba(0,0,0,0.55),
+      0 4px 14px rgba(0,0,0,0.3);
+  }
+
+  .mockup-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 14px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .dots { display: flex; gap: 6px; }
+  .dots span {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--surface-4);
+  }
+  .dots span:first-child { background: rgba(248,113,113,0.7); }
+  .dots span:nth-child(2) { background: rgba(251,191,36,0.7); }
+  .dots span:last-child   { background: rgba(74,222,128,0.7); }
+
+  .mockup-address {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-3);
+    background: var(--surface-3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 10px;
+    justify-content: center;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .mockup-body {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    min-height: 420px;
+  }
+
+  .mockup-sidebar {
+    padding: 14px;
+    border-right: 1px solid var(--border);
+    background: var(--surface-1);
+    font-size: 12.5px;
+  }
+
+  .sidebar-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 8px; border-radius: 6px;
+    color: var(--text-2);
+    cursor: default;
+  }
+
+  .sidebar-item.active {
+    background: var(--surface-3);
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+  }
+
+  .filter-row {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 8px;
+    color: var(--text-2);
+    font-size: 12px;
+  }
+
+  .dot-accent {
+    width: 8px; height: 8px; border-radius: 50%;
+    flex: none;
+  }
+
+  .mockup-main {
+    padding: 16px 18px 18px;
+    display: flex; flex-direction: column; gap: 14px;
+    min-width: 0;
+  }
+
+  .mockup-header {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+
+  .pill {
+    padding: 4px 10px;
+    font-size: 11px;
+    font-family: var(--mono);
+    border-radius: 6px;
+    color: var(--text-3);
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+  }
+
+  .pill.active {
+    color: var(--text);
+    background: var(--surface-3);
+    border-color: var(--border-strong);
+  }
+
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .cat-cell {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--accent);
+    border-radius: 8px;
+    padding: 10px 12px;
+    display: flex; flex-direction: column; gap: 6px;
+    min-width: 0;
+  }
+
+  .cat-count {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .sparkline { margin-top: 2px; opacity: 0.85; }
+
+  .mockup-table {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .table-head {
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--text-2);
+    background: var(--surface-3);
+    border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .table-row {
+    display: grid;
+    grid-template-columns: 90px 1fr 1.4fr 70px;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 14px;
+    font-size: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .table-row:last-child { border-bottom: 0; }
+  .table-dim { color: var(--text-3); }
+
+  @media (max-width: 720px) {
+    .mockup-body { grid-template-columns: 1fr; min-height: auto; }
+    .mockup-sidebar { display: none; }
+    .cat-grid { grid-template-columns: repeat(2, 1fr); }
+    .table-row { grid-template-columns: 70px 1fr 60px; }
+    .table-row > :nth-child(3) { display: none; }
+  }
+</style>

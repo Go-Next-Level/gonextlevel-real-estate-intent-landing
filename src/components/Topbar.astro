@@ -1,0 +1,35 @@
+---
+import Logo from "./Logo.astro";
+---
+<header class="topbar">
+  <div class="container topbar-inner">
+    <div class="topbar-logo"><Logo /></div>
+    <div class="topbar-logo-sm"><Logo showWordmark={false} /></div>
+    <nav aria-label="Primary" class="topbar-nav">
+      <a href="#pricing" class="btn btn-ghost hide-sm">pricing</a>
+      <a href="/signup" class="btn btn-secondary">sign in</a>
+      <a href="/signup" class="btn btn-primary">
+        Start free trial
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .topbar-inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .topbar-nav { display: flex; align-items: center; gap: 8px; }
+  .topbar-logo-sm { display: none; }
+  .hide-sm { display: inline-flex; }
+  @media (max-width: 560px) {
+    .hide-sm { display: none; }
+    .topbar-logo { display: none; }
+    .topbar-logo-sm { display: inline-flex; }
+  }
+</style>
