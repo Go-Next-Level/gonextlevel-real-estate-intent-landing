@@ -36,13 +36,15 @@ Search for `REPLACE` across the project — every instance needs updating:
 | `public/site.webmanifest` | Business name, description, theme color |
 | `public/favicon.svg` | Branded SVG favicon |
 
-## Build Workflow (3 Phases)
+## Full Skill Workflow
 
 ### Phase 1 — Foundation (run BEFORE writing any code)
-1. `/frontend-design` — bold aesthetic direction, NOT generic AI defaults
-2. `/ui-ux-pro-max` — complete design system: font pairing, hex palette, spacing
-3. `/taste-skill` — senior UI/UX standards, overrides default LLM biases
-4. `/emil-design-eng` — animation philosophy, interaction details, component polish
+1. `/output-skill` — **run this first** — prevents code truncation, enforces complete file output
+2. `/frontend-design` — bold aesthetic direction, NOT generic AI defaults
+3. `/ui-ux-pro-max` — complete design system: font pairing, hex palette, spacing scale
+4. `/taste-skill` — senior UI/UX standards, overrides default LLM design biases
+5. `/emil-design-eng` — animation philosophy, interaction details, component polish
+6. `/shape` — plan UX structure and page hierarchy before writing any code
 
 ### Phase 2 — Build
 - Check **21st.dev Magic** (`/ui`) for every major section before building from scratch
@@ -53,9 +55,14 @@ Search for `REPLACE` across the project — every instance needs updating:
 - Web3Forms for all contact forms
 
 ### Phase 3 — Refinement
-Run the tier-specific skills from the client prompt, then always close with:
-- `/polish` — alignment, spacing, consistency, micro-details
-- `/audit` — accessibility, performance, responsive, SEO
+First run the tier-specific skills from the client prompt, then run these in order:
+1. `/delight` — personality, micro-moments, memorable touches
+2. `/clarify` — UX copy, headlines, CTAs, labels, microcopy
+3. `/harden` — edge cases, error states, empty states, overflow
+4. `/optimize` — performance, images, bundle, Core Web Vitals
+5. `/critique` — UX design review pass
+6. `/polish` — final alignment, spacing, consistency
+7. `/audit` — full technical quality check
 
 ## Deploy
 ```bash
