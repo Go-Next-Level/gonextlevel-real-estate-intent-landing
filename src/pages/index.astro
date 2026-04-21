@@ -3,11 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Topbar from '../components/Topbar.astro';
 import Logo from '../components/Logo.astro';
 import ParticleField from '../components/ParticleField.astro';
-import SignalTicker from '../components/SignalTicker.astro';
 
 const businessName = "Real Estate Intent";
 const tagline = "Behavioral Audience Intelligence for Real Estate";
-const description = "Identify buyers, sellers, and distressed homeowners who are actively showing intent — before they hit Zillow. 60B+ behavioral signals weekly. 7-day free trial.";
+const description = "See the buyers, sellers, and distressed homeowners who are already showing intent — before they ever hit Zillow. 7-day free trial.";
 const siteUrl = (Astro.site ?? Astro.url.origin).toString();
 
 const structuredData = {
@@ -38,52 +37,27 @@ const structuredData = {
 const behaviors = [
   {
     accent: "distress", title: "Distress",
-    desc: "Actively engaging with pre-foreclosure content, loan modification, and financial hardship resources.",
-    stat: "820", unit: "avg contacts / market / mo",
-    spark: "M 0 28 L 10 24 L 18 26 L 28 18 L 38 22 L 48 14 L 58 18 L 68 10 L 80 14 L 92 6 L 100 8",
+    desc: "Homeowners engaging with pre-foreclosure content, loan modification tools, and financial hardship resources.",
   },
   {
     accent: "seller", title: "Seller",
-    desc: "Browsing listing platforms, researching home values, comparing agent reviews.",
-    stat: "1,340", unit: "avg contacts / market / mo",
-    spark: "M 0 24 L 12 20 L 22 22 L 32 16 L 44 18 L 54 12 L 64 14 L 74 8 L 86 10 L 100 4",
+    desc: "People browsing listing platforms, researching home values, and comparing agent reviews in your market.",
   },
   {
     accent: "buyer", title: "Buyer",
-    desc: "Saving listings, attending virtual open houses, researching neighborhoods.",
-    stat: "2,180", unit: "avg contacts / market / mo",
-    spark: "M 0 26 L 10 18 L 22 22 L 32 14 L 42 16 L 54 8 L 64 12 L 76 6 L 88 10 L 100 4",
+    desc: "Prospects saving listings, attending virtual open houses, and researching neighborhoods they want to move to.",
   },
   {
     accent: "mortgage", title: "Mortgage",
-    desc: "Running affordability calculators, comparing lenders, engaging with refinance tools.",
-    stat: "910", unit: "avg contacts / market / mo",
-    spark: "M 0 22 L 12 24 L 22 18 L 34 20 L 44 14 L 56 16 L 66 10 L 78 12 L 90 6 L 100 10",
+    desc: "Households running affordability calculators, comparing lenders, and engaging with refinance tools.",
   },
 ];
 
 const steps = [
-  { n: "01", title: "Monitor", body: "60B+ real behaviors scanned weekly. Never sampled, never modeled." },
-  { n: "02", title: "Filter",  body: "Category. Market. Recency. Export-ready in under a minute." },
-  { n: "03", title: "Export",  body: "CSV or direct CRM push. Refresh weekly, only pay for net-new." },
+  { n: "01", title: "Monitor", body: "We watch real behavioral signals across the open web — the kind that actually precede a move." },
+  { n: "02", title: "Filter",  body: "Narrow by intent category, market, and recency until the list matches the deals you want to close." },
+  { n: "03", title: "Export",  body: "Push to your CRM or download a CSV. Refreshes weekly — you only pay for net-new contacts." },
 ];
-
-const exportCats = [
-  { cat: "distress", color: "#F87171" },
-  { cat: "buyer",    color: "#4ADE80" },
-  { cat: "seller",   color: "#FBBF24" },
-  { cat: "mortgage", color: "#A78BFA" },
-  { cat: "buyer",    color: "#4ADE80" },
-  { cat: "seller",   color: "#FBBF24" },
-  { cat: "distress", color: "#F87171" },
-  { cat: "buyer",    color: "#4ADE80" },
-];
-const exportRows = exportCats.map((r, i) => ({
-  cat: r.cat.toUpperCase(),
-  color: r.color,
-  y: 90 + i * 28,
-  id: String(9142 + i).padStart(5, "0"),
-}));
 
 const plans = [
   { name: "Starter", price: "$1,000", contacts: "1,000", seats: "1", featured: false,
@@ -100,10 +74,6 @@ const plans = [
   description={description}
   structuredData={structuredData}
 >
-  <!-- Custom cursor -->
-  <div class="cursor-ring" aria-hidden="true"></div>
-  <div class="cursor-dot" aria-hidden="true"></div>
-
   <Topbar />
 
   <main>
@@ -124,27 +94,18 @@ const plans = [
         </h1>
 
         <p class="lead hero-lead" data-reveal>
-          We monitor 60B+ weekly behavioral signals and turn them into verified, contactable leads — sliced by intent category and market.
+          See the buyers, sellers, and distressed homeowners already showing intent — sliced by category and market, refreshed every week.
         </p>
 
         <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;" data-reveal>
-          <span class="chip chip-live">
-            <span class="pulse-dot"></span>
-            live · 1,247 signals/min
-          </span>
-        </div>
-
-        <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;" data-reveal>
-          <a href="/signup" class="btn btn-primary" data-magnetic>
+          <a href="/signup" class="btn btn-primary">
             Start 7-day free trial
             <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
-          <a href="/signup" class="btn btn-secondary">Sign in</a>
+          <a href="#pricing" class="btn btn-ghost">See pricing</a>
         </div>
       </div>
     </section>
-
-    <SignalTicker />
 
     <!-- 2. FOUR BEHAVIORS -->
     <section class="section" id="behaviors">
@@ -159,115 +120,36 @@ const plans = [
         <div class="behaviors-grid">
           {behaviors.map((b) => (
             <article class="behavior-card" data-accent={b.accent} data-reveal>
-              <div class="behavior-top">
-                <span class={`tag tag-${b.accent}`}>{b.title}</span>
-                <span class="caption" style={`color:var(--${b.accent});`}>
-                  <span class="pulse-dot" style={`background:var(--${b.accent}); box-shadow:0 0 8px var(--${b.accent}); width:6px; height:6px;`}></span>
-                </span>
-              </div>
-              <div class="behavior-body">
-                <h3 class="behavior-title">{b.title}</h3>
-                <p class="behavior-desc">{b.desc}</p>
-              </div>
-              <div class="behavior-foot">
-                <div class="behavior-stat">
-                  <strong class="mono" data-count-to={b.stat}>{b.stat}</strong>
-                  <span style="color:var(--text-3); display:block; font-size:11px; letter-spacing:0.04em; text-transform:uppercase; margin-top:2px;">{b.unit}</span>
-                </div>
-                <svg class="sparkline" viewBox="0 0 100 36" preserveAspectRatio="none">
-                  <path d={b.spark} />
-                </svg>
-              </div>
+              <span class="behavior-accent">
+                <span class="accent-dot"></span>
+                {b.title}
+              </span>
+              <h3 class="behavior-title">{b.title}</h3>
+              <p class="behavior-desc">{b.desc}</p>
             </article>
           ))}
         </div>
       </div>
     </section>
 
-    <!-- 3. HOW IT WORKS (pinned) -->
-    <section class="how" id="how">
-      <div class="how-pin" data-pin>
-        <div class="container">
-          <div class="section-head" style="margin-bottom:40px;" data-reveal>
-            <span class="eyebrow">How it works</span>
-            <h2 class="section-title">
-              From signal to verified contact in <em class="gradient-text">60 seconds</em>.
-            </h2>
-          </div>
+    <!-- 3. HOW IT WORKS -->
+    <section class="section" id="how">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow" data-reveal>How it works</span>
+          <h2 class="section-title" data-reveal>
+            From signal to <em class="gradient-text">verified contact</em>.
+          </h2>
+        </div>
 
-          <div class="how-grid">
-            <div class="how-stage" data-reveal>
-              <div class="how-stage-inner">
-                <!-- Panel 1: Monitor -->
-                <div class="stage-panel is-active" data-panel="0">
-                  <svg width="100%" height="100%" viewBox="0 0 360 360" preserveAspectRatio="xMidYMid meet">
-                    <defs>
-                      <radialGradient id="mg" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="rgba(167,139,250,0.22)"/><stop offset="1" stop-color="rgba(167,139,250,0)"/></radialGradient>
-                    </defs>
-                    <rect x="0" y="0" width="360" height="360" fill="url(#mg)"/>
-                    <g class="mon-particles">
-                      {[...Array(40)].map((_, i) => {
-                        const cx = 20 + (i * 37) % 320;
-                        const cy = 20 + ((i * 53) % 320);
-                        const r = 1 + (i % 3);
-                        const colors = ["#F87171","#FBBF24","#4ADE80","#A78BFA","#7DD3FC"];
-                        return <circle cx={cx} cy={cy} r={r} fill={colors[i % 5]} opacity="0.7" />;
-                      })}
-                    </g>
-                    <g stroke="rgba(255,255,255,0.08)" stroke-width="1">
-                      <line x1="0" y1="180" x2="360" y2="180" />
-                      <line x1="180" y1="0" x2="180" y2="360" />
-                    </g>
-                  </svg>
-                </div>
-                <!-- Panel 2: Filter (funnel) -->
-                <div class="stage-panel" data-panel="1">
-                  <svg width="100%" height="100%" viewBox="0 0 360 360" preserveAspectRatio="xMidYMid meet">
-                    <g class="filter-bars">
-                      <rect x="40"  y="60"  width="280" height="44" rx="8" fill="rgba(167,139,250,0.15)" stroke="rgba(167,139,250,0.35)" />
-                      <rect x="80"  y="130" width="200" height="44" rx="8" fill="rgba(125,211,252,0.15)" stroke="rgba(125,211,252,0.35)" />
-                      <rect x="120" y="200" width="120" height="44" rx="8" fill="rgba(74,222,128,0.18)"  stroke="rgba(74,222,128,0.45)" />
-                      <rect x="150" y="270" width="60"  height="44" rx="8" fill="rgba(251,191,36,0.22)"  stroke="rgba(251,191,36,0.5)" />
-                    </g>
-                    <g font-family="JetBrains Mono" font-size="11" fill="rgba(255,255,255,0.55)">
-                      <text x="56" y="87">CATEGORY · 12,482 signals</text>
-                      <text x="96" y="157">MARKET · 4,921 signals</text>
-                      <text x="136" y="227">RECENCY · 1,204 signals</text>
-                      <text x="160" y="297" fill="#FBBF24">284 net-new</text>
-                    </g>
-                  </svg>
-                </div>
-                <!-- Panel 3: Export -->
-                <div class="stage-panel" data-panel="2">
-                  <svg width="100%" height="100%" viewBox="0 0 360 360" preserveAspectRatio="xMidYMid meet">
-                    <rect x="40" y="40" width="280" height="280" rx="10" fill="rgba(23,23,26,0.8)" stroke="rgba(255,255,255,0.08)"/>
-                    <rect x="40" y="40" width="280" height="30" fill="rgba(30,30,34,0.9)"/>
-                    <text x="54" y="60" font-family="JetBrains Mono" font-size="10" fill="rgba(255,255,255,0.55)" letter-spacing="1">list-2026-04-21.csv</text>
-                    {exportRows.map((row) => (
-                      <g>
-                        <rect x="50" y={row.y} width="56" height="16" rx="8" fill={`${row.color}22`} stroke={`${row.color}55`}/>
-                        <text x="58" y={row.y + 11} font-family="JetBrains Mono" font-size="8" fill={row.color} letter-spacing="1">{row.cat}</text>
-                        <text x="118" y={row.y + 11} font-family="JetBrains Mono" font-size="10" fill="rgba(255,255,255,0.82)">contact_{row.id}</text>
-                        <text x="240" y={row.y + 11} font-family="JetBrains Mono" font-size="10" fill="#4ADE80">verified</text>
-                      </g>
-                    ))}
-                  </svg>
-                </div>
-              </div>
+        <div class="how-grid">
+          {steps.map((s) => (
+            <div class="how-step" data-reveal>
+              <span class="how-num mono">{s.n}</span>
+              <h3 class="how-title">{s.title}</h3>
+              <p class="how-body">{s.body}</p>
             </div>
-
-            <div class="how-steps" data-how-steps>
-              {steps.map((s, i) => (
-                <div class={`how-step ${i === 0 ? "is-active" : ""}`} data-step={i}>
-                  <div class="how-step-head">
-                    <span class="how-step-num mono">{s.n}</span>
-                    <span class="how-step-title">{s.title}</span>
-                  </div>
-                  <p class="how-step-body">{s.body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
@@ -293,18 +175,19 @@ const plans = [
                 </div>
               </div>
 
-              <div class="plan-meta-row">
-                <div>
-                  <div class="plan-meta-label">Contacts</div>
-                  <div class="plan-meta-value">{p.contacts}<span> / mo</span></div>
-                </div>
-                <div>
-                  <div class="plan-meta-label">Seats</div>
-                  <div class="plan-meta-value">{p.seats}</div>
-                </div>
-              </div>
-
               <ul class="plan-features">
+                <li>
+                  <span class="plan-check">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  {p.contacts} contacts / mo
+                </li>
+                <li>
+                  <span class="plan-check">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  {p.seats} {p.seats === "1" ? "seat" : "seats"}
+                </li>
                 {p.features.map((f) => (
                   <li>
                     <span class="plan-check">
@@ -315,7 +198,7 @@ const plans = [
                 ))}
               </ul>
 
-              <a href="/signup" class={p.featured ? "btn btn-primary" : "btn btn-secondary"} style="width:100%;" data-magnetic={p.featured ? "true" : null}>
+              <a href="/signup" class={p.featured ? "btn btn-primary" : "btn btn-secondary"} style="width:100%;">
                 Start free trial
                 <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </a>
@@ -345,7 +228,7 @@ const plans = [
             The signal is already there. <em data-reveal-em>You just need to see it.</em>
           </h2>
           <div style="display:flex; justify-content:center; margin-top:8px;">
-            <a href="/signup" class="btn btn-primary" data-magnetic>
+            <a href="/signup" class="btn btn-primary">
               Start 7-day free trial
               <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
@@ -374,13 +257,12 @@ const plans = [
     </footer>
   </main>
 
-  <!-- GSAP CDN -->
+  <!-- GSAP CDN — used only for the CTA gradient reveal -->
   <script is:inline src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script is:inline src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 
   <script>
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const isTouch = window.matchMedia("(hover: none), (pointer: coarse)").matches;
 
     // @ts-ignore
     const gsap = (window as any).gsap;
@@ -404,7 +286,6 @@ const plans = [
       (el) => !(hero && hero.contains(el))
     );
 
-    // Hero stagger
     heroReveals.forEach((el) => el.classList.add("reveal"));
     otherReveals.forEach((el) => el.classList.add("reveal"));
 
@@ -412,7 +293,7 @@ const plans = [
       document.querySelectorAll<HTMLElement>(".reveal").forEach((el) => el.classList.add("is-in"));
     } else {
       heroReveals.forEach((el, i) => {
-        (el as HTMLElement).style.transitionDelay = `${i * 80 + 80}ms`;
+        (el as HTMLElement).style.transitionDelay = `${i * 90 + 100}ms`;
         requestAnimationFrame(() => el.classList.add("is-in"));
       });
 
@@ -429,113 +310,6 @@ const plans = [
           { threshold: 0.12, rootMargin: "0px 0px -60px 0px" }
         );
         otherReveals.forEach((el) => io.observe(el));
-      }
-    }
-
-    /* ===== Counter animation ===== */
-    if (!prefersReduced && "IntersectionObserver" in window) {
-      const counters = document.querySelectorAll<HTMLElement>("[data-count-to]");
-      const counterIo = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            if (!entry.isIntersecting) continue;
-            const el = entry.target as HTMLElement;
-            const target = el.dataset.countTo || "";
-            const numericMatch = target.match(/[\d,]+/);
-            if (numericMatch) {
-              const clean = parseFloat(numericMatch[0].replace(/,/g, ""));
-              const duration = 1100;
-              const start = performance.now();
-              const ease = (t: number) => 1 - Math.pow(1 - t, 3);
-              const step = (now: number) => {
-                const t = Math.min(1, (now - start) / duration);
-                const v = Math.round(clean * ease(t));
-                el.textContent = v.toLocaleString("en-US");
-                if (t < 1) requestAnimationFrame(step);
-                else el.textContent = target;
-              };
-              requestAnimationFrame(step);
-            }
-            counterIo.unobserve(el);
-          }
-        },
-        { threshold: 0.4 }
-      );
-      counters.forEach((el) => counterIo.observe(el));
-    }
-
-    /* ===== Custom cursor ===== */
-    if (!isTouch && !prefersReduced) {
-      const dot = document.querySelector<HTMLElement>(".cursor-dot");
-      const ring = document.querySelector<HTMLElement>(".cursor-ring");
-      if (dot && ring) {
-        let dx = 0, dy = 0, rx = 0, ry = 0, mx = 0, my = 0;
-        const setDot = gsap ? gsap.quickTo(dot, "x", { duration: 0.05, ease: "none" }) : null;
-        const setDotY = gsap ? gsap.quickTo(dot, "y", { duration: 0.05, ease: "none" }) : null;
-        const setRing = gsap ? gsap.quickTo(ring, "x", { duration: 0.28, ease: "power3" }) : null;
-        const setRingY = gsap ? gsap.quickTo(ring, "y", { duration: 0.28, ease: "power3" }) : null;
-
-        window.addEventListener("mousemove", (e) => {
-          mx = e.clientX; my = e.clientY;
-          document.body.classList.add("cursor-ready");
-          if (gsap && setDot && setDotY && setRing && setRingY) {
-            setDot(mx); setDotY(my);
-            setRing(mx); setRingY(my);
-          } else {
-            dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
-            ring.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
-          }
-        });
-
-        document.querySelectorAll<HTMLElement>("a, button, [data-magnetic]").forEach((el) => {
-          el.addEventListener("mouseenter", () => document.body.classList.add("cursor-hover"));
-          el.addEventListener("mouseleave", () => document.body.classList.remove("cursor-hover"));
-        });
-      }
-    }
-
-    /* ===== Magnetic buttons ===== */
-    if (!isTouch && !prefersReduced && gsap) {
-      document.querySelectorAll<HTMLElement>("[data-magnetic]").forEach((el) => {
-        const xTo = gsap.quickTo(el, "x", { duration: 0.45, ease: "elastic.out(1, 0.5)" });
-        const yTo = gsap.quickTo(el, "y", { duration: 0.45, ease: "elastic.out(1, 0.5)" });
-        el.addEventListener("mousemove", (e: MouseEvent) => {
-          const r = el.getBoundingClientRect();
-          const cx = r.left + r.width / 2;
-          const cy = r.top + r.height / 2;
-          const dx = (e.clientX - cx) * 0.3;
-          const dy = (e.clientY - cy) * 0.35;
-          xTo(dx); yTo(dy);
-        });
-        el.addEventListener("mouseleave", () => {
-          xTo(0); yTo(0);
-        });
-      });
-    }
-
-    /* ===== How It Works pinned scroll ===== */
-    if (gsap && ScrollTrigger && !prefersReduced && window.matchMedia("(min-width: 900px)").matches) {
-      const howPin = document.querySelector<HTMLElement>(".how-pin");
-      const panels = document.querySelectorAll<HTMLElement>("[data-panel]");
-      const stepEls = document.querySelectorAll<HTMLElement>(".how-step");
-
-      if (howPin && panels.length && stepEls.length) {
-        ScrollTrigger.create({
-          trigger: howPin,
-          start: "top top",
-          end: "+=1800",
-          pin: true,
-          scrub: 0.6,
-          onUpdate: (self: any) => {
-            const p = self.progress;
-            let idx = 0;
-            if (p > 0.66) idx = 2;
-            else if (p > 0.33) idx = 1;
-            else idx = 0;
-            panels.forEach((el, i) => el.classList.toggle("is-active", i === idx));
-            stepEls.forEach((el, i) => el.classList.toggle("is-active", i === idx));
-          },
-        });
       }
     }
 
