@@ -489,24 +489,42 @@ const plans = [
       }
     }
 
-    /* ===== CTA gradient reveal ===== */
+    /* ===== CTA gradient reveal =====
+       Use the .cta section as the trigger so there is enough scroll room
+       for the reveal to complete before the user hits the page bottom. */
     if (gsap && ScrollTrigger && !prefersReduced) {
       const em = document.querySelector<HTMLElement>("[data-reveal-em]");
-      if (em) {
+      const ctaSection = document.querySelector<HTMLElement>(".cta");
+      if (em && ctaSection) {
         ScrollTrigger.create({
-          trigger: em,
-          start: "top 80%",
-          end: "top 30%",
+          trigger: ctaSection,
+          start: "top 85%",
+          end: "bottom bottom",
           scrub: 0.4,
           onUpdate: (self: any) => {
             em.style.setProperty("--reveal", String(self.progress));
           },
-          onLeave: () => em.classList.add("reveal-done"),
+          onLeave: () => {
+            em.style.setProperty("--reveal", "1");
+            em.classList.add("reveal-done");
+          },
         });
+        // Belt-and-braces: if the user is already at the bottom (short viewport
+        // or they jumped via anchor), force-complete the reveal.
+        window.addEventListener("scroll", () => {
+          const atBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 4;
+          if (atBottom) {
+            em.style.setProperty("--reveal", "1");
+            em.classList.add("reveal-done");
+          }
+        }, { passive: true });
       }
     } else {
       const em = document.querySelector<HTMLElement>("[data-reveal-em]");
-      if (em) em.classList.add("reveal-done");
+      if (em) {
+        em.style.setProperty("--reveal", "1");
+        em.classList.add("reveal-done");
+      }
     }
   </script>
 </BaseLayout>
