@@ -5,8 +5,8 @@ import Logo from '../components/Logo.astro';
 import ParticleField from '../components/ParticleField.astro';
 
 const businessName = "Real Estate Intent";
-const tagline = "Behavioral Audience Intelligence for Real Estate";
-const description = "See the buyers, sellers, and distressed homeowners who are already showing intent — before they ever hit Zillow. 7-day free trial.";
+const tagline = "Real online behavior data for real estate";
+const description = "Real online behavior data for buyers, sellers, distressed homeowners, and lenders — refreshed daily, resolved to real contacts, exported wherever you run campaigns. 7-day free trial.";
 const siteUrl = (Astro.site ?? Astro.url.origin).toString();
 
 const structuredData = {
@@ -34,38 +34,82 @@ const structuredData = {
   ]
 };
 
+// Order: Buyer → Seller → Distress → Lenders
 const behaviors = [
   {
-    accent: "distress", title: "Distress",
-    desc: "Homeowners engaging with pre-foreclosure content, loan modification tools, and financial hardship resources.",
+    accent: "buyer", title: "Buyers",
+    desc: "People saving listings, touring virtually, and researching neighborhoods they're actively planning to move into.",
   },
   {
-    accent: "seller", title: "Seller",
-    desc: "People browsing listing platforms, researching home values, and comparing agent reviews in your market.",
+    accent: "seller", title: "Sellers",
+    desc: "Homeowners browsing listing platforms, pulling home valuations, and comparing agent reviews in your market.",
   },
   {
-    accent: "buyer", title: "Buyer",
-    desc: "Prospects saving listings, attending virtual open houses, and researching neighborhoods they want to move to.",
+    accent: "distress", title: "Distressed homeowners",
+    desc: "Owners engaging with pre-foreclosure content, loan-modification tools, and financial-hardship resources.",
   },
   {
-    accent: "mortgage", title: "Mortgage",
+    accent: "lenders", title: "Lenders",
     desc: "Households running affordability calculators, comparing lenders, and engaging with refinance tools.",
+  },
+];
+
+const compareOld = [
+  "Statistical models guessing at likelihood.",
+  '"This segment might be interested soon."',
+  "Refreshed monthly, if that.",
+  "Generic intent score. No evidence.",
+];
+const compareNew = [
+  "Real activity. Actually observed on the open web.",
+  '"This person is researching right now."',
+  "Refreshed daily. No signal older than 24 hours.",
+  "Signal-level evidence attached to each contact.",
+];
+
+const flow = [
+  {
+    accent: "capture", n: "01", title: "Capture",
+    body: "Real activity across the open web — saved listings, mortgage calculators, pre-foreclosure content, agent-review pages.",
+  },
+  {
+    accent: "resolve", n: "02", title: "Resolve",
+    body: "Each signal matched to publicly available contact data. Name, email, phone, address.",
+  },
+  {
+    accent: "refresh", n: "03", title: "Refresh",
+    body: "Source window runs 48 hours to 30 days. Once in our system, nothing is older than 24 hours.",
+  },
+  {
+    accent: "deliver", n: "04", title: "Deliver",
+    body: "Your dashboard, CSV, or direct push to the ad platforms where you already run campaigns.",
   },
 ];
 
 const steps = [
   { n: "01", title: "Monitor", body: "We watch real behavioral signals across the open web — the kind that actually precede a move." },
   { n: "02", title: "Filter",  body: "Narrow by intent category, market, and recency until the list matches the deals you want to close." },
-  { n: "03", title: "Export",  body: "Push to your CRM or download a CSV. Refreshes weekly — you only pay for net-new contacts." },
+  { n: "03", title: "Export",  body: "Push to the channels where you run campaigns or download a CSV. Refreshes daily — you only pay for net-new contacts." },
+];
+
+const exports_ = [
+  { name: "Meta Ads",    kind: "meta" },
+  { name: "TikTok Ads",  kind: "tiktok" },
+  { name: "Google Ads",  kind: "google" },
+  { name: "YouTube Ads", kind: "youtube" },
+  { name: "LinkedIn Ads",kind: "linkedin" },
+  { name: "Pinterest Ads", kind: "pinterest" },
+  { name: "CSV",         kind: "csv" },
+  { name: "Webhook",     kind: "webhook" },
 ];
 
 const plans = [
-  { name: "Starter", price: "$1,000", contacts: "1,000", seats: "1", featured: false,
-    features: ["All four intent categories", "CSV export + CRM push", "Weekly behavioral refresh", "7-day free trial"] },
-  { name: "Growth",  price: "$2,500", contacts: "3,500", seats: "3", featured: true,
+  { name: "Starter", price: "$1,000", contacts: "Up to 5,000", seats: "1", featured: false,
+    features: ["All four intent categories", "CSV export + ad-platform push", "Daily behavioral refresh", "7-day free trial"] },
+  { name: "Growth",  price: "$2,500", contacts: "Up to 25,000", seats: "3", featured: true,
     features: ["Everything in Starter", "Auto-refreshing lists", "Multi-market builds", "Priority support"] },
-  { name: "Scale",   price: "$5,000", contacts: "10,000", seats: "10", featured: false,
-    features: ["Everything in Growth", "Dedicated success manager", "Custom CRM integrations", "Volume pricing"] },
+  { name: "Scale",   price: "$5,000", contacts: "Up to 100,000", seats: "10", featured: false,
+    features: ["Everything in Growth", "Dedicated success manager", "Custom webhook setup", "Volume pricing"] },
 ];
 ---
 
@@ -86,15 +130,15 @@ const plans = [
       <div class="container hero-inner">
         <span class="chip" data-reveal>
           <span style="width:6px;height:6px;border-radius:50%;background:var(--brand);box-shadow:0 0 8px var(--brand);"></span>
-          Audience intelligence for real estate
+          Behavioral intent data for real estate
         </span>
 
         <h1 class="hero-h1" data-reveal>
-          Real behaviors. Real contacts. <em class="gradient-text">Before</em> they hit Zillow.
+          Real online <em class="gradient-text">behavior data</em> for buyers, sellers, distressed homeowners, and lenders.
         </h1>
 
         <p class="lead hero-lead" data-reveal>
-          See the buyers, sellers, and distressed homeowners already showing intent — sliced by category and market, refreshed every week.
+          Not predictions. Actual activity — observed on the open web, resolved to a real contact, refreshed every day.
         </p>
 
         <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;" data-reveal>
@@ -132,13 +176,85 @@ const plans = [
       </div>
     </section>
 
-    <!-- 3. HOW IT WORKS -->
-    <section class="section" id="how">
+    <!-- 3. BEHAVIORAL vs PREDICTIVE -->
+    <section class="section" id="vs" style="padding-top:0;">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow" data-reveal>Behavioral vs predictive</span>
+          <h2 class="section-title" data-reveal>
+            Everyone else sells <em class="gradient-text">guesses</em>. We sell <em class="gradient-text">evidence</em>.
+          </h2>
+          <p class="lead" data-reveal style="max-width:640px;">
+            Predictive platforms score who <em style="font-style:normal; color:var(--text);">might</em> move. We show you who <em style="font-style:normal; color:var(--text);">is</em> moving — and what they were doing when we caught the signal.
+          </p>
+        </div>
+
+        <div class="compare-grid">
+          <div class="compare-col" data-tone="old" data-reveal>
+            <span class="compare-eyebrow">The old way</span>
+            <h3 class="compare-title">Predictive data</h3>
+            <ul class="compare-rows">
+              {compareOld.map((row) => (
+                <li class="compare-row">
+                  <span class="compare-glyph" aria-hidden="true">
+                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2l-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                  </span>
+                  {row}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="compare-col" data-tone="new" data-reveal>
+            <span class="compare-eyebrow">Real Estate Intent</span>
+            <h3 class="compare-title">Behavioral intent data</h3>
+            <ul class="compare-rows">
+              {compareNew.map((row) => (
+                <li class="compare-row">
+                  <span class="compare-glyph" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6.2l2.6 2.6L10 3.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  {row}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. SIGNAL-TO-CONTACT FLOW -->
+    <section class="section" id="flow" style="padding-top:0;">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow" data-reveal>Signal to contact</span>
+          <h2 class="section-title" data-reveal>
+            How the data <em class="gradient-text">gets to you</em>.
+          </h2>
+          <p class="lead" data-reveal style="max-width:640px;">
+            A signal gets captured, resolved to a real person, refreshed, then delivered. No magic. Just a pipeline built for speed.
+          </p>
+        </div>
+
+        <div class="flow-grid">
+          {flow.map((s) => (
+            <div class="flow-step" data-accent={s.accent} data-reveal>
+              <span class="flow-step-num">{s.n} · {s.title}</span>
+              <h3 class="flow-step-title">{s.title}</h3>
+              <p class="flow-step-body">{s.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. HOW IT WORKS -->
+    <section class="section" id="how" style="padding-top:0;">
       <div class="container">
         <div class="section-head">
           <span class="eyebrow" data-reveal>How it works</span>
           <h2 class="section-title" data-reveal>
-            From signal to <em class="gradient-text">verified contact</em>.
+            From raw signal to <em class="gradient-text">verified contact</em>.
           </h2>
         </div>
 
@@ -154,8 +270,61 @@ const plans = [
       </div>
     </section>
 
-    <!-- 4. PRICING -->
-    <section class="section" id="pricing">
+    <!-- 6. EXPORT DESTINATIONS -->
+    <section class="section" id="exports" style="padding-top:0;">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow" data-reveal>Your list, your channels</span>
+          <h2 class="section-title" data-reveal>
+            Take the list <em class="gradient-text">anywhere</em> you run campaigns.
+          </h2>
+          <p class="lead" data-reveal style="max-width:640px;">
+            Export as CSV, or push to any ad platform via custom audience upload. Webhook available for bespoke CRM setups.
+          </p>
+        </div>
+
+        <div class="export-grid">
+          {exports_.map((e) => (
+            <div class="export-tile" data-reveal>
+              <span class="export-glyph" aria-hidden="true">
+                {e.kind === "meta" && (
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M4 20c0-6 3.5-10 8-10 3 0 5 2 7 6 2-4 4-6 7-6 4.5 0 8 4 8 10 0 5-3 8-6.5 8-3 0-5-2-7.5-6-2.5 4-4.5 6-7.5 6C7 28 4 25 4 20z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                )}
+                {e.kind === "tiktok" && (
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M17 3v14.5c0 2.5-2 4.5-4.5 4.5S8 20 8 17.5 10 13 12.5 13c.5 0 1 .1 1.5.3M17 3c.5 3 3 5.5 6 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                )}
+                {e.kind === "google" && (
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="10" stroke="currentColor" stroke-width="1.6"/><path d="M14 8v6l4 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                )}
+                {e.kind === "youtube" && (
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="4" y="8" width="24" height="16" rx="4" stroke="currentColor" stroke-width="1.6"/><path d="M14 13l5 3-5 3v-6z" fill="currentColor"/></svg>
+                )}
+                {e.kind === "linkedin" && (
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="4" width="20" height="20" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M8 12v8M8 9v.01M12 20v-8M12 14c0-1.5 1-2.5 2.5-2.5S17 12.5 17 14v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                )}
+                {e.kind === "pinterest" && (
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="10" stroke="currentColor" stroke-width="1.6"/><path d="M13 9c2.5 0 4 2 4 4.5S15.5 18 13.5 18c-1 0-1.8-.5-2-1.5L10 23" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                )}
+                {e.kind === "csv" && (
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M7 4h10l4 4v16a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M17 4v4h4M9 14h10M9 18h10M9 22h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                )}
+                {e.kind === "webhook" && (
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="1.6"/><circle cx="19" cy="19" r="3" stroke="currentColor" stroke-width="1.6"/><circle cx="8" cy="20" r="3" stroke="currentColor" stroke-width="1.6"/><path d="M12 11l6 6M9 17l-1 1M13 9l4-1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                )}
+              </span>
+              <span class="export-label">{e.name}</span>
+            </div>
+          ))}
+        </div>
+
+        <p class="export-note" data-reveal>
+          Logos represent export destinations. Real Estate Intent is not affiliated with or endorsed by any platform shown.
+        </p>
+      </div>
+    </section>
+
+    <!-- 7. PRICING -->
+    <section class="section" id="pricing" style="padding-top:0;">
       <div class="container">
         <div class="section-head" style="text-align:center; align-items:center; margin-left:auto; margin-right:auto;">
           <span class="eyebrow" data-reveal>Pricing</span>
@@ -206,10 +375,17 @@ const plans = [
           ))}
         </div>
 
+        <div class="price-compare" data-reveal>
+          <div class="price-compare-row">
+            Apollo full contact ~ $1.80 · ZoomInfo intent ~ $2–3 · <strong>Real Estate Intent Growth $0.10</strong>
+          </div>
+          <div class="price-compare-gloss">Same contact. <em>10–30× the math.</em></div>
+        </div>
+
         <div class="enterprise-row" data-reveal>
           <div class="enterprise-row-left">
             <div class="enterprise-title">Multi-market brokerage? Custom volume & integrations.</div>
-            <div class="enterprise-note">Lists refresh weekly — <span>only net-new contacts count against your cap.</span></div>
+            <div class="enterprise-note">Lists refresh daily — <span>only net-new contacts count against your cap.</span></div>
           </div>
           <a href="mailto:sales@realestateintent.com" class="btn btn-secondary">
             Contact sales
@@ -219,7 +395,7 @@ const plans = [
       </div>
     </section>
 
-    <!-- 5. FINAL CTA -->
+    <!-- 8. FINAL CTA -->
     <section class="cta" id="cta">
       <div class="cta-glow"></div>
       <div class="container">
@@ -237,7 +413,7 @@ const plans = [
       </div>
     </section>
 
-    <!-- 6. FOOTER -->
+    <!-- 9. FOOTER -->
     <footer class="footer">
       <div class="container">
         <div class="footer-row">
