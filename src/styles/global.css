@@ -502,6 +502,7 @@ p { margin: 0; }
   gap: 22px;
 }
 @media (min-width: 1080px) { .plan-card { padding: 32px 24px; } }
+.plan-card > .btn { margin-top: auto; }
 .plan-card:hover { border-color: var(--border-strong); }
 .plan-card[data-featured="true"] {
   border-color: var(--brand-border);
