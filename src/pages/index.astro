@@ -26,9 +26,10 @@ const structuredData = {
       "operatingSystem": "Web",
       "description": description,
       "offers": [
-        { "@type": "Offer", "name": "Starter", "price": "1000", "priceCurrency": "USD" },
-        { "@type": "Offer", "name": "Growth", "price": "2500", "priceCurrency": "USD" },
-        { "@type": "Offer", "name": "Scale", "price": "5000", "priceCurrency": "USD" }
+        { "@type": "Offer", "name": "Starter",    "price": "199",  "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } },
+        { "@type": "Offer", "name": "Pro",        "price": "499",  "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } },
+        { "@type": "Offer", "name": "Team",       "price": "999",  "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } },
+        { "@type": "Offer", "name": "Enterprise", "price": "2499", "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } }
       ]
     }
   ]
@@ -104,12 +105,71 @@ const exports_ = [
 ];
 
 const plans = [
-  { name: "Starter", price: "$1,000", contacts: "Up to 5,000", seats: "1", featured: false,
-    features: ["All four intent categories", "CSV export + ad-platform push", "Daily behavioral refresh", "7-day free trial"] },
-  { name: "Growth",  price: "$2,500", contacts: "Up to 25,000", seats: "3", featured: true,
-    features: ["Everything in Starter", "Auto-refreshing lists", "Multi-market builds", "Priority support"] },
-  { name: "Scale",   price: "$5,000", contacts: "Up to 100,000", seats: "10", featured: false,
-    features: ["Everything in Growth", "Dedicated success manager", "Custom webhook setup", "Volume pricing"] },
+  {
+    name: "Starter",
+    monthly: "$199", annual: "$159", annualBilled: "$1,908",
+    featured: false,
+    summary: "For solo agents working a single market.",
+    features: [
+      "500 exports / mo",
+      "1 seat",
+      "7-day lookback",
+      "All 3 categories + subcategories",
+      "Unlimited searches & previews",
+      "CSV export",
+      "Email support",
+      "Free trial included",
+    ],
+  },
+  {
+    name: "Pro",
+    monthly: "$499", annual: "$399", annualBilled: "$4,788",
+    featured: true,
+    summary: "For producers running multi-channel campaigns.",
+    features: [
+      "2,500 exports / mo",
+      "2 seats",
+      "14-day lookback",
+      "Everything in Starter",
+      "Export scheduling",
+      "Priority email support",
+      "Free trial included",
+    ],
+  },
+  {
+    name: "Team",
+    monthly: "$999", annual: "$799", annualBilled: "$9,588",
+    featured: false,
+    summary: "For brokerages and growing teams.",
+    features: [
+      "10,000 exports / mo",
+      "5 seats",
+      "30-day lookback",
+      "Everything in Pro",
+      "CRM integrations",
+      "Chat + email support",
+    ],
+  },
+  {
+    name: "Enterprise",
+    monthly: "$2,499", annual: "$1,999", annualBilled: "$23,988",
+    featured: false,
+    summary: "For multi-state brokerages and partners.",
+    features: [
+      "Unlimited exports",
+      "Unlimited seats",
+      "30-day lookback",
+      "Everything in Team",
+      "API access",
+      "Dedicated account manager",
+    ],
+  },
+];
+
+const creditPacks = [
+  { contacts: "500",   price: "$99"  },
+  { contacts: "1,500", price: "$249" },
+  { contacts: "5,000", price: "$597" },
 ];
 ---
 
@@ -142,7 +202,7 @@ const plans = [
         </p>
 
         <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;" data-reveal>
-          <a href="/signup" class="btn btn-primary">
+          <a href="https://app.realestateintent.com/signup" class="btn btn-primary">
             Start 7-day free trial
             <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
@@ -329,34 +389,40 @@ const plans = [
         <div class="section-head" style="text-align:center; align-items:center; margin-left:auto; margin-right:auto;">
           <span class="eyebrow" data-reveal>Pricing</span>
           <h2 class="section-title" data-reveal>Start free. <em class="gradient-text">Scale</em> when you're ready.</h2>
-          <p class="lead" data-reveal style="max-width:500px;">7-day free trial on every plan.</p>
+          <p class="lead" data-reveal style="max-width:560px;">
+            Every plan includes all 3 data categories — Motivated Sellers, General Real Estate, Lending Signals — and every subcategory underneath. No tier gating. Free trial: export up to 50 contacts after previewing your local inventory.
+          </p>
+
+          <div class="billing-toggle" data-billing-toggle role="tablist" aria-label="Billing period" data-reveal>
+            <button type="button" class="is-active" data-billing="monthly" role="tab" aria-selected="true">Monthly</button>
+            <button type="button" data-billing="annual" role="tab" aria-selected="false">
+              Annual
+              <span class="save-badge">Save 20%</span>
+            </button>
+          </div>
         </div>
 
-        <div class="plan-grid">
+        <div class="plan-grid" data-billing="monthly">
           {plans.map((p) => (
             <article class="plan-card" data-featured={p.featured} data-reveal>
               {p.featured && <span class="plan-badge">Most popular</span>}
               <div>
                 <h3 class="plan-name">{p.name}</h3>
-                <div class="plan-price">
-                  <span class="price">{p.price}</span>
-                  <span class="price-suffix">/ mo</span>
+                <p class="plan-summary">{p.summary}</p>
+                <div class="plan-prices">
+                  <div class="plan-price plan-price-monthly">
+                    <span class="price">{p.monthly}</span>
+                    <span class="price-suffix">/ mo</span>
+                  </div>
+                  <div class="plan-price plan-price-annual">
+                    <span class="price">{p.annual}</span>
+                    <span class="price-suffix">/ mo</span>
+                    <span class="price-billed">billed {p.annualBilled} / yr</span>
+                  </div>
                 </div>
               </div>
 
               <ul class="plan-features">
-                <li>
-                  <span class="plan-check">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </span>
-                  {p.contacts} contacts / mo
-                </li>
-                <li>
-                  <span class="plan-check">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </span>
-                  {p.seats} {p.seats === "1" ? "seat" : "seats"}
-                </li>
                 {p.features.map((f) => (
                   <li>
                     <span class="plan-check">
@@ -367,7 +433,7 @@ const plans = [
                 ))}
               </ul>
 
-              <a href="/signup" class={p.featured ? "btn btn-primary" : "btn btn-secondary"} style="width:100%;">
+              <a href="https://app.realestateintent.com/signup" class={p.featured ? "btn btn-primary" : "btn btn-secondary"} style="width:100%;">
                 Start free trial
                 <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </a>
@@ -377,20 +443,32 @@ const plans = [
 
         <div class="price-compare" data-reveal>
           <div class="price-compare-row">
-            Apollo full contact ~ $1.80 · ZoomInfo intent ~ $2–3 · <strong>Real Estate Intent Growth $0.10</strong>
+            Apollo full contact ~ $1.80 · ZoomInfo intent ~ $2–3 · <strong>Real Estate Intent Pro $0.20 / export</strong>
           </div>
-          <div class="price-compare-gloss">Same contact. <em>10–30× the math.</em></div>
+          <div class="price-compare-gloss">Same contact. <em>9–15× the math.</em></div>
         </div>
 
-        <div class="enterprise-row" data-reveal>
-          <div class="enterprise-row-left">
-            <div class="enterprise-title">Multi-market brokerage? Custom volume & integrations.</div>
-            <div class="enterprise-note">Lists refresh daily — <span>only net-new contacts count against your cap.</span></div>
+        <div class="credit-packs" data-reveal>
+          <div class="credit-packs-head">
+            <span class="eyebrow" style="color:var(--brand);">Need more this month?</span>
+            <h3 class="credit-packs-title">Top up with one-time credit packs.</h3>
+            <p class="credit-packs-note">Available on Starter and Pro. No expiration on credits — use them whenever.</p>
           </div>
-          <a href="mailto:sales@realestateintent.com" class="btn btn-secondary">
-            Contact sales
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
+
+          <div class="credit-pack-grid">
+            {creditPacks.map((c) => (
+              <div class="credit-pack-card">
+                <span class="credit-pack-contacts">{c.contacts}<span> contacts</span></span>
+                <span class="credit-pack-price">{c.price}</span>
+                <span class="credit-pack-tag">one-time</span>
+              </div>
+            ))}
+            <div class="credit-pack-card credit-pack-card-overage">
+              <span class="credit-pack-contacts">Auto overage</span>
+              <span class="credit-pack-price">$0.25<span> / contact</span></span>
+              <span class="credit-pack-tag">when you exceed your cap</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -404,7 +482,7 @@ const plans = [
             The signal is already there. <em data-reveal-em>You just need to see it.</em>
           </h2>
           <div style="display:flex; justify-content:center; margin-top:8px;">
-            <a href="/signup" class="btn btn-primary">
+            <a href="https://app.realestateintent.com/signup" class="btn btn-primary">
               Start 7-day free trial
               <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
@@ -420,8 +498,8 @@ const plans = [
           <Logo />
           <nav class="footer-nav" aria-label="Footer">
             <a href="#pricing">pricing</a>
-            <a href="/signup">sign in</a>
-            <a href="/signup">start trial</a>
+            <a href="https://app.realestateintent.com/signup">sign in</a>
+            <a href="https://app.realestateintent.com/signup">start trial</a>
           </nav>
           <div class="caption">powered by <a href="https://gonextlevel.ai" style="color:var(--text-2);">Go Next Level</a></div>
         </div>
@@ -487,6 +565,23 @@ const plans = [
         );
         otherReveals.forEach((el) => io.observe(el));
       }
+    }
+
+    /* ===== Billing toggle (Monthly / Annual) ===== */
+    const billingGrid = document.querySelector<HTMLElement>(".plan-grid[data-billing]");
+    const billingButtons = document.querySelectorAll<HTMLButtonElement>("[data-billing-toggle] button[data-billing]");
+    if (billingGrid && billingButtons.length) {
+      billingButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const mode = btn.dataset.billing || "monthly";
+          billingGrid.dataset.billing = mode;
+          billingButtons.forEach((b) => {
+            const isActive = b === btn;
+            b.classList.toggle("is-active", isActive);
+            b.setAttribute("aria-selected", isActive ? "true" : "false");
+          });
+        });
+      });
     }
 
     /* ===== CTA gradient reveal =====
