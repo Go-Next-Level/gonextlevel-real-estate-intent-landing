@@ -1,0 +1,182 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Topbar from '../components/Topbar.astro';
+import Logo from '../components/Logo.astro';
+
+const title = "Acceptable Use Policy — Real Estate Intent";
+const description = "How customers may access and use the Real Estate Intent service, including additional requirements for activities involving California residents.";
+const lastUpdated = "May 3, 2026";
+---
+
+<BaseLayout title={title} description={description}>
+  <Topbar />
+
+  <main>
+    <section class="legal-page">
+      <div class="container">
+        <div class="legal-head">
+          <span class="legal-eyebrow">Legal</span>
+          <h1 class="legal-title">Acceptable Use Policy</h1>
+          <span class="legal-meta">Effective · {lastUpdated}</span>
+        </div>
+
+        <div class="legal-toc" aria-label="Table of contents">
+          <div class="legal-toc-label">In this policy</div>
+          <ol>
+            <li><a href="#permitted">Permitted use</a></li>
+            <li><a href="#prohibited">Prohibited uses</a></li>
+            <li><a href="#consent">No transfer of consent</a></li>
+            <li><a href="#oversight">No monitoring or oversight</a></li>
+            <li><a href="#california">California-specific requirements</a></li>
+            <li><a href="#enforcement">Enforcement &amp; termination</a></li>
+            <li><a href="#report">Reporting violations</a></li>
+            <li><a href="#law">Governing law</a></li>
+          </ol>
+        </div>
+
+        <div class="legal-prose">
+          <p>
+            This Acceptable Use Policy ("AUP") governs how Customers may access and use the services, data, software, and related materials (the "Service") provided by <strong>Real Estate Intent</strong>, a service of <strong>Next Level Web Design LLC</strong> ("Company," "we," "us," or "our").
+          </p>
+          <p>
+            This AUP includes <strong>additional requirements for Customers operating in or involving California residents</strong>.
+          </p>
+          <p>
+            By accessing or using the Service, you agree to comply with this AUP. Violation of this AUP may result in <strong>immediate suspension or termination without refund</strong>.
+          </p>
+
+          <h2 id="permitted">1. Permitted use</h2>
+          <p>Customers may use the Service solely for:</p>
+          <ul>
+            <li>Internal business outreach and lead-generation activities</li>
+            <li>Sales, marketing, and market research related to their real estate business</li>
+            <li>Advertising audience matching where permitted by the relevant ad platform's policies</li>
+            <li>Direct mail, email, telephone, and SMS outreach where lawful and consented</li>
+          </ul>
+          <p>All use must comply with applicable federal, state, and local laws.</p>
+
+          <h2 id="prohibited">2. Prohibited uses</h2>
+          <p>You may <strong>not</strong> use the Service to:</p>
+          <ul>
+            <li>Violate any applicable law or regulation</li>
+            <li>Misrepresent the source, consent status, or purpose of the data</li>
+            <li>Claim or imply that an individual requested direct contact from you</li>
+            <li>Ignore "No Soliciting," "No Trespassing," opt-out, unsubscribe, or Do Not Call (DNC) notices</li>
+            <li>Harass, threaten, deceive, or mislead individuals</li>
+            <li>Engage in fraudulent, deceptive, or abusive conduct</li>
+            <li>Use the data for robocalls, spam, or mass unsolicited messaging</li>
+            <li>Resell, sublicense, rent, or redistribute the data</li>
+            <li>Share login credentials or access with unauthorized parties</li>
+            <li>Store, archive, or reuse data beyond the operational scope of the license</li>
+            <li>Scrape, reverse engineer, or replicate datasets or methodologies</li>
+            <li>Use the data to unlawfully target or exclude protected classes (including in real estate, fair-housing, or lending contexts)</li>
+            <li>Bypass consent, privacy, or consumer-rights mechanisms</li>
+          </ul>
+
+          <h2 id="consent">3. No transfer of consent</h2>
+          <p>You acknowledge and agree that:</p>
+          <ul>
+            <li>Consent obtained during online form submissions or co-registration processes <strong>does not constitute consent to be contacted by you specifically</strong></li>
+            <li>Access to the Service <strong>does not grant permission</strong> to contact individuals using any particular method</li>
+            <li>You are solely responsible for determining whether your outreach practices are lawful and for obtaining any additional consent required for your specific channel (TCPA-compliant prior express written consent for autodialed calls or SMS, CAN-SPAM-compliant footers and opt-outs for email, and so on)</li>
+          </ul>
+          <p>The Company does not represent or warrant that the data is suitable for any specific outreach method.</p>
+
+          <div class="callout">
+            <strong>Important</strong>
+            We do not provide proof of opt-in for individual records. Even where original collection was lawful, that consent does not transfer to your subsequent outreach. Comply with TCPA, CAN-SPAM, and applicable state laws independently.
+          </div>
+
+          <h2 id="oversight">4. No monitoring or compliance oversight</h2>
+          <p>You acknowledge that the Company:</p>
+          <ul>
+            <li>Does not monitor or supervise customer outreach</li>
+            <li>Does not control or supervise solicitation activities</li>
+            <li>Does not provide legal or regulatory compliance advice</li>
+          </ul>
+          <p>Customers are solely responsible for lawful use of the Service.</p>
+
+          <h2 id="california">5. California-specific use requirements (CCPA / CPRA)</h2>
+          <p>This section applies to Customers using the Service in connection with activities involving <strong>California residents</strong>.</p>
+
+          <h3>5.1 Customer compliance obligations</h3>
+          <p>Customers must comply with all applicable California laws, including but not limited to:</p>
+          <ul>
+            <li>California Consumer Privacy Act (CCPA)</li>
+            <li>California Privacy Rights Act (CPRA)</li>
+            <li>California Business &amp; Professions Code provisions related to solicitation and real estate</li>
+            <li>Do Not Call (DNC) and opt-out requirements</li>
+            <li>Local and municipal solicitation restrictions</li>
+          </ul>
+          <p>The Company does not provide compliance guidance or enforcement related to California law.</p>
+
+          <h3>5.2 No sale or transfer of privacy rights</h3>
+          <p>You may <strong>not</strong>:</p>
+          <ul>
+            <li>Represent that personal information was sold or transferred by the Company in a manner inconsistent with our Privacy Policy</li>
+            <li>Use the data in a manner that would constitute unlawful "selling" or "sharing" under California law</li>
+            <li>Attempt to bypass consumer privacy rights, including opt-out, deletion, or limitation requests</li>
+          </ul>
+
+          <h3>5.3 No service-provider or contractor relationship</h3>
+          <p>You acknowledge and agree that:</p>
+          <ul>
+            <li>The Company is <strong>not acting as your service provider or contractor</strong> under California privacy law</li>
+            <li>The Company does not determine the purposes or means of your data use</li>
+            <li>You independently control all outreach activities and decisions</li>
+          </ul>
+
+          <h3>5.4 California-related indemnification</h3>
+          <p>You agree to indemnify and hold harmless the Company from any claims, investigations, penalties, damages, or liabilities arising from:</p>
+          <ul>
+            <li>Your use of the Service involving California residents</li>
+            <li>Alleged violations of California privacy or solicitation laws</li>
+            <li>Consumer complaints, enforcement actions, or private claims</li>
+          </ul>
+
+          <h2 id="enforcement">6. Enforcement &amp; termination</h2>
+          <p>The Company reserves the right to:</p>
+          <ul>
+            <li>Investigate suspected violations of this AUP</li>
+            <li>Suspend or terminate access to the Service immediately</li>
+            <li>Cooperate with law enforcement or regulatory authorities when required</li>
+          </ul>
+          <p>Termination for violation of this AUP does <strong>not</strong> entitle the Customer to any refund.</p>
+
+          <h2 id="report">7. Reporting violations</h2>
+          <p>
+            Suspected misuse of the Service may be reported to <a href="mailto:abuse@realestateintent.com">abuse@realestateintent.com</a>.
+          </p>
+
+          <h2 id="law">8. Governing law</h2>
+          <p>
+            This AUP is governed by and construed in accordance with the laws of the <strong>State of California</strong>, without regard to conflict-of-law principles.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-row">
+          <Logo />
+          <nav class="footer-nav" aria-label="Footer">
+            <a href="/#pricing">pricing</a>
+            <a href="https://app.realestateintent.com/signup">sign in</a>
+            <a href="https://app.realestateintent.com/signup">start trial</a>
+          </nav>
+          <div class="caption">powered by <a href="https://gonextlevel.ai" style="color:var(--text-2);">Go Next Level</a></div>
+        </div>
+        <div class="footer-legal">
+          <span>© 2026 Real Estate Intent</span>
+          <span>
+            <a href="/privacy">Privacy</a> ·
+            <a href="/terms">Terms</a> ·
+            <a href="/acceptable-use">Acceptable use</a> ·
+            <a href="/compliance">Compliance</a>
+          </span>
+        </div>
+      </div>
+    </footer>
+  </main>
+</BaseLayout>

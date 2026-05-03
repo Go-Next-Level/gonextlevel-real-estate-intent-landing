@@ -1,0 +1,257 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Topbar from '../components/Topbar.astro';
+import Logo from '../components/Logo.astro';
+
+const title = "Terms of Service — Real Estate Intent";
+const description = "Terms governing your access to and use of the Real Estate Intent service.";
+const lastUpdated = "May 3, 2026";
+---
+
+<BaseLayout title={title} description={description}>
+  <Topbar />
+
+  <main>
+    <section class="legal-page">
+      <div class="container">
+        <div class="legal-head">
+          <span class="legal-eyebrow">Legal</span>
+          <h1 class="legal-title">Terms of Service</h1>
+          <span class="legal-meta">Last updated · {lastUpdated}</span>
+        </div>
+
+        <div class="legal-toc" aria-label="Table of contents">
+          <div class="legal-toc-label">In these terms</div>
+          <ol>
+            <li><a href="#service">Description of service</a></li>
+            <li><a href="#guarantee">No guarantee of results</a></li>
+            <li><a href="#responsibility">Customer responsibility &amp; lawful use</a></li>
+            <li><a href="#license">License to access data</a></li>
+            <li><a href="#methodology">Data methodology disclosure</a></li>
+            <li><a href="#matching">Identity matching limitations</a></li>
+            <li><a href="#address">Address validation &amp; NCOA</a></li>
+            <li><a href="#pricing">Pricing &amp; billing</a></li>
+            <li><a href="#refund">No-refund policy</a></li>
+            <li><a href="#cancel">Cancellation</a></li>
+            <li><a href="#liability">Limitation of liability</a></li>
+            <li><a href="#indemnify">Indemnification</a></li>
+            <li><a href="#availability">Service modifications</a></li>
+            <li><a href="#law">Governing law</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ol>
+        </div>
+
+        <div class="legal-prose">
+          <p>
+            These Terms of Service ("Terms") govern your access to and use of the services, data, software, and related materials (collectively, the "Service") provided by <strong>Real Estate Intent</strong>, a service of <strong>Next Level Web Design LLC</strong> ("Company," "we," "us," or "our").
+          </p>
+          <p>
+            By purchasing, accessing, or using the Service, you ("Customer," "you," or "your") agree to be bound by these Terms. If you do not agree, you may not access or use the Service.
+          </p>
+
+          <h2 id="service">1. Description of service</h2>
+          <p>
+            The Service provides Customers with licensed access to behavioral intent data and household-level records associated with real estate activity (motivated sellers, general real estate, and lending signals). The data is intended to support outreach and marketing activities including, but not limited to, advertising audience matching, direct mail, email, telephone calls (where lawful), and in-person solicitation (where lawful).
+          </p>
+          <p>The data provided:</p>
+          <ul>
+            <li>Is sourced from a combination of co-registered submissions, behavioral signals observed on the open web, public records, and licensed data partners</li>
+            <li>Is aggregated, cleaned, filtered, and processed using commercially reasonable methods</li>
+            <li>Reflects observed behavioral signals — not confirmed interest in your business or consent to be contacted by you</li>
+          </ul>
+          <p>
+            The Service is informational and operational in nature and does not include marketing execution, sales representation, compliance oversight, or lead guarantees.
+          </p>
+
+          <h2 id="guarantee">2. No guarantee of results</h2>
+          <p>You acknowledge and agree that we make no guarantees of any kind, including but not limited to:</p>
+          <ul>
+            <li>Sales</li>
+            <li>Appointments</li>
+            <li>Revenue</li>
+            <li>Conversion rates</li>
+            <li>Return on investment</li>
+          </ul>
+          <p>Performance depends on factors outside our control, including:</p>
+          <ul>
+            <li>Your sales process and messaging</li>
+            <li>Timing and execution of outreach</li>
+            <li>Market conditions and competition</li>
+            <li>Compliance with applicable laws</li>
+          </ul>
+          <p>
+            Enhancements to data processing methods — including identity resolution, address validation, or refresh frequency — do not constitute guarantees of performance or accuracy.
+          </p>
+
+          <h2 id="responsibility">3. Customer responsibility &amp; lawful use</h2>
+          <p>You are solely responsible for how the data is used. You agree to:</p>
+          <ul>
+            <li>Use the Service in compliance with all applicable federal, state, and local laws</li>
+            <li>Comply with the Telephone Consumer Protection Act (TCPA), CAN-SPAM Act, and any applicable state-specific privacy laws</li>
+            <li>Honor Do Not Call (DNC) registries, opt-out requests, and unsubscribe requests</li>
+            <li>Follow regulations related to real estate solicitation, fair-housing rules, and any applicable MLS rules</li>
+            <li>Comply with the policies of any advertising platform on which you upload audiences for matching</li>
+            <li>Respect posted "No Soliciting," "No Trespassing," or similar notices in the case of in-person outreach</li>
+          </ul>
+          <p>The Company:</p>
+          <ul>
+            <li>Does not control or supervise your outreach activities</li>
+            <li>Does not provide legal or compliance advice</li>
+            <li>Is not liable for violations, complaints, fines, penalties, or claims arising from your use of the data</li>
+          </ul>
+
+          <h2 id="license">4. License to access data (not a sale)</h2>
+          <p>
+            The Service grants you a limited, non-exclusive, non-transferable, revocable license to access the data during an active subscription period.
+          </p>
+          <p>You do not own the data. You may not:</p>
+          <ul>
+            <li>Resell, sublicense, or redistribute the data</li>
+            <li>Share access credentials</li>
+            <li>Store or reuse data beyond its intended operational purpose</li>
+          </ul>
+          <p>Unauthorized use may result in immediate termination without refund.</p>
+
+          <h2 id="methodology">5. Data methodology disclosure (informational only)</h2>
+          <p>
+            The Service relies on behavioral signals, identity resolution, and licensed data partnerships, which may include anonymized IP activity, URL interactions, geographic indicators, and address validation processes.
+          </p>
+          <p>You acknowledge that:</p>
+          <ul>
+            <li>Behavioral data is observational, not deterministic of future action</li>
+            <li>Signals represent observed activity associated with a household, not certainty of intent or consent</li>
+            <li>No methodology can identify individuals or households with complete accuracy</li>
+          </ul>
+          <p>Certain signals may originate from:</p>
+          <ul>
+            <li>Shared IP environments (offices, apartments, public Wi-Fi)</li>
+            <li>Devices or networks used by multiple individuals</li>
+            <li>Dynamic or frequently changing IP assignments</li>
+          </ul>
+          <p>Methodology disclosures are provided for transparency only and do not create warranties or guarantees.</p>
+
+          <h2 id="matching">6. Identity matching &amp; accuracy limitations</h2>
+          <p>You acknowledge that:</p>
+          <ul>
+            <li>IP-based matching is inherently limited by shared and dynamic environments</li>
+            <li>Geographic validation techniques, including latitude and longitude layering, are designed to improve confidence — not to ensure correctness</li>
+            <li>Identity-resolution enhancements do not eliminate false positives, do not guarantee identification of the correct individual or household, and do not ensure suitability for any particular use case</li>
+          </ul>
+
+          <h2 id="address">7. Address validation &amp; NCOA processing</h2>
+          <p>
+            The Service may incorporate address validation processes, including periodic use of commercially available databases such as the National Change of Address (NCOA) registry.
+          </p>
+          <p>You acknowledge that:</p>
+          <ul>
+            <li>Address validation occurs on a recurring basis, not in real time</li>
+            <li>Consumers frequently move, change devices, or change network environments</li>
+            <li>Data freshness can degrade rapidly</li>
+            <li>No representation is made that any record reflects a current residence, the correct household member, or active interest at the time of use</li>
+          </ul>
+
+          <h2 id="pricing">8. Pricing, billing &amp; plan changes</h2>
+          <h3>Subscription plans</h3>
+          <p>
+            Plans are billed monthly or annually as selected at signup. Annual plans are billed in advance for the full year and reflect the discounted rate shown on the pricing page at the time of purchase.
+          </p>
+          <ul>
+            <li>Monthly pricing is not guaranteed to remain unchanged</li>
+            <li>Pricing may change due to market conditions, data partner costs, or operational expenses</li>
+            <li>Reasonable advance notice will be provided when practicable</li>
+          </ul>
+          <h3>Term agreements</h3>
+          <ul>
+            <li>If a written term agreement is executed, pricing will be locked only for the duration of that term</li>
+            <li>Upon expiration or conversion to month-to-month, pricing may change</li>
+          </ul>
+          <h3>Credit packs &amp; overage</h3>
+          <p>
+            One-time credit packs may be purchased on Starter and Pro plans and are non-refundable. If your account exceeds its monthly export cap, automatic overage may be billed at the published per-contact rate unless you have explicitly disabled overage in your account settings.
+          </p>
+
+          <h2 id="refund">9. No-refund policy</h2>
+          <p>All purchases are final.</p>
+          <p>Because the Service includes immediate access, ongoing data processing, and active operational resources, no refunds are provided, including where:</p>
+          <ul>
+            <li>Results do not meet expectations</li>
+            <li>Data performance varies</li>
+            <li>The Service is unused</li>
+          </ul>
+          <p>
+            A free trial is available so you can preview your local data inventory and export up to 50 contacts before any payment is taken. We strongly encourage using the trial to validate fit for your market before subscribing.
+          </p>
+
+          <h2 id="cancel">10. Cancellation</h2>
+          <p>
+            You may cancel from your account dashboard at any time, or by providing written notice to <a href="mailto:legal@realestateintent.com">legal@realestateintent.com</a> at least 15 days prior to your renewal date.
+          </p>
+          <ul>
+            <li>Notice received 15+ days before renewal → no rebilling</li>
+            <li>Notice received fewer than 15 days before renewal → next billing cycle may process</li>
+          </ul>
+          <p>Access will terminate at the end of the current billing period. No partial refunds are issued.</p>
+
+          <h2 id="liability">11. Limitation of liability</h2>
+          <p>To the maximum extent permitted by law:</p>
+          <ul>
+            <li>The Company is not liable for indirect, incidental, consequential, or punitive damages</li>
+            <li>Total liability shall not exceed the amount paid in the preceding 30 days</li>
+          </ul>
+          <p>This includes claims related to lost revenue or opportunities, business interruption, and legal disputes arising from outreach activities.</p>
+
+          <h2 id="indemnify">12. Indemnification</h2>
+          <p>
+            You agree to indemnify and hold harmless the Company, its owners, employees, contractors, and partners from any claims, damages, liabilities, or expenses arising from your use of the Service, your outreach activities, or violations of law or third-party rights.
+          </p>
+
+          <h2 id="availability">13. Service modifications &amp; availability</h2>
+          <p>
+            The Company may modify, suspend, or discontinue aspects of the Service at any time. The Service is provided "as is" and "as available."
+          </p>
+
+          <h2 id="law">14. Governing law</h2>
+          <p>
+            These Terms are governed by the laws of the State of California, without regard to conflict-of-law principles.
+          </p>
+
+          <h2 id="contact">15. Contact</h2>
+          <p>
+            <strong>Real Estate Intent</strong><br />
+            a service of Next Level Web Design LLC<br />
+            <strong>Email:</strong> <a href="mailto:legal@realestateintent.com">legal@realestateintent.com</a>
+          </p>
+
+          <hr />
+
+          <p>
+            <em>Final note:</em> Customer acknowledges that all behavioral intent data involves observation, modeling, and inference — and agrees that no data service can eliminate uncertainty or guarantee consumer behavior.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-row">
+          <Logo />
+          <nav class="footer-nav" aria-label="Footer">
+            <a href="/#pricing">pricing</a>
+            <a href="https://app.realestateintent.com/signup">sign in</a>
+            <a href="https://app.realestateintent.com/signup">start trial</a>
+          </nav>
+          <div class="caption">powered by <a href="https://gonextlevel.ai" style="color:var(--text-2);">Go Next Level</a></div>
+        </div>
+        <div class="footer-legal">
+          <span>© 2026 Real Estate Intent</span>
+          <span>
+            <a href="/privacy">Privacy</a> ·
+            <a href="/terms">Terms</a> ·
+            <a href="/acceptable-use">Acceptable use</a> ·
+            <a href="/compliance">Compliance</a>
+          </span>
+        </div>
+      </div>
+    </footer>
+  </main>
+</BaseLayout>

@@ -1,0 +1,211 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Topbar from '../components/Topbar.astro';
+import Logo from '../components/Logo.astro';
+
+const title = "Privacy Policy — Real Estate Intent";
+const description = "How Real Estate Intent collects, processes, and protects information related to our service and our customers.";
+const lastUpdated = "May 3, 2026";
+---
+
+<BaseLayout title={title} description={description}>
+  <Topbar />
+
+  <main>
+    <section class="legal-page">
+      <div class="container">
+        <div class="legal-head">
+          <span class="legal-eyebrow">Legal</span>
+          <h1 class="legal-title">Privacy Policy</h1>
+          <span class="legal-meta">Last updated · {lastUpdated}</span>
+        </div>
+
+        <div class="legal-toc" aria-label="Table of contents">
+          <div class="legal-toc-label">In this policy</div>
+          <ol>
+            <li><a href="#scope">Scope of this policy</a></li>
+            <li><a href="#nature">Nature of the data</a></li>
+            <li><a href="#sources">How the data is sourced</a></li>
+            <li><a href="#verification">Data cleaning &amp; verification</a></li>
+            <li><a href="#refresh">Address validation &amp; refresh</a></li>
+            <li><a href="#use">How we use information</a></li>
+            <li><a href="#advertising">Advertising &amp; encryption</a></li>
+            <li><a href="#client">Customer responsibilities</a></li>
+            <li><a href="#security">Data security</a></li>
+            <li><a href="#retention">Data retention</a></li>
+            <li><a href="#changes">Changes to this policy</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ol>
+        </div>
+
+        <div class="legal-prose">
+          <p>
+            This Privacy Policy describes how <strong>Real Estate Intent</strong>, a service of <strong>Next Level Web Design LLC</strong> ("Company," "we," "us," or "our"), collects, processes, and protects information in connection with the services we provide (the "Service").
+          </p>
+          <p>By accessing or using the Service, you agree to this Privacy Policy.</p>
+
+          <h2 id="scope">1. Scope of this policy</h2>
+          <p>This Privacy Policy applies to:</p>
+          <ul>
+            <li>Visitors to <a href="https://realestateintent.com">realestateintent.com</a> and <a href="https://app.realestateintent.com">app.realestateintent.com</a></li>
+            <li>Customers who purchase or access the Service</li>
+            <li>Communications with our team</li>
+          </ul>
+          <p>It does <strong>not</strong> apply to:</p>
+          <ul>
+            <li>Outreach conducted by our customers</li>
+            <li>Data collected directly by our customers</li>
+            <li>Third-party websites or platforms used by our customers</li>
+          </ul>
+
+          <h2 id="nature">2. Nature of the data we provide</h2>
+          <p>
+            The Service provides <strong>licensed access to behavioral intent data</strong> derived from a combination of online activity signals, voluntary online submissions, verification processes, and publicly available information.
+          </p>
+          <p>Important clarifications:</p>
+          <ul>
+            <li>We <strong>do not sell consumer personal data</strong></li>
+            <li>We <strong>do not scrape private information</strong></li>
+            <li>We <strong>do not bypass consent mechanisms</strong></li>
+            <li>We <strong>do not collect data directly from consumers on behalf of customers</strong></li>
+          </ul>
+          <p>The data is provided for <strong>business use only</strong> and is licensed — not sold.</p>
+
+          <h2 id="sources">3. How the data is sourced</h2>
+          <h3>Online activity signals</h3>
+          <p>
+            Behavioral signals are observed across publishing partners and consented data networks — saved listings, mortgage and affordability calculators, foreclosure-related content, agent comparison pages, and similar real-estate-relevant pages on the open web. These signals are processed through identity-resolution providers to associate observed activity with a household record.
+          </p>
+          <h3>Online submissions (co-registration)</h3>
+          <p>Some records originate from partner sites where individuals voluntarily submit information through online forms, including:</p>
+          <ul>
+            <li>Coupon, deal, sweepstakes, contest, quiz, comparison, or newsletter sites</li>
+            <li>Lead-generation properties operated under proper notice</li>
+          </ul>
+          <p>This process is commonly known as <strong>co-registration (co-reg)</strong>. During submission:</p>
+          <ul>
+            <li>Individuals provide contact information intentionally</li>
+            <li>Disclosures on partner sites indicate that information may be shared with third parties</li>
+            <li>Only records that include such permission are eligible for inclusion</li>
+          </ul>
+          <h3>Public sources and licensed data partners</h3>
+          <p>
+            Records are enhanced with information from licensed data partners, public records (property, address, demographic), and similar verification files used for matching and accuracy.
+          </p>
+
+          <h2 id="verification">4. Data cleaning, verification &amp; enhancement</h2>
+          <h3>Offline verification</h3>
+          <p>Information may be matched against trusted sources such as:</p>
+          <ul>
+            <li>Property and address records</li>
+            <li>Census-level or utility-related datasets</li>
+            <li>Similar verification files</li>
+          </ul>
+          <p>This process — commonly referred to as <strong>skip tracing</strong> — is used to:</p>
+          <ul>
+            <li>Correct incomplete or outdated information</li>
+            <li>Remove unusable or invalid records</li>
+            <li>Improve accuracy without introducing private data</li>
+          </ul>
+          <h3>Public data confirmation</h3>
+          <p>For records associated with a business, company details may be validated against:</p>
+          <ul>
+            <li>Official business websites</li>
+            <li>Public directories</li>
+            <li>Public listings published by the business itself</li>
+          </ul>
+          <p>No private, hidden, or restricted data is added during verification.</p>
+
+          <h2 id="refresh">5. Address validation &amp; data refresh</h2>
+          <p>
+            The Service may include periodic address validation processes, including use of commercially available tools such as the <strong>National Change of Address (NCOA)</strong> registry.
+          </p>
+          <p>You acknowledge that:</p>
+          <ul>
+            <li>Validation occurs on a scheduled basis, not in real time</li>
+            <li>Individuals frequently move or change network environments</li>
+            <li>No dataset can remain fully current at all times</li>
+          </ul>
+
+          <h2 id="use">6. How we use information</h2>
+          <p>We use customer information to:</p>
+          <ul>
+            <li>Provide and maintain the Service</li>
+            <li>Process billing and account access</li>
+            <li>Communicate regarding support or updates</li>
+            <li>Enforce contractual terms</li>
+          </ul>
+          <p>We do <strong>not</strong>:</p>
+          <ul>
+            <li>Perform outreach on behalf of our customers</li>
+            <li>Market directly to consumers</li>
+            <li>Sell or scrape consumer data</li>
+          </ul>
+
+          <h2 id="advertising">7. Advertising audience matching &amp; encryption</h2>
+          <p>When email data is used for advertising audience matching:</p>
+          <ul>
+            <li>Email addresses are encrypted using <strong>SHA-256 hashing</strong></li>
+            <li>This aligns with compliance standards required by major advertising platforms (Meta, TikTok, Google, YouTube, LinkedIn, Pinterest)</li>
+            <li>Hashed data is used solely for matching purposes — not direct inbox delivery</li>
+          </ul>
+
+          <h2 id="client">8. Customer responsibilities</h2>
+          <p>Customers are solely responsible for:</p>
+          <ul>
+            <li>Their outreach practices across every channel they choose to use</li>
+            <li>Compliance with the Telephone Consumer Protection Act (TCPA), CAN-SPAM Act, and state-specific Do Not Call (DNC) rules</li>
+            <li>Opt-out and unsubscribe requirements</li>
+            <li>State and local real-estate solicitation laws and any applicable MLS rules</li>
+            <li>Ad-platform policies when uploading audiences for matching</li>
+            <li>All other applicable federal, state, and local laws</li>
+          </ul>
+          <p>We do not provide legal advice or compliance enforcement. See our <a href="/acceptable-use">Acceptable Use Policy</a> for additional requirements.</p>
+
+          <h2 id="security">9. Data security</h2>
+          <p>We implement commercially reasonable safeguards to protect data; however:</p>
+          <ul>
+            <li>No system is fully secure</li>
+            <li>Absolute security cannot be guaranteed</li>
+          </ul>
+
+          <h2 id="retention">10. Data retention</h2>
+          <p>Access to licensed data ends upon cancellation or termination. Customers may not retain or reuse data beyond the scope of their license.</p>
+
+          <h2 id="changes">11. Changes to this policy</h2>
+          <p>We may update this Privacy Policy periodically. The "Last updated" date at the top of this page reflects the most recent revision. Continued use of the Service constitutes acceptance.</p>
+
+          <h2 id="contact">12. Contact</h2>
+          <p>
+            <strong>Real Estate Intent</strong><br />
+            a service of Next Level Web Design LLC<br />
+            <strong>Email:</strong> <a href="mailto:legal@realestateintent.com">legal@realestateintent.com</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-row">
+          <Logo />
+          <nav class="footer-nav" aria-label="Footer">
+            <a href="/#pricing">pricing</a>
+            <a href="https://app.realestateintent.com/signup">sign in</a>
+            <a href="https://app.realestateintent.com/signup">start trial</a>
+          </nav>
+          <div class="caption">powered by <a href="https://gonextlevel.ai" style="color:var(--text-2);">Go Next Level</a></div>
+        </div>
+        <div class="footer-legal">
+          <span>© 2026 Real Estate Intent</span>
+          <span>
+            <a href="/privacy">Privacy</a> ·
+            <a href="/terms">Terms</a> ·
+            <a href="/acceptable-use">Acceptable use</a> ·
+            <a href="/compliance">Compliance</a>
+          </span>
+        </div>
+      </div>
+    </footer>
+  </main>
+</BaseLayout>

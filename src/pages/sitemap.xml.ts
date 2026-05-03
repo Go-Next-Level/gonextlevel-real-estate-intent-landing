@@ -1,7 +1,7 @@
 export async function GET({ site }: { site: URL }) {
-  const siteUrl = site?.href ?? 'https://realestateintent.pages.dev/';
+  const siteUrl = site?.href ?? 'https://realestateintent.com/';
 
-  const pages = [''];
+  const pages = ['', 'privacy', 'terms', 'acceptable-use', 'compliance'];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

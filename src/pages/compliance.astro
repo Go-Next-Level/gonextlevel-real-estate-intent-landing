@@ -1,0 +1,188 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Topbar from '../components/Topbar.astro';
+import Logo from '../components/Logo.astro';
+
+const title = "Data Compliance & Legitimacy — Real Estate Intent";
+const description = "Where Real Estate Intent's behavioral signals come from, how they're verified, and how the data stays compliant with US privacy law.";
+const lastUpdated = "May 3, 2026";
+---
+
+<BaseLayout title={title} description={description}>
+  <Topbar />
+
+  <main>
+    <section class="legal-page">
+      <div class="container">
+        <div class="legal-head">
+          <span class="legal-eyebrow">Compliance &amp; legitimacy</span>
+          <h1 class="legal-title">Where the data comes from. How it stays compliant.</h1>
+          <span class="legal-meta">Last updated · {lastUpdated}</span>
+        </div>
+
+        <div class="legal-toc" aria-label="Table of contents">
+          <div class="legal-toc-label">In this document</div>
+          <ol>
+            <li><a href="#what">What kind of data this is</a></li>
+            <li><a href="#sources">Where the signals come from</a></li>
+            <li><a href="#verification">Verification &amp; identity resolution</a></li>
+            <li><a href="#refresh">Refresh cadence &amp; freshness</a></li>
+            <li><a href="#advertising">Advertising audience matching</a></li>
+            <li><a href="#privacy-laws">Privacy law alignment</a></li>
+            <li><a href="#consent">The opt-in question</a></li>
+            <li><a href="#opt-out">How individuals opt out</a></li>
+            <li><a href="#customer">What you (the customer) own</a></li>
+            <li><a href="#security">Security &amp; storage</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ol>
+        </div>
+
+        <div class="legal-prose">
+          <p>
+            This document explains, in plain terms, how Real Estate Intent sources, processes, and maintains the behavioral data we provide — and where each side of the relationship (us and you, the customer) is responsible for compliance.
+          </p>
+          <p>
+            For the binding language, see our <a href="/privacy">Privacy Policy</a>, <a href="/terms">Terms of Service</a>, and <a href="/acceptable-use">Acceptable Use Policy</a>.
+          </p>
+
+          <h2 id="what">1. What kind of data this is</h2>
+          <p>
+            Real Estate Intent licenses <strong>behavioral intent data</strong> — observed online activity associated with real estate decisions, resolved to a household-level contact record.
+          </p>
+          <p>This is meaningfully different from "predictive" lead data:</p>
+          <ul>
+            <li><strong>Behavioral</strong> data is what someone is <em>actually doing</em> — saving listings, running affordability calculators, reading pre-foreclosure content.</li>
+            <li><strong>Predictive</strong> data is a model's guess about who <em>might</em> be interested. Statistical scoring without observed activity.</li>
+          </ul>
+          <p>We sell the former. We do not sell predictions.</p>
+
+          <h2 id="sources">2. Where the signals come from</h2>
+          <p>The data is built from a combination of sources, all collected and licensed lawfully:</p>
+          <h3>Online behavioral signals</h3>
+          <p>
+            Real estate–relevant activity observed across publishing partners and consented data networks: saved listings, mortgage and affordability calculator usage, foreclosure-related research, agent-comparison page views, neighborhood research, and similar pages.
+          </p>
+          <h3>Online submissions (co-registration)</h3>
+          <p>
+            Records that originate from partner sites where individuals voluntarily submit information through online forms — coupon and deal sites, sweepstakes, contests, quizzes, comparisons, and newsletters. Disclosures on those partner sites indicate that information may be shared with third parties; only records that include such permission are eligible for inclusion.
+          </p>
+          <h3>Public records &amp; licensed data partners</h3>
+          <p>
+            Property records, address databases, demographic datasets, financial-institution-sourced records, and licensed data partner files are used for matching, validation, and resolution — not to add private or hidden information.
+          </p>
+
+          <h2 id="verification">3. Verification &amp; identity resolution</h2>
+          <p>
+            Raw signals are processed through multiple verification layers before they reach a customer's export:
+          </p>
+          <ul>
+            <li><strong>Email verification.</strong> SMTP and deep verification (including catch-all detection) to filter undeliverable or invalid records.</li>
+            <li><strong>Phone validation &amp; skip tracing.</strong> Phone numbers are matched and validated against multiple cross-referenced datasets.</li>
+            <li><strong>Address validation.</strong> Periodic processing through commercially available tools, including the National Change of Address (NCOA) registry.</li>
+            <li><strong>Identity resolution.</strong> Anonymized signals are matched to publicly available household records to produce a contactable file. We do not introduce private or restricted data during this step.</li>
+          </ul>
+
+          <h2 id="refresh">4. Refresh cadence &amp; freshness</h2>
+          <p>The data is refreshed on a daily cadence. In practice:</p>
+          <ul>
+            <li>The behavioral signal source window runs roughly <strong>48 hours to 30 days</strong>.</li>
+            <li>Once a signal is in our system, it is <strong>no older than 24 hours</strong>.</li>
+            <li>NCOA and address validation run on a recurring basis — not in real time.</li>
+          </ul>
+          <p>
+            No dataset can stay fully current at all times. Individuals move, change networks, and change devices. Data freshness is a best-effort discipline, not a guarantee.
+          </p>
+
+          <h2 id="advertising">5. Advertising audience matching</h2>
+          <p>When customers upload an exported list to an ad platform for audience matching:</p>
+          <ul>
+            <li>Email addresses can be submitted as <strong>SHA-256 hashes</strong>, which is the standard required by major ad platforms (Meta, TikTok, Google, YouTube, LinkedIn, Pinterest).</li>
+            <li>The hash is one-way — it is used solely for the platform to match against existing user records, not to deliver email to the inbox.</li>
+            <li>You remain bound by each platform's own audience-upload terms and policies.</li>
+          </ul>
+
+          <h2 id="privacy-laws">6. Privacy law alignment</h2>
+          <h3>CCPA / CPRA (California)</h3>
+          <p>
+            We provide notice of the categories of personal information we collect and the purposes for which we use it (see <a href="/privacy">Privacy Policy</a>). California residents have the right to request access, deletion, and limitation. Customers operating in or involving California residents have additional obligations described in our <a href="/acceptable-use#california">Acceptable Use Policy</a>.
+          </p>
+          <h3>TCPA &amp; CAN-SPAM (federal)</h3>
+          <p>
+            TCPA and CAN-SPAM compliance is a function of <em>how you reach out</em>, not what data you possess. Customers are responsible for honoring Do Not Call registries, obtaining the consent required for autodialed calls or SMS, including required CAN-SPAM disclosures and opt-out mechanisms in email, and respecting all unsubscribe requests independently.
+          </p>
+          <h3>GDPR (Europe)</h3>
+          <p>
+            Real Estate Intent's behavioral data is sourced and intended for use in the United States. We do not market the Service for outreach to EU residents and do not represent that the data is suitable for GDPR-governed activities.
+          </p>
+
+          <h2 id="consent">7. The opt-in question — what we do and don't claim</h2>
+          <p>We're explicit about this because it matters:</p>
+          <div class="callout">
+            <strong>What we do not provide</strong>
+            We do not provide proof of individual opt-in to receive contact from you. Even where a record was lawfully and compliantly collected at the source, that original consent does not automatically transfer to your specific outreach. You are responsible for the consent your channel of choice requires.
+          </div>
+          <p>
+            This is the honest position every legitimate behavioral data provider takes. Anyone selling you "100% TCPA-cleared" or "100% opted-in to your business" leads is misrepresenting how this category works.
+          </p>
+
+          <h2 id="opt-out">8. How individuals opt out</h2>
+          <p>An individual who wants their record removed from our database can request removal at <a href="mailto:optout@realestateintent.com">optout@realestateintent.com</a>. We process opt-out requests within <strong>15 business days</strong> in most cases.</p>
+          <p>
+            For email opt-outs from a specific customer's outreach, recipients should use the unsubscribe mechanism in the email itself — that is governed by the customer, not by us.
+          </p>
+          <p>
+            For direct-mail suppression, the DMA Choice service at <a href="https://www.thedma.org/" target="_blank" rel="noreferrer noopener">thedma.org</a> is the standard opt-out registry.
+          </p>
+
+          <h2 id="customer">9. What you (the customer) own and don't own</h2>
+          <ul>
+            <li>Your <strong>account, your filters, your campaigns, your CRM</strong> — yours.</li>
+            <li>Records <strong>you exported</strong> are licensed for use during your active subscription. They are not yours to resell, redistribute, or retain after cancellation.</li>
+            <li>Our <strong>methodology, models, and aggregated database</strong> are ours.</li>
+          </ul>
+          <p>The full license language lives in our <a href="/terms#license">Terms of Service</a>.</p>
+
+          <h2 id="security">10. Security &amp; storage</h2>
+          <ul>
+            <li>Data is stored and processed on infrastructure within the United States.</li>
+            <li>Commercially reasonable safeguards — including encryption, hashing where appropriate, access controls, and network protections — are in place.</li>
+            <li>No platform can guarantee absolute security against hacks or illegal intrusion.</li>
+          </ul>
+
+          <h2 id="contact">11. Contact</h2>
+          <p>
+            <strong>Real Estate Intent</strong><br />
+            a service of Next Level Web Design LLC<br />
+            <strong>General questions:</strong> <a href="mailto:hello@realestateintent.com">hello@realestateintent.com</a><br />
+            <strong>Legal &amp; compliance:</strong> <a href="mailto:legal@realestateintent.com">legal@realestateintent.com</a><br />
+            <strong>Opt-out requests:</strong> <a href="mailto:optout@realestateintent.com">optout@realestateintent.com</a><br />
+            <strong>Abuse reports:</strong> <a href="mailto:abuse@realestateintent.com">abuse@realestateintent.com</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-row">
+          <Logo />
+          <nav class="footer-nav" aria-label="Footer">
+            <a href="/#pricing">pricing</a>
+            <a href="https://app.realestateintent.com/signup">sign in</a>
+            <a href="https://app.realestateintent.com/signup">start trial</a>
+          </nav>
+          <div class="caption">powered by <a href="https://gonextlevel.ai" style="color:var(--text-2);">Go Next Level</a></div>
+        </div>
+        <div class="footer-legal">
+          <span>© 2026 Real Estate Intent</span>
+          <span>
+            <a href="/privacy">Privacy</a> ·
+            <a href="/terms">Terms</a> ·
+            <a href="/acceptable-use">Acceptable use</a> ·
+            <a href="/compliance">Compliance</a>
+          </span>
+        </div>
+      </div>
+    </footer>
+  </main>
+</BaseLayout>
