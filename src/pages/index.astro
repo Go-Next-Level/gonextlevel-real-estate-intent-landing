@@ -56,41 +56,22 @@ const behaviors = [
 ];
 
 const compareOld = [
-  "Statistical models guessing at likelihood.",
-  '"This segment might be interested soon."',
-  "Refreshed monthly, if that.",
-  "Generic intent score. No evidence.",
+  "Refreshed monthly — if that. Lists are stale on arrival.",
+  "Statistical models scoring who might move someday.",
+  '"This segment may be interested soon."',
+  "Generic score. No evidence. No timing.",
 ];
 const compareNew = [
-  "Real activity. Actually observed on the open web.",
+  "Refreshed every 24 hours. Nothing older than a day.",
+  "Real activity, actually observed on the open web.",
   '"This person is researching right now."',
-  "Refreshed daily. No signal older than 24 hours.",
-  "Signal-level evidence attached to each contact.",
-];
-
-const flow = [
-  {
-    accent: "capture", n: "01", title: "Capture",
-    body: "Real activity across the open web — saved listings, mortgage calculators, pre-foreclosure content, agent-review pages.",
-  },
-  {
-    accent: "resolve", n: "02", title: "Resolve",
-    body: "Each signal matched to publicly available contact data. Name, email, phone, address.",
-  },
-  {
-    accent: "refresh", n: "03", title: "Refresh",
-    body: "Source window runs 48 hours to 30 days. Once in our system, nothing is older than 24 hours.",
-  },
-  {
-    accent: "deliver", n: "04", title: "Deliver",
-    body: "Your dashboard, CSV, or direct push to the ad platforms where you already run campaigns.",
-  },
+  "Signal-level evidence and a timestamp on every contact.",
 ];
 
 const steps = [
-  { n: "01", title: "Monitor", body: "We watch real behavioral signals across the open web — the kind that actually precede a move." },
-  { n: "02", title: "Filter",  body: "Narrow by intent category, market, and recency until the list matches the deals you want to close." },
-  { n: "03", title: "Export",  body: "Push to the channels where you run campaigns or download a CSV. Refreshes daily — you only pay for net-new contacts." },
+  { n: "01", title: "Detect",  body: "We watch real activity across the open web — saved listings, mortgage calculators, foreclosure searches, agent comparisons. The kind of signals that actually precede a move." },
+  { n: "02", title: "Resolve", body: "Each signal matched to a contactable record — name, email, phone, address — through identity resolution and address validation. Nothing in our system is older than 24 hours." },
+  { n: "03", title: "Deliver", body: "Filtered by category, market, and recency, then pushed to your dashboard, CRM, ad audience, or CSV. Ready before tomorrow's coffee." },
 ];
 
 const exports_ = [
@@ -110,6 +91,7 @@ const plans = [
     monthly: "$199", annual: "$159", annualBilled: "$1,908",
     featured: false,
     summary: "For solo agents working a single market.",
+    cta: { label: "Get started", href: "https://app.realestateintent.com/sign-up" },
     features: [
       "500 exports / mo",
       "1 seat",
@@ -126,6 +108,7 @@ const plans = [
     monthly: "$499", annual: "$399", annualBilled: "$4,788",
     featured: true,
     summary: "For producers running multi-channel campaigns.",
+    cta: { label: "Start trial", href: "https://app.realestateintent.com/sign-up" },
     features: [
       "2,500 exports / mo",
       "2 seats",
@@ -141,12 +124,14 @@ const plans = [
     monthly: "$999", annual: "$799", annualBilled: "$9,588",
     featured: false,
     summary: "For brokerages and growing teams.",
+    cta: { label: "Start trial", href: "https://app.realestateintent.com/sign-up" },
     features: [
       "10,000 exports / mo",
-      "5 seats",
+      "3 seats",
       "30-day lookback",
       "Everything in Pro",
       "CRM integrations",
+      "Webhook access",
       "Chat + email support",
     ],
   },
@@ -155,21 +140,16 @@ const plans = [
     monthly: "$2,499", annual: "$1,999", annualBilled: "$23,988",
     featured: false,
     summary: "For multi-state brokerages and partners.",
+    cta: { label: "Contact sales", href: "mailto:sales@realestateintent.com" },
     features: [
       "Unlimited exports",
-      "Unlimited seats",
+      "5 seats",
       "30-day lookback",
       "Everything in Team",
-      "API access",
+      "Webhook access",
       "Dedicated account manager",
     ],
   },
-];
-
-const creditPacks = [
-  { contacts: "500",   price: "$99"  },
-  { contacts: "1,500", price: "$249" },
-  { contacts: "5,000", price: "$597" },
 ];
 ---
 
@@ -202,7 +182,7 @@ const creditPacks = [
         </p>
 
         <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;" data-reveal>
-          <a href="https://app.realestateintent.com/signup" class="btn btn-primary">
+          <a href="https://app.realestateintent.com/sign-up" class="btn btn-primary">
             Start 7-day free trial
             <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
@@ -236,16 +216,16 @@ const creditPacks = [
       </div>
     </section>
 
-    <!-- 3. BEHAVIORAL vs PREDICTIVE -->
+    <!-- 3. THE TIMING GAP — BEHAVIORAL vs PREDICTIVE -->
     <section class="section" id="vs" style="padding-top:0;">
       <div class="container">
         <div class="section-head">
-          <span class="eyebrow" data-reveal>Behavioral vs predictive</span>
+          <span class="eyebrow" data-reveal>The timing gap</span>
           <h2 class="section-title" data-reveal>
-            Everyone else sells <em class="gradient-text">guesses</em>. We sell <em class="gradient-text">evidence</em>.
+            Everyone else sells <em class="gradient-text">stale</em> guesses. We deliver <em class="gradient-text">fresh</em> evidence.
           </h2>
           <p class="lead" data-reveal style="max-width:640px;">
-            Predictive platforms score who <em style="font-style:normal; color:var(--text);">might</em> move. We show you who <em style="font-style:normal; color:var(--text);">is</em> moving — and what they were doing when we caught the signal.
+            Predictive lists are weeks old before they reach your CRM. By then the deal is gone. Real Estate Intent runs every 24 hours — so you reach people <em style="font-style:normal; color:var(--text);">while they're still researching</em>.
           </p>
         </div>
 
@@ -290,39 +270,17 @@ const creditPacks = [
       </div>
     </section>
 
-    <!-- 4. SIGNAL-TO-CONTACT FLOW -->
-    <section class="section" id="flow" style="padding-top:0;">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow" data-reveal>Signal to contact</span>
-          <h2 class="section-title" data-reveal>
-            How the data <em class="gradient-text">gets to you</em>.
-          </h2>
-          <p class="lead" data-reveal style="max-width:640px;">
-            A signal gets captured, resolved to a real person, refreshed, then delivered. No magic. Just a pipeline built for speed.
-          </p>
-        </div>
-
-        <div class="flow-grid">
-          {flow.map((s) => (
-            <div class="flow-step" data-accent={s.accent} data-reveal>
-              <span class="flow-step-num">{s.n} · {s.title}</span>
-              <h3 class="flow-step-title">{s.title}</h3>
-              <p class="flow-step-body">{s.body}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- 5. HOW IT WORKS -->
+    <!-- 4. THE PIPELINE — single, timing-focused -->
     <section class="section" id="how" style="padding-top:0;">
       <div class="container">
         <div class="section-head">
-          <span class="eyebrow" data-reveal>How it works</span>
+          <span class="eyebrow" data-reveal>The pipeline</span>
           <h2 class="section-title" data-reveal>
-            From raw signal to <em class="gradient-text">verified contact</em>.
+            While the intent is <em class="gradient-text">still hot</em>.
           </h2>
+          <p class="lead" data-reveal style="max-width:640px;">
+            Behavioral signal observed. Resolved to a real contact. In your hands inside 24 hours. Every day. Over and over.
+          </p>
         </div>
 
         <div class="how-grid">
@@ -440,35 +398,22 @@ const creditPacks = [
                 ))}
               </ul>
 
-              <a href="https://app.realestateintent.com/signup" class={p.featured ? "btn btn-primary" : "btn btn-secondary"} style="width:100%;">
-                Start free trial
+              <a href={p.cta.href} class={p.featured ? "btn btn-primary" : "btn btn-secondary"} style="width:100%;">
+                {p.cta.label}
                 <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </a>
             </article>
           ))}
         </div>
 
-        <div class="credit-packs" data-reveal>
-          <div class="credit-packs-head">
-            <span class="eyebrow" style="color:var(--brand);">Need more this month?</span>
-            <h3 class="credit-packs-title">Top up with one-time credit packs.</h3>
-            <p class="credit-packs-note">Available on Starter and Pro. No expiration on credits — use them whenever.</p>
-          </div>
+        <p class="seat-upsell" data-reveal>
+          Need more seats? Add additional users for <strong>$50 / mo each</strong>.
+        </p>
 
-          <div class="credit-pack-grid">
-            {creditPacks.map((c) => (
-              <div class="credit-pack-card">
-                <span class="credit-pack-contacts">{c.contacts}<span> contacts</span></span>
-                <span class="credit-pack-price">{c.price}</span>
-                <span class="credit-pack-tag">one-time</span>
-              </div>
-            ))}
-            <div class="credit-pack-card credit-pack-card-overage">
-              <span class="credit-pack-contacts">Auto overage</span>
-              <span class="credit-pack-price">$0.25<span> / contact</span></span>
-              <span class="credit-pack-tag">when you exceed your cap</span>
-            </div>
-          </div>
+        <div class="credit-packs credit-packs-simple" data-reveal>
+          <span class="eyebrow" style="color:var(--brand);">Need more this month?</span>
+          <h3 class="credit-packs-title">Top up with one-time credit packs.</h3>
+          <p class="credit-packs-note">No expiration. Use them whenever you need them.</p>
         </div>
       </div>
     </section>
@@ -482,7 +427,7 @@ const creditPacks = [
             The signal is already there. <em data-reveal-em>You just need to see it.</em>
           </h2>
           <div style="display:flex; justify-content:center; margin-top:8px;">
-            <a href="https://app.realestateintent.com/signup" class="btn btn-primary">
+            <a href="https://app.realestateintent.com/sign-up" class="btn btn-primary">
               Start 7-day free trial
               <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
@@ -498,8 +443,8 @@ const creditPacks = [
           <Logo />
           <nav class="footer-nav" aria-label="Footer">
             <a href="#pricing">pricing</a>
-            <a href="https://app.realestateintent.com/signup">sign in</a>
-            <a href="https://app.realestateintent.com/signup">start trial</a>
+            <a href="https://app.realestateintent.com/sign-in">sign in</a>
+            <a href="https://app.realestateintent.com/sign-up">start trial</a>
           </nav>
           <div class="caption">powered by <a href="https://gonextlevel.ai" style="color:var(--text-2);">Go Next Level</a></div>
         </div>
