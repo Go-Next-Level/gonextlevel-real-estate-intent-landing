@@ -1,10 +1,25 @@
-<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" fill="none">
-  <defs>
-    <linearGradient id="rei-x" x1="100%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#60A5FA"/>
-      <stop offset="48%" stop-color="#A78BFA"/>
-      <stop offset="100%" stop-color="#F472B6"/>
-    </linearGradient>
-  </defs>
-  <path d="M7.5 7.5 L24.5 24.5 M24.5 7.5 L7.5 24.5" stroke="url(#rei-x)" stroke-width="6.2" stroke-linecap="round"/>
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <path fill-rule="evenodd" clip-rule="evenodd" fill="#7DD3FC" d="
+    M 11 6
+    L 11 58
+    L 21 58
+    L 21 38
+    L 30 38
+    L 49 58
+    L 61 58
+    L 39 36
+    A 15 15 0 0 0 39 6
+    L 11 6
+    Z
+    M 21 14
+    L 36 14
+    A 7 7 0 0 1 36 28
+    L 21 28
+    Z
+  "/>
+  <path fill="#7DD3FC" d="M 3 58 L 25 36 L 31 43 L 16 58 Z"/>
+  <rect x="28" y="46" width="3.4" height="3.4" fill="#7DD3FC"/>
+  <rect x="32.6" y="46" width="3.4" height="3.4" fill="#7DD3FC"/>
+  <rect x="28" y="50.6" width="3.4" height="3.4" fill="#7DD3FC"/>
+  <rect x="32.6" y="50.6" width="3.4" height="3.4" fill="#7DD3FC"/>
 </svg>
