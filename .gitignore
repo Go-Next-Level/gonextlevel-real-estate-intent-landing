@@ -4,3 +4,6 @@ dist
 .DS_Store
 .env
 .env.local
+
+# Source logo originals — copied into public/ as needed
+logos/
