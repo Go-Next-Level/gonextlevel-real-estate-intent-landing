@@ -296,14 +296,21 @@ const plans = [
 
         <div class="video-frame" data-reveal>
           <div class="video-frame-inner">
-            <iframe
-              src="https://www.youtube-nocookie.com/embed/-5qI2KBPnwg?rel=0&modestbranding=1"
-              title="Real Estate Intent — platform walkthrough"
-              loading="lazy"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerpolicy="strict-origin-when-cross-origin"
-              allowfullscreen
-            ></iframe>
+            <button class="video-poster" type="button" data-yt="-5qI2KBPnwg" aria-label="Play Real Estate Intent platform walkthrough">
+              <img
+                src="https://i.ytimg.com/vi/-5qI2KBPnwg/maxresdefault.jpg"
+                alt=""
+                loading="lazy"
+                decoding="async"
+                width="1280"
+                height="720"
+              />
+              <span class="video-play" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                  <path d="M8 5v14l11-7z" fill="currentColor"/>
+                </svg>
+              </span>
+            </button>
           </div>
         </div>
       </div>
@@ -555,6 +562,30 @@ const plans = [
         otherReveals.forEach((el) => io.observe(el));
       }
     }
+
+    /* ===== Click-to-load video: replace poster with iframe only after click ===== */
+    document.querySelectorAll<HTMLButtonElement>("[data-yt]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const id = btn.dataset.yt;
+        if (!id) return;
+        const params = new URLSearchParams({
+          autoplay: "1",
+          rel: "0",
+          modestbranding: "1",
+          playsinline: "1",
+          iv_load_policy: "3",
+          cc_load_policy: "0",
+        });
+        const iframe = document.createElement("iframe");
+        iframe.src = `https://www.youtube-nocookie.com/embed/${id}?${params.toString()}`;
+        iframe.title = "Real Estate Intent — platform walkthrough";
+        iframe.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
+        iframe.setAttribute("allowfullscreen", "");
+        iframe.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+        iframe.style.cssText = "position:absolute;inset:0;width:100%;height:100%;border:0;display:block;";
+        btn.replaceWith(iframe);
+      });
+    });
 
     /* ===== Billing toggle (Monthly / Annual) ===== */
     const billingGrid = document.querySelector<HTMLElement>(".plan-grid[data-billing]");
