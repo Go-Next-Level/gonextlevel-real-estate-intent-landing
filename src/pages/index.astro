@@ -6,8 +6,15 @@ import ParticleField from '../components/ParticleField.astro';
 
 const businessName = "Real Estate Intent";
 const tagline = "Real online behavior data for real estate";
-const description = "Real online behavior data for buyers, sellers, distressed homeowners, and lenders — refreshed daily, resolved to real contacts, exported wherever you run campaigns. 7-day free trial.";
+const description = "Real online behavior data for buyers, sellers, distressed homeowners, and lenders — refreshed daily, resolved to real contacts, exported wherever you run campaigns.";
 const siteUrl = (Astro.site ?? Astro.url.origin).toString();
+
+// PRICING VISIBILITY FLAG
+// Pricing is temporarily hidden from the public landing page while positioning
+// is evaluated. To restore the full pricing section, JSON-LD offers, and the
+// pricing-related CTAs, flip this flag back to `true`. All pricing data,
+// markup, and styles remain in place — nothing has been deleted.
+const showPricing = false;
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -25,12 +32,14 @@ const structuredData = {
       "applicationCategory": "BusinessApplication",
       "operatingSystem": "Web",
       "description": description,
-      "offers": [
-        { "@type": "Offer", "name": "Starter",    "price": "199",  "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } },
-        { "@type": "Offer", "name": "Pro",        "price": "499",  "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } },
-        { "@type": "Offer", "name": "Team",       "price": "999",  "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } },
-        { "@type": "Offer", "name": "Enterprise", "price": "2499", "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } }
-      ]
+      ...(showPricing ? {
+        "offers": [
+          { "@type": "Offer", "name": "Starter",    "price": "199",  "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } },
+          { "@type": "Offer", "name": "Pro",        "price": "499",  "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } },
+          { "@type": "Offer", "name": "Team",       "price": "999",  "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } },
+          { "@type": "Offer", "name": "Enterprise", "price": "2499", "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } }
+        ]
+      } : {})
     },
     {
       "@type": "VideoObject",
@@ -194,10 +203,10 @@ const plans = [
 
         <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;" data-reveal>
           <a href="https://app.realestateintent.com/signup" class="btn btn-primary">
-            Start 7-day free trial
+            Get on the list
             <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
-          <a href="#pricing" class="btn btn-ghost">See pricing</a>
+          <a href="#access" class="btn btn-ghost">Learn more</a>
         </div>
       </div>
     </section>
@@ -272,12 +281,14 @@ const plans = [
           </div>
         </div>
 
-        <div class="price-compare" data-reveal>
-          <div class="price-compare-row">
-            Apollo full contact ~ $1.80 · ZoomInfo intent ~ $2–3 · <strong>Real Estate Intent Pro $0.20 / export</strong>
+        {showPricing && (
+          <div class="price-compare" data-reveal>
+            <div class="price-compare-row">
+              Apollo full contact ~ $1.80 · ZoomInfo intent ~ $2–3 · <strong>Real Estate Intent Pro $0.20 / export</strong>
+            </div>
+            <div class="price-compare-gloss">Same contact. <em>9–15× the math.</em></div>
           </div>
-          <div class="price-compare-gloss">Same contact. <em>9–15× the math.</em></div>
-        </div>
+        )}
       </div>
     </section>
 
@@ -394,75 +405,99 @@ const plans = [
       </div>
     </section>
 
-    <!-- 7. PRICING -->
-    <section class="section" id="pricing" style="padding-top:0;">
-      <div class="container">
-        <div class="section-head" style="text-align:center; align-items:center; margin-left:auto; margin-right:auto;">
-          <span class="eyebrow" data-reveal>Pricing</span>
-          <h2 class="section-title" data-reveal>Start free. <em class="gradient-text">Scale</em> when you're ready.</h2>
-          <p class="lead" data-reveal style="max-width:560px;">
-            Every plan includes all 3 data categories — Motivated Sellers, General Real Estate, Lending Signals — and every subcategory underneath. No tier gating. Free trial: export up to 50 contacts after previewing your local inventory.
-          </p>
+    {showPricing && (
+      <!-- 7. PRICING (hidden — toggle showPricing in frontmatter to restore) -->
+      <section class="section" id="pricing" style="padding-top:0;">
+        <div class="container">
+          <div class="section-head" style="text-align:center; align-items:center; margin-left:auto; margin-right:auto;">
+            <span class="eyebrow" data-reveal>Pricing</span>
+            <h2 class="section-title" data-reveal>Start free. <em class="gradient-text">Scale</em> when you're ready.</h2>
+            <p class="lead" data-reveal style="max-width:560px;">
+              Every plan includes all 3 data categories — Motivated Sellers, General Real Estate, Lending Signals — and every subcategory underneath. No tier gating. Free trial: export up to 50 contacts after previewing your local inventory.
+            </p>
 
-          <div class="billing-toggle" data-billing-toggle role="tablist" aria-label="Billing period" data-reveal>
-            <button type="button" class="is-active" data-billing="monthly" role="tab" aria-selected="true">Monthly</button>
-            <button type="button" data-billing="annual" role="tab" aria-selected="false">
-              Annual
-              <span class="save-badge">Save 20%</span>
-            </button>
+            <div class="billing-toggle" data-billing-toggle role="tablist" aria-label="Billing period" data-reveal>
+              <button type="button" class="is-active" data-billing="monthly" role="tab" aria-selected="true">Monthly</button>
+              <button type="button" data-billing="annual" role="tab" aria-selected="false">
+                Annual
+                <span class="save-badge">Save 20%</span>
+              </button>
+            </div>
           </div>
-        </div>
 
-        <div class="plan-grid" data-billing="monthly">
-          {plans.map((p) => (
-            <article class="plan-card" data-featured={p.featured} data-reveal>
-              {p.featured && <span class="plan-badge">Most popular</span>}
-              <div>
-                <h3 class="plan-name">{p.name}</h3>
-                <p class="plan-summary">{p.summary}</p>
-                <div class="plan-prices">
-                  <div class="plan-price plan-price-monthly">
-                    <span class="price">{p.monthly}</span>
-                    <span class="price-suffix">/ mo</span>
-                  </div>
-                  <div class="plan-price plan-price-annual">
-                    <span class="price">{p.annual}</span>
-                    <span class="price-suffix">/ mo</span>
-                    <span class="price-billed">billed {p.annualBilled} / yr</span>
+          <div class="plan-grid" data-billing="monthly">
+            {plans.map((p) => (
+              <article class="plan-card" data-featured={p.featured} data-reveal>
+                {p.featured && <span class="plan-badge">Most popular</span>}
+                <div>
+                  <h3 class="plan-name">{p.name}</h3>
+                  <p class="plan-summary">{p.summary}</p>
+                  <div class="plan-prices">
+                    <div class="plan-price plan-price-monthly">
+                      <span class="price">{p.monthly}</span>
+                      <span class="price-suffix">/ mo</span>
+                    </div>
+                    <div class="plan-price plan-price-annual">
+                      <span class="price">{p.annual}</span>
+                      <span class="price-suffix">/ mo</span>
+                      <span class="price-billed">billed {p.annualBilled} / yr</span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <ul class="plan-features">
-                {p.features.map((f) => (
-                  <li>
-                    <span class="plan-check">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </span>
-                    {f}
-                  </li>
-                ))}
-              </ul>
+                <ul class="plan-features">
+                  {p.features.map((f) => (
+                    <li>
+                      <span class="plan-check">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </span>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
 
-              <a href={p.cta.href} class={p.featured ? "btn btn-primary" : "btn btn-secondary"} style="width:100%;">
-                {p.cta.label}
-                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </a>
-            </article>
-          ))}
+                <a href={p.cta.href} class={p.featured ? "btn btn-primary" : "btn btn-secondary"} style="width:100%;">
+                  {p.cta.label}
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+              </article>
+            ))}
+          </div>
+
+          <p class="seat-upsell" data-reveal>
+            Need more seats? Add additional users for <strong>$50 / mo each</strong>.
+          </p>
+
+          <div class="credit-packs credit-packs-simple" data-reveal>
+            <span class="eyebrow" style="color:var(--brand);">Need more this month?</span>
+            <h3 class="credit-packs-title">Top up with one-time credit packs.</h3>
+            <p class="credit-packs-note">No expiration. Use them whenever you need them.</p>
+          </div>
         </div>
+      </section>
+    )}
 
-        <p class="seat-upsell" data-reveal>
-          Need more seats? Add additional users for <strong>$50 / mo each</strong>.
-        </p>
-
-        <div class="credit-packs credit-packs-simple" data-reveal>
-          <span class="eyebrow" style="color:var(--brand);">Need more this month?</span>
-          <h3 class="credit-packs-title">Top up with one-time credit packs.</h3>
-          <p class="credit-packs-note">No expiration. Use them whenever you need them.</p>
+    {!showPricing && (
+      <!-- 7. EARLY ACCESS — shown while pricing is hidden -->
+      <section class="section" id="access" style="padding-top:0;">
+        <div class="container">
+          <div class="access-card" data-reveal>
+            <span class="eyebrow" style="color:var(--brand-2);">Early access</span>
+            <h2 class="access-title">Now taking names.</h2>
+            <p class="access-body">
+              We're rolling Real Estate Intent out to a focused set of teams while the platform scales. Tell us about your business and we'll be in touch as the next cohort opens — along with what the data is showing along the way.
+            </p>
+            <a href="https://app.realestateintent.com/signup" class="btn btn-primary">
+              Get on the list
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <p class="access-foot">
+              Working at a brokerage with serious volume? Email <a href="mailto:sales@realestateintent.com">sales@realestateintent.com</a> and we'll set up a conversation.
+            </p>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    )}
 
     <!-- 8. FINAL CTA -->
     <section class="cta" id="cta">
@@ -474,7 +509,7 @@ const plans = [
           </h2>
           <div style="display:flex; justify-content:center; margin-top:8px;">
             <a href="https://app.realestateintent.com/signup" class="btn btn-primary">
-              Start 7-day free trial
+              Get on the list
               <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
           </div>
@@ -488,9 +523,9 @@ const plans = [
         <div class="footer-row">
           <Logo />
           <nav class="footer-nav" aria-label="Footer">
-            <a href="#pricing">pricing</a>
+            <a href="#access">early access</a>
             <a href="https://app.realestateintent.com/login">sign in</a>
-            <a href="https://app.realestateintent.com/signup">start trial</a>
+            <a href="https://app.realestateintent.com/signup">get on the list</a>
           </nav>
           <div class="caption">powered by <a href="https://gonextlevel.ai" style="color:var(--text-2);">Go Next Level</a></div>
         </div>
