@@ -9,12 +9,8 @@ const tagline = "Real online behavior data for real estate";
 const description = "Real online behavior data for buyers, sellers, distressed homeowners, and lenders — refreshed daily, resolved to real contacts, exported wherever you run campaigns.";
 const siteUrl = (Astro.site ?? Astro.url.origin).toString();
 
-// PRICING VISIBILITY FLAG
-// Pricing is temporarily hidden from the public landing page while positioning
-// is evaluated. To restore the full pricing section, JSON-LD offers, and the
-// pricing-related CTAs, flip this flag back to `true`. All pricing data,
-// markup, and styles remain in place — nothing has been deleted.
-const showPricing = false;
+// Public pricing and the self-serve seven-day trial are active.
+const showPricing = true;
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -111,7 +107,7 @@ const plans = [
     monthly: "$199", annual: "$159", annualBilled: "$1,908",
     featured: false,
     summary: "For solo agents working a single market.",
-    cta: { label: "Get started", href: "https://app.realestateintent.com/signup" },
+    cta: { label: "Start 7-day free trial", href: "https://app.realestateintent.com/signup" },
     features: [
       "500 exports / mo",
       "1 seat",
@@ -128,7 +124,7 @@ const plans = [
     monthly: "$499", annual: "$399", annualBilled: "$4,788",
     featured: true,
     summary: "For producers running multi-channel campaigns.",
-    cta: { label: "Start trial", href: "https://app.realestateintent.com/signup" },
+    cta: { label: "Start 7-day free trial", href: "https://app.realestateintent.com/signup" },
     features: [
       "2,500 exports / mo",
       "2 seats",
@@ -144,7 +140,7 @@ const plans = [
     monthly: "$999", annual: "$799", annualBilled: "$9,588",
     featured: false,
     summary: "For brokerages and growing teams.",
-    cta: { label: "Start trial", href: "https://app.realestateintent.com/signup" },
+    cta: { label: "Start 7-day free trial", href: "https://app.realestateintent.com/signup" },
     features: [
       "10,000 exports / mo",
       "3 seats",
@@ -160,7 +156,7 @@ const plans = [
     monthly: "$2,499", annual: "$1,999", annualBilled: "$23,988",
     featured: false,
     summary: "For multi-state brokerages and partners.",
-    cta: { label: "Get started", href: "https://app.realestateintent.com/signup" },
+    cta: { label: "Start 7-day free trial", href: "https://app.realestateintent.com/signup" },
     features: [
       "Unlimited exports",
       "5 seats",
@@ -203,10 +199,10 @@ const plans = [
 
         <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;" data-reveal>
           <a href="https://app.realestateintent.com/signup" class="btn btn-primary">
-            Get on the list
+            Start 7-day free trial
             <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
-          <a href="#access" class="btn btn-ghost">Learn more</a>
+          <a href="#pricing" class="btn btn-ghost">View pricing</a>
         </div>
       </div>
     </section>
@@ -406,14 +402,14 @@ const plans = [
     </section>
 
     {showPricing && (
-      <!-- 7. PRICING (hidden — toggle showPricing in frontmatter to restore) -->
+      <!-- 7. PRICING -->
       <section class="section" id="pricing" style="padding-top:0;">
         <div class="container">
           <div class="section-head" style="text-align:center; align-items:center; margin-left:auto; margin-right:auto;">
             <span class="eyebrow" data-reveal>Pricing</span>
             <h2 class="section-title" data-reveal>Start free. <em class="gradient-text">Scale</em> when you're ready.</h2>
             <p class="lead" data-reveal style="max-width:560px;">
-              Every plan includes all 3 data categories — Motivated Sellers, General Real Estate, Lending Signals — and every subcategory underneath. No tier gating. Free trial: export up to 50 contacts after previewing your local inventory.
+              Start with a 7-day free trial — no credit card required. Every plan includes all 3 data categories and every subcategory underneath. Preview your local inventory and export up to 50 contacts during the trial.
             </p>
 
             <div class="billing-toggle" data-billing-toggle role="tablist" aria-label="Billing period" data-reveal>
@@ -477,25 +473,6 @@ const plans = [
       </section>
     )}
 
-    {!showPricing && (
-      <!-- 7. EARLY ACCESS — shown while pricing is hidden -->
-      <section class="section" id="access" style="padding-top:0;">
-        <div class="container">
-          <div class="access-card" data-reveal>
-            <span class="eyebrow" style="color:var(--brand-2);">Early access</span>
-            <h2 class="access-title">Now taking names.</h2>
-            <p class="access-body">
-              We're rolling Real Estate Intent out to a focused set of teams while the platform scales. Tell us about your business and we'll be in touch as the next cohort opens — along with what the data is showing along the way.
-            </p>
-            <a href="https://app.realestateintent.com/signup" class="btn btn-primary">
-              Get on the list
-              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </div>
-        </div>
-      </section>
-    )}
-
     <!-- 8. FINAL CTA -->
     <section class="cta" id="cta">
       <div class="cta-glow"></div>
@@ -506,7 +483,7 @@ const plans = [
           </h2>
           <div style="display:flex; justify-content:center; margin-top:8px;">
             <a href="https://app.realestateintent.com/signup" class="btn btn-primary">
-              Get on the list
+              Start 7-day free trial
               <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
           </div>
@@ -520,9 +497,9 @@ const plans = [
         <div class="footer-row">
           <Logo />
           <nav class="footer-nav" aria-label="Footer">
-            <a href="#access">early access</a>
+            <a href="#pricing">pricing</a>
             <a href="https://app.realestateintent.com/login">sign in</a>
-            <a href="https://app.realestateintent.com/signup">get on the list</a>
+            <a href="https://app.realestateintent.com/signup">start free trial</a>
           </nav>
           <div class="caption">powered by <a href="https://gonextlevel.ai" style="color:var(--text-2);">Go Next Level</a></div>
         </div>
