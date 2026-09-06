@@ -30,10 +30,7 @@ const structuredData = {
       "description": description,
       ...(showPricing ? {
         "offers": [
-          { "@type": "Offer", "name": "Starter",    "price": "199",  "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } },
-          { "@type": "Offer", "name": "Pro",        "price": "499",  "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } },
-          { "@type": "Offer", "name": "Team",       "price": "999",  "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } },
-          { "@type": "Offer", "name": "Enterprise", "price": "2499", "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } }
+          { "@type": "Offer", "name": "Beta / Founders Program", "price": "997", "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } }
         ]
       } : {})
     },
@@ -103,67 +100,20 @@ const exports_ = [
 
 const plans = [
   {
-    name: "Starter",
-    monthly: "$199", annual: "$159", annualBilled: "$1,908",
-    featured: false,
-    summary: "For solo agents working a single market.",
-    cta: { label: "Start 7-day free trial", href: "https://app.realestateintent.com/signup" },
-    features: [
-      "500 exports / mo",
-      "1 seat",
-      "7-day lookback",
-      "All 3 categories + subcategories",
-      "Unlimited searches & previews",
-      "CSV export",
-      "Email support",
-      "Free trial included",
-    ],
-  },
-  {
-    name: "Pro",
-    monthly: "$499", annual: "$399", annualBilled: "$4,788",
+    name: "Beta / Founders Program",
+    monthly: "$997",
     featured: true,
-    summary: "For producers running multi-channel campaigns.",
-    cta: { label: "Start 7-day free trial", href: "https://app.realestateintent.com/signup" },
-    features: [
-      "2,500 exports / mo",
-      "2 seats",
-      "14-day lookback",
-      "Everything in Starter",
-      "Export scheduling",
-      "Priority email support",
-      "Free trial included",
-    ],
-  },
-  {
-    name: "Team",
-    monthly: "$999", annual: "$799", annualBilled: "$9,588",
-    featured: false,
-    summary: "For brokerages and growing teams.",
-    cta: { label: "Start 7-day free trial", href: "https://app.realestateintent.com/signup" },
-    features: [
-      "10,000 exports / mo",
-      "3 seats",
-      "30-day lookback",
-      "Everything in Pro",
-      "CRM integrations",
-      "Webhook access",
-      "Chat + email support",
-    ],
-  },
-  {
-    name: "Enterprise",
-    monthly: "$2,499", annual: "$1,999", annualBilled: "$23,988",
-    featured: false,
-    summary: "For multi-state brokerages and partners.",
+    summary: "Lifetime founder pricing — normally $2,497 per month.",
     cta: { label: "Start 7-day free trial", href: "https://app.realestateintent.com/signup" },
     features: [
       "Unlimited exports",
       "5 seats",
       "30-day lookback",
-      "Everything in Team",
+      "All 3 categories + subcategories",
+      "Unlimited searches & previews",
       "Webhook access",
       "Dedicated account manager",
+      "Free trial included",
     ],
   },
 ];
@@ -407,21 +357,13 @@ const plans = [
         <div class="container">
           <div class="section-head" style="text-align:center; align-items:center; margin-left:auto; margin-right:auto;">
             <span class="eyebrow" data-reveal>Pricing</span>
-            <h2 class="section-title" data-reveal>Start free. <em class="gradient-text">Scale</em> when you're ready.</h2>
+            <h2 class="section-title" data-reveal>Join the <em class="gradient-text">Founders Program</em>.</h2>
             <p class="lead" data-reveal style="max-width:560px;">
-              Start with a 7-day free trial — no credit card required. Every plan includes all 3 data categories and every subcategory underneath. Preview your local inventory and export up to 50 contacts during the trial.
+              Lock in $997 per month for the lifetime of your active subscription — normally $2,497. Start with a 7-day free trial, no credit card required.
             </p>
-
-            <div class="billing-toggle" data-billing-toggle role="tablist" aria-label="Billing period" data-reveal>
-              <button type="button" class="is-active" data-billing="monthly" role="tab" aria-selected="true">Monthly</button>
-              <button type="button" data-billing="annual" role="tab" aria-selected="false">
-                Annual
-                <span class="save-badge">Save 20%</span>
-              </button>
-            </div>
           </div>
 
-          <div class="plan-grid" data-billing="monthly">
+          <div class="plan-grid" data-billing="monthly" style="max-width:440px; margin-left:auto; margin-right:auto; grid-template-columns:1fr;">
             {plans.map((p) => (
               <article class="plan-card" data-featured={p.featured} data-reveal>
                 {p.featured && <span class="plan-badge">Most popular</span>}
@@ -432,11 +374,6 @@ const plans = [
                     <div class="plan-price plan-price-monthly">
                       <span class="price">{p.monthly}</span>
                       <span class="price-suffix">/ mo</span>
-                    </div>
-                    <div class="plan-price plan-price-annual">
-                      <span class="price">{p.annual}</span>
-                      <span class="price-suffix">/ mo</span>
-                      <span class="price-billed">billed {p.annualBilled} / yr</span>
                     </div>
                   </div>
                 </div>
