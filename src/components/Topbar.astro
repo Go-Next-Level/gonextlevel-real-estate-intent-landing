@@ -1,6 +1,9 @@
 ---
 import Logo from './Logo.astro';
 import { primaryNavigation } from '../data/site';
+
+const currentPath = Astro.url.pathname;
+const isActive = (href: string) => currentPath === href || (href !== '/' && currentPath.startsWith(href));
 ---
 
 <header class="topbar" data-site-header>
@@ -9,7 +12,7 @@ import { primaryNavigation } from '../data/site';
 
     <nav aria-label="Primary" class="desktop-nav">
       {primaryNavigation.map((item) => (
-        <a href={item.href} class="nav-link">{item.label}</a>
+        <a href={item.href} class="nav-link" aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>
       ))}
     </nav>
 
@@ -19,15 +22,15 @@ import { primaryNavigation } from '../data/site';
         Start free trial
         <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
       </a>
-      <details class="mobile-nav">
-        <summary aria-label="Open navigation menu">
+      <div class="mobile-nav" data-mobile-nav>
+        <button class="mobile-nav-trigger" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-navigation-panel" data-mobile-nav-trigger>
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" /></svg>
-        </summary>
-        <nav aria-label="Mobile navigation" class="mobile-nav-panel">
-          {primaryNavigation.map((item) => <a href={item.href}>{item.label}</a>)}
+        </button>
+        <nav id="mobile-navigation-panel" aria-label="Mobile navigation" class="mobile-nav-panel" data-mobile-nav-panel hidden>
+          {primaryNavigation.map((item) => <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>)}
           <a href="https://app.realestateintent.com/login">Sign in</a>
         </nav>
-      </details>
+      </div>
     </div>
   </div>
 </header>
@@ -37,6 +40,27 @@ import { primaryNavigation } from '../data/site';
   const updateHeader = () => header?.classList.toggle('is-scrolled', window.scrollY > 4);
   window.addEventListener('scroll', updateHeader, { passive: true });
   updateHeader();
+
+  const mobileNav = document.querySelector<HTMLElement>('[data-mobile-nav]');
+  const mobileTrigger = mobileNav?.querySelector<HTMLButtonElement>('[data-mobile-nav-trigger]');
+  const mobilePanel = mobileNav?.querySelector<HTMLElement>('[data-mobile-nav-panel]');
+  const setMobileNav = (open: boolean) => {
+    if (!mobileTrigger || !mobilePanel) return;
+    mobileTrigger.setAttribute('aria-expanded', String(open));
+    mobileTrigger.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+    mobilePanel.hidden = !open;
+  };
+  mobileTrigger?.addEventListener('click', () => setMobileNav(mobileTrigger.getAttribute('aria-expanded') !== 'true'));
+  mobilePanel?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMobileNav(false)));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && mobileTrigger?.getAttribute('aria-expanded') === 'true') {
+      setMobileNav(false);
+      mobileTrigger.focus();
+    }
+  });
+  document.addEventListener('click', (event) => {
+    if (mobileNav && event.target instanceof Node && !mobileNav.contains(event.target)) setMobileNav(false);
+  });
 </script>
 
 <style>
@@ -45,14 +69,18 @@ import { primaryNavigation } from '../data/site';
   .desktop-nav { display: flex; align-items: center; justify-content: center; gap: 2px; margin-left: auto; }
   .nav-link { min-height: 44px; display: inline-flex; align-items: center; padding: 0 10px; border-radius: 7px; color: var(--text-2); font-size: 13px; font-weight: 500; transition: color 180ms ease, background 180ms ease; }
   .nav-link:hover { color: var(--text); background: var(--surface-2); }
+  .nav-link[aria-current="page"] { color: var(--text); background: var(--surface-2); box-shadow: inset 0 -1px var(--brand); }
   .topbar-actions { display: flex; align-items: center; gap: 6px; margin-left: 4px; }
   .mobile-nav { display: none; position: relative; }
-  .mobile-nav summary { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--border-strong); border-radius: var(--r); color: var(--text); cursor: pointer; list-style: none; }
-  .mobile-nav summary::-webkit-details-marker { display: none; }
+  .mobile-nav-trigger { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--border-strong); border-radius: var(--r); color: var(--text); background: var(--surface-1); }
+  .mobile-nav-trigger:hover,
+  .mobile-nav-trigger[aria-expanded="true"] { border-color: var(--brand-border); background: var(--surface-3); }
   .mobile-nav-panel { position: absolute; top: 52px; right: 0; width: min(280px, calc(100vw - 40px)); padding: 10px; display: grid; border: 1px solid var(--border-strong); border-radius: var(--r-xl); background: rgba(18,18,20,.98); box-shadow: var(--shadow-lg); }
+  .mobile-nav-panel[hidden] { display: none; }
   .mobile-nav-panel a { min-height: 46px; display: flex; align-items: center; padding: 0 12px; border-bottom: 1px solid var(--border); color: var(--text-2); }
   .mobile-nav-panel a:last-child { border: 0; }
   .mobile-nav-panel a:hover { color: var(--brand-2); }
+  .mobile-nav-panel a[aria-current="page"] { color: var(--text); background: var(--brand-bg); }
   @media (max-width: 1040px) {
     .desktop-nav { display: none; }
     .topbar-actions { margin-left: auto; }

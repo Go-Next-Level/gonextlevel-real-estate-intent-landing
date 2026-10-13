@@ -163,6 +163,13 @@ const plans = [
           </a>
           <a href="#pricing" class="btn btn-ghost">View pricing</a>
         </div>
+
+        <dl class="hero-proof" aria-label="Platform operating facts" data-reveal>
+          <div><dt>Daily</dt><dd>Signal refresh cadence</dd></div>
+          <div><dt>Evidence</dt><dd>Signal-level timestamps</dd></div>
+          <div><dt>Portable</dt><dd>CSV + webhook delivery</dd></div>
+          <div><dt><a href="/data-methodology/">Documented →</a></dt><dd>Sources, limits & governance</dd></div>
+        </dl>
       </div>
     </section>
 
@@ -259,7 +266,9 @@ const plans = [
           <div class="video-frame-inner">
             <button class="video-poster" type="button" data-yt="-5qI2KBPnwg" aria-label="Play Real Estate Intent platform walkthrough">
               <img
-                src="https://i.ytimg.com/vi/-5qI2KBPnwg/maxresdefault.jpg"
+                src="https://i.ytimg.com/vi/-5qI2KBPnwg/sddefault.jpg"
+                srcset="https://i.ytimg.com/vi/-5qI2KBPnwg/mqdefault.jpg 320w, https://i.ytimg.com/vi/-5qI2KBPnwg/sddefault.jpg 640w, https://i.ytimg.com/vi/-5qI2KBPnwg/maxresdefault.jpg 1280w"
+                sizes="(max-width: 760px) calc(100vw - 40px), 1120px"
                 alt=""
                 loading="lazy"
                 decoding="async"
@@ -420,7 +429,7 @@ const plans = [
       <div class="container">
         <div class="cta-inner">
           <h2 class="cta-h2" data-reveal>
-            The signal is already there. <em data-reveal-em>You just need to see it.</em>
+            The signal is already there. <em>You just need to see it.</em>
           </h2>
           <div style="display:flex; justify-content:center; margin-top:8px;">
             <a href="https://app.realestateintent.com/signup" class="btn btn-primary">
@@ -435,46 +444,20 @@ const plans = [
   </main>
   <SiteFooter />
 
-  <!-- GSAP CDN — used only for the CTA gradient reveal -->
-  <script is:inline src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script is:inline src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-
   <script>
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // @ts-ignore
-    const gsap = (window as any).gsap;
-    // @ts-ignore
-    const ScrollTrigger = (window as any).ScrollTrigger;
-    if (gsap && ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
-
-    /* ===== Topbar scrolled state ===== */
-    const topbar = document.querySelector<HTMLElement>(".topbar");
-    const onScroll = () => {
-      if (!topbar) return;
-      topbar.classList.toggle("is-scrolled", window.scrollY > 4);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-
     /* ===== Reveal (hero stagger + scroll-triggered) ===== */
     const hero = document.querySelector(".hero");
-    const heroReveals = hero ? Array.from(hero.querySelectorAll<HTMLElement>("[data-reveal]")) : [];
     const otherReveals = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]")).filter(
       (el) => !(hero && hero.contains(el))
     );
 
-    heroReveals.forEach((el) => el.classList.add("reveal"));
     otherReveals.forEach((el) => el.classList.add("reveal"));
 
     if (prefersReduced) {
       document.querySelectorAll<HTMLElement>(".reveal").forEach((el) => el.classList.add("is-in"));
     } else {
-      heroReveals.forEach((el, i) => {
-        (el as HTMLElement).style.transitionDelay = `${i * 90 + 100}ms`;
-        requestAnimationFrame(() => el.classList.add("is-in"));
-      });
-
       if ("IntersectionObserver" in window) {
         const io = new IntersectionObserver(
           (entries) => {
@@ -532,42 +515,5 @@ const plans = [
       });
     }
 
-    /* ===== CTA gradient reveal =====
-       Use the .cta section as the trigger so there is enough scroll room
-       for the reveal to complete before the user hits the page bottom. */
-    if (gsap && ScrollTrigger && !prefersReduced) {
-      const em = document.querySelector<HTMLElement>("[data-reveal-em]");
-      const ctaSection = document.querySelector<HTMLElement>(".cta");
-      if (em && ctaSection) {
-        ScrollTrigger.create({
-          trigger: ctaSection,
-          start: "top 85%",
-          end: "bottom bottom",
-          scrub: 0.4,
-          onUpdate: (self: any) => {
-            em.style.setProperty("--reveal", String(self.progress));
-          },
-          onLeave: () => {
-            em.style.setProperty("--reveal", "1");
-            em.classList.add("reveal-done");
-          },
-        });
-        // Belt-and-braces: if the user is already at the bottom (short viewport
-        // or they jumped via anchor), force-complete the reveal.
-        window.addEventListener("scroll", () => {
-          const atBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 4;
-          if (atBottom) {
-            em.style.setProperty("--reveal", "1");
-            em.classList.add("reveal-done");
-          }
-        }, { passive: true });
-      }
-    } else {
-      const em = document.querySelector<HTMLElement>("[data-reveal-em]");
-      if (em) {
-        em.style.setProperty("--reveal", "1");
-        em.classList.add("reveal-done");
-      }
-    }
   </script>
 </BaseLayout>

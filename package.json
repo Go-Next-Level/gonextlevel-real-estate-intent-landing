@@ -9,6 +9,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "audit:seo": "node scripts/audit-seo.mjs",
+    "audit:ui": "node scripts/audit-ui.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
