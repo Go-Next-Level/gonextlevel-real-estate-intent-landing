@@ -1,0 +1,51 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Topbar from '../../../components/Topbar.astro';
+import SiteFooter from '../../../components/SiteFooter.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import FaqList from '../../../components/FaqList.astro';
+import { SITE, organizationSchema } from '../../../data/site';
+
+export async function getStaticPaths() {
+  const guides = await getCollection('guides', ({ data }) => !data.draft);
+  return guides.map((guide) => ({ params: { id: guide.id }, props: { guide } }));
+}
+
+const { guide } = Astro.props as { guide: CollectionEntry<'guides'> };
+const { Content, headings } = await render(guide);
+const { data } = guide;
+const url = `${SITE.url}/resources/guides/${guide.id}/`;
+const published = data.pubDate.toISOString();
+const modified = (data.updatedDate ?? data.pubDate).toISOString();
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    organizationSchema,
+    { '@type': 'Article', '@id': `${url}#article`, headline: data.title, description: data.description, datePublished: published, dateModified: modified, mainEntityOfPage: url, author: { '@type': 'Organization', name: data.author }, reviewedBy: data.reviewer ? { '@type': 'Organization', name: data.reviewer } : undefined, publisher: { '@id': `${SITE.url}/#organization` } },
+    { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url }, { '@type': 'ListItem', position: 2, name: 'Resources', item: `${SITE.url}/resources/` }, { '@type': 'ListItem', position: 3, name: 'Guides', item: `${SITE.url}/resources/guides/` }, { '@type': 'ListItem', position: 4, name: data.title }] },
+    ...(data.faqs.length ? [{ '@type': 'FAQPage', mainEntity: data.faqs.map((faq) => ({ '@type': 'Question', name: faq.question, acceptedAnswer: { '@type': 'Answer', text: faq.answer } })) }] : []),
+  ],
+};
+---
+
+<BaseLayout title={`${data.title} | Real Estate Intent`} description={data.description} canonicalUrl={url} structuredData={structuredData} pageType="article" publishedTime={published} modifiedTime={modified}>
+  <Topbar />
+  <main id="main-content" class="content-shell">
+    <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Resources', href: '/resources/' }, { label: 'Guides', href: '/resources/guides/' }, { label: data.title }]} />
+    <header class="content-hero guide-hero">
+      <div><p class="content-eyebrow">Field guide · {data.readingTime}</p><h1 class="content-title">{data.title}</h1><p class="content-dek">{data.description}</p></div>
+      <dl class="content-meta"><div><dt>Written by</dt><dd>{data.author}</dd></div>{data.reviewer && <div><dt>Reviewed by</dt><dd>{data.reviewer}</dd></div>}<div><dt>Updated</dt><dd>{(data.updatedDate ?? data.pubDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}</dd></div></dl>
+    </header>
+    <div class="content-layout">
+      <article class="content-prose guide-body"><Content />
+        {data.faqs.length > 0 && <section aria-labelledby="faq-heading"><p class="section-kicker">Quick reference</p><h2 id="faq-heading">Frequently asked questions</h2><FaqList items={data.faqs} /></section>}
+        {data.sources.length > 0 && <section class="source-register" aria-labelledby="sources-heading"><p class="section-kicker">Further reading</p><h2 id="sources-heading">Sources</h2><ol>{data.sources.map((source) => <li><a href={source.url}>{source.label}</a></li>)}</ol></section>}
+      </article>
+      <aside class="content-aside" aria-label="On this page"><p>On this page</p><nav>{headings.filter((heading) => heading.depth === 2).map((heading) => <a href={`#${heading.slug}`}>{heading.text}<span aria-hidden="true">↓</span></a>)}</nav><div class="aside-note"><span>Apply the framework</span><p>Build a test audience after the decision criteria are clear.</p><a href="https://app.realestateintent.com/signup">Start free trial</a></div></aside>
+    </div>
+    <section class="editorial-cta"><div><p>Next step</p><h2>Turn the framework into a measurable test.</h2></div><div class="cta-actions"><a class="btn btn-primary" href="https://app.realestateintent.com/signup">Start free trial</a><a class="btn btn-secondary" href="/compare/">Compare platforms</a></div></section>
+  </main>
+  <SiteFooter />
+</BaseLayout>
+

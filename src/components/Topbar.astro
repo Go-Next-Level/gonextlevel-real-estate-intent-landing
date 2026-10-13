@@ -1,35 +1,70 @@
 ---
-import Logo from "./Logo.astro";
+import Logo from './Logo.astro';
+import { primaryNavigation } from '../data/site';
 ---
-<header class="topbar">
+
+<header class="topbar" data-site-header>
   <div class="container topbar-inner">
     <div class="topbar-logo"><Logo /></div>
-    <div class="topbar-logo-sm"><Logo showWordmark={false} /></div>
-    <nav aria-label="Primary" class="topbar-nav">
-      <a href="/#pricing" class="btn btn-ghost hide-sm">pricing</a>
-      <a href="https://app.realestateintent.com/login" class="btn btn-secondary">sign in</a>
+
+    <nav aria-label="Primary" class="desktop-nav">
+      {primaryNavigation.map((item) => (
+        <a href={item.href} class="nav-link">{item.label}</a>
+      ))}
+    </nav>
+
+    <div class="topbar-actions">
+      <a href="https://app.realestateintent.com/login" class="btn btn-ghost hide-tablet">Sign in</a>
       <a href="https://app.realestateintent.com/signup" class="btn btn-primary">
         Start free trial
-        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
       </a>
-    </nav>
+      <details class="mobile-nav">
+        <summary aria-label="Open navigation menu">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" /></svg>
+        </summary>
+        <nav aria-label="Mobile navigation" class="mobile-nav-panel">
+          {primaryNavigation.map((item) => <a href={item.href}>{item.label}</a>)}
+          <a href="https://app.realestateintent.com/login">Sign in</a>
+        </nav>
+      </details>
+    </div>
   </div>
 </header>
 
+<script>
+  const header = document.querySelector<HTMLElement>('[data-site-header]');
+  const updateHeader = () => header?.classList.toggle('is-scrolled', window.scrollY > 4);
+  window.addEventListener('scroll', updateHeader, { passive: true });
+  updateHeader();
+</script>
+
 <style>
-  .topbar-inner {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
+  .topbar-inner { height: 100%; display: flex; align-items: center; gap: 22px; }
+  .topbar-logo { flex: none; }
+  .desktop-nav { display: flex; align-items: center; justify-content: center; gap: 2px; margin-left: auto; }
+  .nav-link { min-height: 44px; display: inline-flex; align-items: center; padding: 0 10px; border-radius: 7px; color: var(--text-2); font-size: 13px; font-weight: 500; transition: color 180ms ease, background 180ms ease; }
+  .nav-link:hover { color: var(--text); background: var(--surface-2); }
+  .topbar-actions { display: flex; align-items: center; gap: 6px; margin-left: 4px; }
+  .mobile-nav { display: none; position: relative; }
+  .mobile-nav summary { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--border-strong); border-radius: var(--r); color: var(--text); cursor: pointer; list-style: none; }
+  .mobile-nav summary::-webkit-details-marker { display: none; }
+  .mobile-nav-panel { position: absolute; top: 52px; right: 0; width: min(280px, calc(100vw - 40px)); padding: 10px; display: grid; border: 1px solid var(--border-strong); border-radius: var(--r-xl); background: rgba(18,18,20,.98); box-shadow: var(--shadow-lg); }
+  .mobile-nav-panel a { min-height: 46px; display: flex; align-items: center; padding: 0 12px; border-bottom: 1px solid var(--border); color: var(--text-2); }
+  .mobile-nav-panel a:last-child { border: 0; }
+  .mobile-nav-panel a:hover { color: var(--brand-2); }
+  @media (max-width: 1040px) {
+    .desktop-nav { display: none; }
+    .topbar-actions { margin-left: auto; }
+    .mobile-nav { display: block; }
   }
-  .topbar-nav { display: flex; align-items: center; gap: 8px; }
-  .topbar-logo-sm { display: none; }
-  .hide-sm { display: inline-flex; }
-  @media (max-width: 560px) {
-    .hide-sm { display: none; }
-    .topbar-logo { display: none; }
-    .topbar-logo-sm { display: inline-flex; }
+  @media (max-width: 620px) {
+    .topbar-logo :global(.wordmark-2) { display: none; }
+    .hide-tablet { display: none; }
+    .topbar-actions > .btn-primary { padding: 11px 13px; font-size: 12px; }
+  }
+  @media (max-width: 420px) {
+    .topbar-logo :global(.wordmark-1) { display: none; }
   }
 </style>
+

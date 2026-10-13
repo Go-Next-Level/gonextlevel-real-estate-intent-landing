@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Topbar from '../components/Topbar.astro';
-import Logo from '../components/Logo.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 import ParticleField from '../components/ParticleField.astro';
 
 const businessName = "Real Estate Intent";
@@ -109,7 +109,7 @@ const plans = [
       "Unlimited exports",
       "5 seats",
       "30-day lookback",
-      "All 3 categories + subcategories",
+      "All 4 categories + subcategories",
       "Unlimited searches & previews",
       "Webhook access",
       "Dedicated account manager",
@@ -126,7 +126,7 @@ const plans = [
 >
   <Topbar />
 
-  <main>
+  <main id="main-content">
     <!-- 1. HERO -->
     <section class="hero" id="hero">
       <div class="hero-glow"></div>
@@ -227,14 +227,9 @@ const plans = [
           </div>
         </div>
 
-        {showPricing && (
-          <div class="price-compare" data-reveal>
-            <div class="price-compare-row">
-              Apollo full contact ~ $1.80 · ZoomInfo intent ~ $2–3 · <strong>Real Estate Intent Pro $0.20 / export</strong>
-            </div>
-            <div class="price-compare-gloss">Same contact. <em>9–15× the math.</em></div>
-          </div>
-        )}
+        <p class="source-note" data-reveal>
+          Behavioral and predictive data answer different questions. Review the <a href="/resources/guides/behavioral-vs-predictive-real-estate-data/">plain-language comparison</a> before choosing a category.
+        </p>
       </div>
     </section>
 
@@ -351,8 +346,8 @@ const plans = [
       </div>
     </section>
 
+    <!-- 7. PRICING -->
     {showPricing && (
-      <!-- 7. PRICING -->
       <section class="section" id="pricing" style="padding-top:0;">
         <div class="container">
           <div class="section-head" style="text-align:center; align-items:center; margin-left:auto; margin-right:auto;">
@@ -428,30 +423,8 @@ const plans = [
       </div>
     </section>
 
-    <!-- 9. FOOTER -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-row">
-          <Logo />
-          <nav class="footer-nav" aria-label="Footer">
-            <a href="#pricing">pricing</a>
-            <a href="https://app.realestateintent.com/login">sign in</a>
-            <a href="https://app.realestateintent.com/signup">start free trial</a>
-          </nav>
-          <div class="caption">powered by <a href="https://gonextlevel.ai" style="color:var(--text-2);">Go Next Level</a></div>
-        </div>
-        <div class="footer-legal">
-          <span>© 2026 Real Estate Intent</span>
-          <span>
-            <a href="/privacy">Privacy</a> ·
-            <a href="/terms">Terms</a> ·
-            <a href="/acceptable-use">Acceptable use</a> ·
-            <a href="/compliance">Compliance</a>
-          </span>
-        </div>
-      </div>
-    </footer>
   </main>
+  <SiteFooter />
 
   <!-- GSAP CDN — used only for the CTA gradient reveal -->
   <script is:inline src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
