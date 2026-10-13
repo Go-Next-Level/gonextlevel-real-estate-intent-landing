@@ -1,0 +1,42 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Topbar from '../../../components/Topbar.astro';
+import SiteFooter from '../../../components/SiteFooter.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import { SITE, organizationSchema } from '../../../data/site';
+
+const guides = (await getCollection('guides', ({ data }) => !data.draft)).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const url = `${SITE.url}/resources/guides/`;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [organizationSchema, {
+    '@type': 'CollectionPage', '@id': `${url}#webpage`, url,
+    name: 'Real Estate Intent Guides', description: 'Research guides for evaluating and using real estate and mortgage intent data.',
+    mainEntity: { '@type': 'ItemList', itemListElement: guides.map((guide, index) => ({ '@type': 'ListItem', position: index + 1, url: `${url}${guide.id}/`, name: guide.data.title })) },
+  }],
+};
+---
+
+<BaseLayout title="Real Estate Intent Data Guides | Real Estate Intent" description="Plain-language, source-aware guides to behavioral intent data, identity resolution, mortgage audiences, vendor evaluation, and activation." canonicalUrl={url} structuredData={structuredData}>
+  <Topbar />
+  <main id="main-content" class="content-shell">
+    <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Resources', href: '/resources/' }, { label: 'Guides' }]} />
+    <header class="content-hero">
+      <div><p class="content-eyebrow">Research library</p><h1 class="content-title">A field guide to intent data.</h1><p class="content-dek">Clear definitions, evaluation frameworks, and operating practices for real estate and mortgage teams.</p></div>
+      <dl class="content-meta"><div><dt>Coverage</dt><dd>Data, identity, activation, governance</dd></div><div><dt>Editorial standard</dt><dd>Plain language, visible limitations</dd></div></dl>
+    </header>
+    <section class="hub-grid" aria-label="Guides">
+      {guides.map((guide) => (
+        <a class="hub-card" href={`/resources/guides/${guide.id}/`}>
+          <span>{guide.data.tags[0] ?? 'Guide'} · {guide.data.readingTime}</span>
+          <h2>{guide.data.title}</h2>
+          <p>{guide.data.description}</p>
+          <b aria-hidden="true">Read guide →</b>
+        </a>
+      ))}
+    </section>
+  </main>
+  <SiteFooter />
+</BaseLayout>
+

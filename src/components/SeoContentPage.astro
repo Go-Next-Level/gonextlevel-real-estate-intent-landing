@@ -1,0 +1,171 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Topbar from './Topbar.astro';
+import SiteFooter from './SiteFooter.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+import FaqList from './FaqList.astro';
+import type { SeoPage } from '../data/seoPages';
+import { getClaims } from '../data/claims';
+import { SITE, organizationSchema, softwareSchema } from '../data/site';
+
+const { page } = Astro.props as { page: SeoPage };
+const url = `${SITE.url}/${page.slug}/`;
+const sources = getClaims(page.claimIds ?? []);
+const isEditorial = page.kind === 'comparison' || page.kind === 'roundup';
+const breadcrumbItems = [
+  { label: 'Home', href: '/' },
+  ...(page.parentLabel === 'Home' ? [] : [{ label: page.parentLabel, href: page.parentHref }]),
+  { label: page.shortTitle },
+];
+const breadcrumbSchema = {
+  '@type': 'BreadcrumbList',
+  '@id': `${url}#breadcrumb`,
+  itemListElement: breadcrumbItems.map((item, index) => ({
+    '@type': 'ListItem', position: index + 1, name: item.label,
+    ...(item.href ? { item: new URL(item.href, SITE.url).href } : {}),
+  })),
+};
+const primarySchema = isEditorial ? {
+  '@type': 'Article', '@id': `${url}#article`, headline: page.title,
+  description: page.description, datePublished: '2026-10-13', dateModified: '2026-10-13',
+  mainEntityOfPage: url, author: { '@id': `${SITE.url}/#organization` },
+  publisher: { '@id': `${SITE.url}/#organization` },
+} : {
+  '@type': 'WebPage', '@id': `${url}#webpage`, url, name: page.title,
+  description: page.description, isPartOf: { '@id': `${SITE.url}/#website` },
+  about: { '@id': `${SITE.url}/#software` },
+};
+const faqSchema = page.faqs.length ? {
+  '@type': 'FAQPage', '@id': `${url}#faq`,
+  mainEntity: page.faqs.map((faq) => ({
+    '@type': 'Question', name: faq.question,
+    acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+  })),
+} : null;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    organizationSchema,
+    softwareSchema,
+    { '@type': 'WebSite', '@id': `${SITE.url}/#website`, name: SITE.name, url: SITE.url, publisher: { '@id': `${SITE.url}/#organization` } },
+    primarySchema,
+    breadcrumbSchema,
+    ...(faqSchema ? [faqSchema] : []),
+  ],
+};
+---
+
+<BaseLayout
+  title={`${page.title} | Real Estate Intent`}
+  description={page.description}
+  canonicalUrl={url}
+  structuredData={structuredData}
+  pageType={isEditorial ? 'article' : 'website'}
+  publishedTime={isEditorial ? '2026-10-13' : undefined}
+  modifiedTime="2026-10-13"
+>
+  <Topbar />
+  <main id="main-content" class="content-shell">
+    <Breadcrumbs items={breadcrumbItems} />
+
+    <header class="content-hero">
+      <div>
+        <p class="content-eyebrow">{page.eyebrow}</p>
+        <h1 class="content-title">{page.title}</h1>
+        <p class="content-dek">{page.description}</p>
+      </div>
+      <dl class="content-meta" aria-label="Page details">
+        <div><dt>Built for</dt><dd>{page.audience}</dd></div>
+        <div><dt>Reviewed</dt><dd>{page.updated}</dd></div>
+        <div><dt>Standard</dt><dd>{isEditorial ? 'Source-backed comparison' : 'Plain-language product guidance'}</dd></div>
+      </dl>
+    </header>
+
+    <section class="answer-block" aria-labelledby="answer-heading">
+      <p id="answer-heading">The short answer</p>
+      <div>{page.tldr}</div>
+    </section>
+
+    {page.cards && (
+      <section class="hub-grid" aria-label={`${page.shortTitle} topics`}>
+        {page.cards.map((card) => (
+          <a class="hub-card" href={card.href}>
+            <span>{card.eyebrow}</span>
+            <h2>{card.title}</h2>
+            <p>{card.description}</p>
+            <b aria-hidden="true">Explore →</b>
+          </a>
+        ))}
+      </section>
+    )}
+
+    <div class="content-layout">
+      <article class="content-prose">
+        {page.comparison && (
+          <section aria-labelledby="comparison-heading">
+            <div class="comparison-disclosure">
+              <strong>Comparison disclosure</strong>
+              <p>{page.comparison.disclosure}</p>
+            </div>
+            <h2 id="comparison-heading">Real Estate Intent vs {page.comparison.competitor}</h2>
+            <div class="table-scroll" tabindex="0" aria-label={`Feature comparison with ${page.comparison.competitor}`}>
+              <table class="comparison-table">
+                <thead><tr><th scope="col">Evaluation factor</th><th scope="col">Real Estate Intent</th><th scope="col">{page.comparison.competitor}</th></tr></thead>
+                <tbody>{page.comparison.rows.map((row) => <tr><th scope="row">{row.factor}</th><td>{row.rei}</td><td>{row.competitor}</td></tr>)}</tbody>
+              </table>
+            </div>
+          </section>
+        )}
+
+        {page.sections.map((section, index) => (
+          <section aria-labelledby={`section-${index}`}>
+            <h2 id={`section-${index}`}>{section.heading}</h2>
+            {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+            {section.bullets && <ul>{section.bullets.map((item) => <li>{item}</li>)}</ul>}
+            {section.steps && <ol class="process-list">{section.steps.map((step) => <li><strong>{step.title}</strong><span>{step.text}</span></li>)}</ol>}
+          </section>
+        ))}
+
+        {page.faqs.length > 0 && (
+          <section aria-labelledby="faq-heading">
+            <p class="section-kicker">Decision support</p>
+            <h2 id="faq-heading">Frequently asked questions</h2>
+            <FaqList items={page.faqs} />
+          </section>
+        )}
+
+        {sources.length > 0 && (
+          <section class="source-register" aria-labelledby="sources-heading">
+            <p class="section-kicker">Claim register</p>
+            <h2 id="sources-heading">Sources and verification</h2>
+            <p>Vendor capabilities change. These public sources were reviewed on the dates shown; confirm current terms directly before purchasing.</p>
+            <ol>
+              {sources.map((source) => (
+                <li><a href={source.sourceUrl} rel="nofollow">{source.sourceLabel}</a><span>{source.statement} Verified {source.verifiedAt}; review by {source.expiresAt}.</span></li>
+              ))}
+            </ol>
+          </section>
+        )}
+      </article>
+
+      <aside class="content-aside" aria-label="Related resources">
+        <p>Continue evaluating</p>
+        <nav>
+          {page.related.map((item) => <a href={item.href}>{item.label}<span aria-hidden="true">↗</span></a>)}
+        </nav>
+        <div class="aside-note">
+          <span>Need a sample?</span>
+          <p>Run a narrow trial with a defined market, workflow, and outcome.</p>
+          <a href="https://app.realestateintent.com/signup">Start the 7-day trial</a>
+        </div>
+      </aside>
+    </div>
+
+    <section class="editorial-cta" aria-labelledby="cta-heading">
+      <div><p>From research to audience</p><h2 id="cta-heading">See the signal before you scale the spend.</h2></div>
+      <div class="cta-actions"><a class="btn btn-primary" href="https://app.realestateintent.com/signup">Start free trial</a><a class="btn btn-secondary" href="mailto:hello@realestateintent.com?subject=Enterprise%20Real%20Estate%20Intent%20demo">Talk to us</a></div>
+    </section>
+  </main>
+  <SiteFooter />
+</BaseLayout>
+
