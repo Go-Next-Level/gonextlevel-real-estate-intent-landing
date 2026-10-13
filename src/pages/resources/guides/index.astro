@@ -10,11 +10,22 @@ const guides = (await getCollection('guides', ({ data }) => !data.draft)).sort((
 const url = `${SITE.url}/resources/guides/`;
 const structuredData = {
   '@context': 'https://schema.org',
-  '@graph': [organizationSchema, {
-    '@type': 'CollectionPage', '@id': `${url}#webpage`, url,
-    name: 'Real Estate Intent Guides', description: 'Research guides for evaluating and using real estate and mortgage intent data.',
-    mainEntity: { '@type': 'ItemList', itemListElement: guides.map((guide, index) => ({ '@type': 'ListItem', position: index + 1, url: `${url}${guide.id}/`, name: guide.data.title })) },
-  }],
+  '@graph': [
+    organizationSchema,
+    {
+      '@type': 'CollectionPage', '@id': `${url}#webpage`, url,
+      name: 'Real Estate Intent Guides', description: 'Research guides for evaluating and using real estate and mortgage intent data.',
+      mainEntity: { '@type': 'ItemList', itemListElement: guides.map((guide, index) => ({ '@type': 'ListItem', position: index + 1, url: `${url}${guide.id}/`, name: guide.data.title })) },
+    },
+    {
+      '@type': 'BreadcrumbList', '@id': `${url}#breadcrumb`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE.url}/` },
+        { '@type': 'ListItem', position: 2, name: 'Resources', item: `${SITE.url}/resources/` },
+        { '@type': 'ListItem', position: 3, name: 'Guides' },
+      ],
+    },
+  ],
 };
 ---
 

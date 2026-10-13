@@ -29,9 +29,22 @@ const titles = new Map();
 for (const file of htmlFiles) {
   const html = await readFile(file, 'utf8');
   const name = relative(root, file);
+  const schemaTypes = new Set();
   for (const [label, pattern] of required) if (!pattern.test(html)) failures.push(`${name}: missing ${label}`);
   for (const match of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi)) {
-    try { JSON.parse(match[1]); } catch { failures.push(`${name}: invalid JSON-LD`); }
+    try {
+      const schema = JSON.parse(match[1]);
+      const nodes = Array.isArray(schema['@graph']) ? schema['@graph'] : [schema];
+      for (const node of nodes) {
+        const types = Array.isArray(node?.['@type']) ? node['@type'] : [node?.['@type']];
+        for (const type of types) if (type) schemaTypes.add(type);
+      }
+    } catch { failures.push(`${name}: invalid JSON-LD`); }
+  }
+  if (name === 'index.html') {
+    for (const type of ['WebSite', 'Organization']) if (!schemaTypes.has(type)) failures.push(`${name}: missing ${type} schema`);
+  } else if (name !== '404.html' && !schemaTypes.has('BreadcrumbList')) {
+    failures.push(`${name}: missing BreadcrumbList schema`);
   }
   for (const match of html.matchAll(/href="(\/[^"#?]*)/gi)) {
     const href = match[1];
