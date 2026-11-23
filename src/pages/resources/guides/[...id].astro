@@ -42,9 +42,9 @@ const structuredData = {
         {data.faqs.length > 0 && <section aria-labelledby="faq-heading"><p class="section-kicker">Quick reference</p><h2 id="faq-heading">Frequently asked questions</h2><FaqList items={data.faqs} /></section>}
         {data.sources.length > 0 && <section class="source-register" aria-labelledby="sources-heading"><p class="section-kicker">Further reading</p><h2 id="sources-heading">Sources</h2><ol>{data.sources.map((source) => <li><a href={source.url}>{source.label}</a></li>)}</ol></section>}
       </article>
-      <aside class="content-aside" aria-label="On this page"><p>On this page</p><nav>{headings.filter((heading) => heading.depth === 2).map((heading) => <a href={`#${heading.slug}`}>{heading.text}<span aria-hidden="true">↓</span></a>)}</nav><div class="aside-note"><span>Apply the framework</span><p>Build a test audience after the decision criteria are clear.</p><a href="https://app.realestateintent.com/signup">Start free trial</a></div></aside>
+      <aside class="content-aside" aria-label="On this page"><p>On this page</p><nav>{headings.filter((heading) => heading.depth === 2).map((heading) => <a href={`#${heading.slug}`}>{heading.text}<span aria-hidden="true">↓</span></a>)}</nav><div class="aside-note"><span>Apply the framework</span><p>Build a test audience after the decision criteria are clear.</p><a href="/#plans">Compare plans</a></div></aside>
     </div>
-    <section class="editorial-cta"><div><p>Next step</p><h2>Turn the framework into a measurable test.</h2></div><div class="cta-actions"><a class="btn btn-primary" href="https://app.realestateintent.com/signup">Start free trial</a><a class="btn btn-secondary" href="/compare/">Compare platforms</a></div></section>
+    <section class="editorial-cta"><div><p>Next step</p><h2>Turn the framework into a measurable test.</h2></div><div class="cta-actions"><a class="btn btn-primary" href="/#plans">Compare plans</a><a class="btn btn-secondary" href="/compare/">Compare platforms</a></div></section>
   </main>
   <SiteFooter />
 </BaseLayout>

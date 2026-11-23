@@ -1,7 +1,8 @@
 import { readFile, readdir, stat } from 'node:fs/promises';
 import { join, relative } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const projectRoot = new URL('../', import.meta.url).pathname.replace(/^\/(.:)/, '$1');
+const projectRoot = fileURLToPath(new URL('../', import.meta.url));
 const sourceRoot = join(projectRoot, 'src');
 const distRoot = join(projectRoot, 'dist');
 
@@ -54,6 +55,7 @@ const htmlFiles = (await walk(distRoot)).filter((file) => file.endsWith('.html')
 for (const file of htmlFiles) {
   const html = await readFile(file, 'utf8');
   const name = relative(distRoot, file);
+  if (/^google[a-f0-9]+\.html$/.test(name) && html.trim() === `google-site-verification: ${name}`) continue;
   if (!html.includes('class="skip-link"')) failures.push(`${name}: missing skip link`);
   for (const image of html.matchAll(/<img\b[^>]*>/gi)) {
     const tag = image[0];

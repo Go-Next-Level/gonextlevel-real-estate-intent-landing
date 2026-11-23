@@ -833,22 +833,22 @@ const trustPages: SeoPage[] = [
   },
   {
     slug: 'pricing', kind: 'pricing', parentLabel: 'Home', parentHref: '/', eyebrow: 'Pricing',
-    title: 'Founder pricing for the teams building the category.', shortTitle: 'Pricing',
-    description: 'Real Estate Intent Founders Program pricing, included features, trial terms, seats, and usage details.',
-    tldr: 'The public Beta / Founders Program is $997 per month for five seats with unlimited exports, searches, and previews; a 30-day lookback; all four primary intent categories and subcategories; webhook access; and a seven-day trial. Confirm current terms before purchase.',
+    title: 'Choose your markets.', shortTitle: 'Pricing',
+    description: 'Compare city coverage, monthly contact allowances and current Real Estate Intent signup offers.',
+    tldr: 'Choose coverage for the cities you serve. Regular monthly prices are $7 for Local, $27 for Multi-market and $47 for Nationwide. See the plan comparison for current promotions and signup availability.',
     audience: 'Growth teams, brokerages, lenders, and operators', updated,
     claimIds: ['rei.delivery'],
     sections: [
-      { heading: 'Beta / Founders Program — $997 per month', paragraphs: ['The public offer is presented as lifetime founder pricing while the subscription remains active, compared with a stated future price of $2,497 per month. The trial is seven days and the homepage states that no credit card is required.'], bullets: ['Unlimited exports', 'Five seats', '30-day lookback', 'Four primary categories plus subcategories', 'Unlimited searches and previews', 'Webhook access', 'Dedicated account manager', 'Seven-day trial'] },
+      { heading: 'Monthly plans', paragraphs: ['City slots belong to the subscription, not to each list. Nationwide removes the city restriction, not the monthly contact limit.'], bullets: ['Local: 5 cities and 500 contacts per month', 'Multi-market: 15 cities and 2,000 contacts per month', 'Nationwide: U.S. coverage and 3,500 contacts per month'] },
       { heading: 'Evaluate value on usable outcomes', paragraphs: ['Do not compare intent products on nominal record price alone. Normalize required-field completeness, duplicate rate, permitted use, recency, match definition, workflow cost, and downstream business outcomes.'] },
-      { heading: 'Before starting the trial', paragraphs: ['Choose one market, one category, one channel, one owner, and one outcome definition. A focused trial produces more useful evidence than exporting a large mixed list without a campaign design.'] },
+      { heading: 'Before you subscribe', paragraphs: ['Review both the amount due today and the monthly renewal price. Promotions can apply to the first month only or continue while subscribed.'] },
     ],
     faqs: [
-      { question: 'Is a credit card required for the trial?', answer: 'The public homepage states that the seven-day trial does not require a credit card. Confirm current checkout terms when enrolling.' },
-      { question: 'How many seats are included?', answer: 'The public Founders Program lists five seats and states that additional seats are available for $50 per month each.' },
-      { question: 'Are exports unlimited?', answer: 'Unlimited exports are listed in the public offer. Permitted use, plan limits, and current contract terms still apply.' },
+      { question: 'Is there a free trial?', answer: 'No. New city-based plans are monthly paid subscriptions.' },
+      { question: 'Can I choose five different cities for every list?', answer: 'No. All lists in your Local or Multi-market workspace use the same licensed cities.' },
+      { question: 'Is Nationwide unlimited?', answer: 'It covers all U.S. cities and includes 3,500 contacts per month.' },
     ],
-    related: [{ label: 'Explore the platform', href: '/platform/' }, { label: 'Start free trial', href: 'https://app.realestateintent.com/signup' }],
+    related: [{ label: 'Compare plans and current offers', href: '/#plans' }, { label: 'Explore the platform', href: '/platform/' }],
   },
 ];
 

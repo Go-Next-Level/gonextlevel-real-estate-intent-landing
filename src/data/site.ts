@@ -83,18 +83,7 @@ export const softwareSchema = {
   url: SITE.url,
   description: SITE.description,
   publisher: { '@id': `${SITE.url}/#organization` },
-  offers: {
-    '@type': 'Offer',
-    name: 'Beta / Founders Program',
-    price: '997',
-    priceCurrency: 'USD',
-    url: `${SITE.url}/pricing/`,
-    priceSpecification: {
-      '@type': 'UnitPriceSpecification',
-      price: '997',
-      priceCurrency: 'USD',
-      billingDuration: 'P1M',
-    },
-  },
+  // Current offers vary by date. Link to the live terms instead of indexing a stale price.
+  offers: { '@type': 'Offer', name: 'Compare monthly data plans', url: `${SITE.url}/#plans` },
 };
 

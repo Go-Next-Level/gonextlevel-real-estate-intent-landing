@@ -1,8 +1,9 @@
 import { access, readdir, readFile, stat } from 'node:fs/promises';
 import { join, relative } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const dist = new URL('../dist/', import.meta.url);
-const root = dist.pathname.replace(/^\/(.:)/, '$1');
+const root = fileURLToPath(dist);
 
 async function walk(directory) {
   const entries = await readdir(directory);
@@ -29,6 +30,7 @@ const titles = new Map();
 for (const file of htmlFiles) {
   const html = await readFile(file, 'utf8');
   const name = relative(root, file);
+  if (/^google[a-f0-9]+\.html$/.test(name) && html.trim() === `google-site-verification: ${name}`) continue;
   const schemaTypes = new Set();
   for (const [label, pattern] of required) if (!pattern.test(html)) failures.push(`${name}: missing ${label}`);
   for (const match of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi)) {
