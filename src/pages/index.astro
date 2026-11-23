@@ -1,591 +1,66 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Topbar from '../components/Topbar.astro';
-import Logo from '../components/Logo.astro';
-import ParticleField from '../components/ParticleField.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Logo from "../components/Logo.astro";
+import Topbar from "../components/Topbar.astro";
+import "../styles/market-desk.css";
+import "../styles/market-funnel.css";
 
-const businessName = "Real Estate Intent";
-const tagline = "Real online behavior data for real estate";
-const description = "Real online behavior data for buyers, sellers, distressed homeowners, and lenders — refreshed daily, resolved to real contacts, exported wherever you run campaigns.";
-const siteUrl = (Astro.site ?? Astro.url.origin).toString();
-
-// Public pricing and the self-serve seven-day trial are active.
-const showPricing = true;
-
-const structuredData = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Organization",
-      "name": businessName,
-      "url": siteUrl,
-      "logo": `${siteUrl}favicon.svg`,
-      "parentOrganization": { "@type": "Organization", "name": "Go Next Level" }
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": businessName,
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "description": description,
-      ...(showPricing ? {
-        "offers": [
-          { "@type": "Offer", "name": "Beta / Founders Program", "price": "997", "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } }
-        ]
-      } : {})
-    },
-    {
-      "@type": "VideoObject",
-      "name": "Real Estate Intent — platform walkthrough",
-      "description": "A five-minute speed run through the Real Estate Intent dashboard: picking categories (Motivated Sellers, General Real Estate, Lending Signals) and subcategories, geo filtering by state / city / zip, choosing recency up to 30 days, profile completeness filters, preview audience counts, exporting to Meta / Google / TikTok / direct mail / CRM, list enrichment, and the website pixel for resolving anonymous visitors.",
-      "thumbnailUrl": "https://i.ytimg.com/vi/-5qI2KBPnwg/maxresdefault.jpg",
-      "uploadDate": "2026-05-08",
-      "duration": "PT5M11S",
-      "contentUrl": "https://www.youtube.com/watch?v=-5qI2KBPnwg",
-      "embedUrl": "https://www.youtube-nocookie.com/embed/-5qI2KBPnwg",
-      "publisher": { "@type": "Organization", "name": businessName }
-    }
-  ]
-};
-
-// Order: Buyer → Seller → Distress → Lenders
-const behaviors = [
-  {
-    accent: "buyer", title: "Buyers",
-    desc: "People saving listings, touring virtually, and researching neighborhoods they're actively planning to move into.",
-  },
-  {
-    accent: "seller", title: "Sellers",
-    desc: "Homeowners browsing listing platforms, pulling home valuations, and comparing agent reviews in your market.",
-  },
-  {
-    accent: "distress", title: "Distressed homeowners",
-    desc: "Owners engaging with pre-foreclosure content, loan-modification tools, and financial-hardship resources.",
-  },
-  {
-    accent: "lenders", title: "Lenders",
-    desc: "Households running affordability calculators, comparing lenders, and engaging with refinance tools.",
-  },
+// Frozen, anonymous examples from the published city rollups; never query visitors' markets here.
+const signals = [
+  { label: "Refinance intent", date: "Nov 22, 2026", iso: "2026-11-22", totals: [942, 1082, 838] },
+  { label: "First-time home buyers", date: "Oct 23, 2026", iso: "2026-10-23", totals: [936, 1092, 957] },
+  { label: "General home sellers", date: "Oct 28, 2026", iso: "2026-10-28", totals: [689, 830, 865] },
 ];
-
-const compareOld = [
-  "Refreshed monthly — if that. Lists are stale on arrival.",
-  "Statistical models scoring who might move someday.",
-  '"This segment may be interested soon."',
-  "Generic score. No evidence. No timing.",
-];
-const compareNew = [
-  "Refreshed every 24 hours. Nothing older than a day.",
-  "Real activity, actually observed on the open web.",
-  '"This person is researching right now."',
-  "Signal-level evidence and a timestamp on every contact.",
-];
-
-const steps = [
-  { n: "01", title: "Detect",  body: "We watch real activity across the open web — saved listings, mortgage calculators, foreclosure searches, agent comparisons. The kind of signals that actually precede a move." },
-  { n: "02", title: "Resolve", body: "Each signal matched to a contactable record — name, email, phone, address — through identity resolution and address validation. Nothing in our system is older than 24 hours." },
-  { n: "03", title: "Deliver", body: "Filtered by category, market, and recency, then pushed to your dashboard, CRM, ad audience, or CSV. Ready before tomorrow's coffee." },
-];
-
-const exports_ = [
-  { name: "Meta Ads",    kind: "meta" },
-  { name: "TikTok Ads",  kind: "tiktok" },
-  { name: "Google Ads",  kind: "google" },
-  { name: "YouTube Ads", kind: "youtube" },
-  { name: "LinkedIn Ads",kind: "linkedin" },
-  { name: "Pinterest Ads", kind: "pinterest" },
-  { name: "CSV",         kind: "csv" },
-  { name: "Webhook",     kind: "webhook" },
-];
-
+const markets = ["Tampa, FL", "Orlando, FL", "Austin, TX"];
+const signupOpen = import.meta.env.PUBLIC_REI_CITY_SIGNUP_OPEN === "true";
 const plans = [
-  {
-    name: "Beta / Founders Program",
-    monthly: "$997",
-    featured: true,
-    summary: "Lifetime founder pricing — normally $2,497 per month.",
-    cta: { label: "Start 7-day free trial", href: "https://app.realestateintent.com/signup" },
-    features: [
-      "Unlimited exports",
-      "5 seats",
-      "30-day lookback",
-      "All 3 categories + subcategories",
-      "Unlimited searches & previews",
-      "Webhook access",
-      "Dedicated account manager",
-      "Free trial included",
-    ],
-  },
+  {name:"Local", price:7, scope:"Up to 5 cities", use:"500 contacts per month."},
+  {name:"Multi-market", price:27, scope:"Up to 10 cities", use:"2,000 contacts per month."},
+  {name:"Nationwide", price:47, scope:"Across the U.S.", use:"3,500 contacts per month."},
 ];
 ---
-
-<BaseLayout
-  title={`${businessName} — ${tagline}`}
-  description={description}
-  structuredData={structuredData}
->
-  <Topbar />
-
-  <main>
-    <!-- 1. HERO -->
-    <section class="hero" id="hero">
-      <div class="hero-glow"></div>
-      <ParticleField />
-      <div class="hero-vignette"></div>
-
-      <div class="container hero-inner">
-        <span class="chip" data-reveal>
-          <span style="width:6px;height:6px;border-radius:50%;background:var(--brand);box-shadow:0 0 8px var(--brand);"></span>
-          Behavioral intent data for real estate
-        </span>
-
-        <h1 class="hero-h1" data-reveal>
-          Real online <em class="gradient-text">behavior data</em> for buyers, sellers, distressed homeowners, and lenders.
-        </h1>
-
-        <p class="lead hero-lead" data-reveal>
-          Not predictions. Actual activity — observed on the open web, resolved to a real contact, refreshed every day.
-        </p>
-
-        <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;" data-reveal>
-          <a href="https://app.realestateintent.com/signup" class="btn btn-primary">
-            Start 7-day free trial
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a href="#pricing" class="btn btn-ghost">View pricing</a>
+<BaseLayout title="Real Estate Intent | Find your market" description="Explore buyer, seller and mortgage intent by city. Preview property counts and compare monthly audience-data plans for real estate and mortgage professionals." canonicalUrl="https://realestateintent.com/">
+  <div class="market-desk">
+    <a class="skip-desk" href="#main">Skip to content</a>
+    <Topbar />
+    <main id="main">
+      <section class="desk-hero" aria-labelledby="hero-title">
+        <div class="desk-pitch">
+          <p class="desk-kicker">Real Estate Intent</p><h1 id="hero-title">What's moving<br/>in <em>your market?</em></h1>
+          <p class="desk-lead">See where people are researching a home purchase, a sale or a refinance. Build a list for the cities you actually serve.</p>
+          <a class="btn btn-primary" href="#sample">Explore a market sample ↓</a>
         </div>
-      </div>
-    </section>
-
-    <!-- 2. FOUR BEHAVIORS -->
-    <section class="section" id="behaviors">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow" data-reveal>Four behaviors. One contact list.</span>
-          <h2 class="section-title" data-reveal>
-            Not <em class="gradient-text">who</em> they are. <em class="gradient-text">What</em> they're doing.
-          </h2>
-        </div>
-
-        <div class="behaviors-grid">
-          {behaviors.map((b) => (
-            <article class="behavior-card" data-accent={b.accent} data-reveal>
-              <span class="behavior-accent">
-                <span class="accent-dot"></span>
-                {b.title}
-              </span>
-              <h3 class="behavior-title">{b.title}</h3>
-              <p class="behavior-desc">{b.desc}</p>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- 3. THE TIMING GAP — BEHAVIORAL vs PREDICTIVE -->
-    <section class="section" id="vs" style="padding-top:0;">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow" data-reveal>The timing gap</span>
-          <h2 class="section-title" data-reveal>
-            Everyone else sells <em class="gradient-text">stale</em> guesses. We deliver <em class="gradient-text">fresh</em> evidence.
-          </h2>
-          <p class="lead" data-reveal style="max-width:640px;">
-            Predictive lists are weeks old before they reach your CRM. By then the deal is gone. Real Estate Intent runs every 24 hours — so you reach people <em style="font-style:normal; color:var(--text);">while they're still researching</em>.
-          </p>
-        </div>
-
-        <div class="compare-grid">
-          <div class="compare-col" data-tone="old" data-reveal>
-            <span class="compare-eyebrow">The old way</span>
-            <h3 class="compare-title">Predictive data</h3>
-            <ul class="compare-rows">
-              {compareOld.map((row) => (
-                <li class="compare-row">
-                  <span class="compare-glyph" aria-hidden="true">
-                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2l-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-                  </span>
-                  {row}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div class="compare-col" data-tone="new" data-reveal>
-            <span class="compare-eyebrow">Real Estate Intent</span>
-            <h3 class="compare-title">Behavioral intent data</h3>
-            <ul class="compare-rows">
-              {compareNew.map((row) => (
-                <li class="compare-row">
-                  <span class="compare-glyph" aria-hidden="true">
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6.2l2.6 2.6L10 3.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </span>
-                  {row}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {showPricing && (
-          <div class="price-compare" data-reveal>
-            <div class="price-compare-row">
-              Apollo full contact ~ $1.80 · ZoomInfo intent ~ $2–3 · <strong>Real Estate Intent Pro $0.20 / export</strong>
-            </div>
-            <div class="price-compare-gloss">Same contact. <em>9–15× the math.</em></div>
-          </div>
-        )}
-      </div>
-    </section>
-
-    <!-- 4. DEMO VIDEO -->
-    <section class="section" id="demo" style="padding-top:0;">
-      <div class="container">
-        <div class="section-head" style="text-align:center; align-items:center; margin-left:auto; margin-right:auto;">
-          <span class="eyebrow" data-reveal>See it live</span>
-          <h2 class="section-title" data-reveal>
-            Five minutes <em class="gradient-text">inside the platform</em>.
-          </h2>
-          <p class="lead" data-reveal style="max-width:640px;">
-            From picking a category to exporting the list — exactly what list-building looks like inside Real Estate Intent. Categories, geo filters, recency, preview counts, and channel-specific exports.
-          </p>
-        </div>
-
-        <div class="video-frame" data-reveal>
-          <div class="video-frame-inner">
-            <button class="video-poster" type="button" data-yt="-5qI2KBPnwg" aria-label="Play Real Estate Intent platform walkthrough">
-              <img
-                src="https://i.ytimg.com/vi/-5qI2KBPnwg/maxresdefault.jpg"
-                alt=""
-                loading="lazy"
-                decoding="async"
-                width="1280"
-                height="720"
-              />
-              <span class="video-play" aria-hidden="true">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                  <path d="M8 5v14l11-7z" fill="currentColor"/>
-                </svg>
-              </span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 5. THE PIPELINE — single, timing-focused -->
-    <section class="section" id="how" style="padding-top:0;">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow" data-reveal>The pipeline</span>
-          <h2 class="section-title" data-reveal>
-            While the intent is <em class="gradient-text">still hot</em>.
-          </h2>
-          <p class="lead" data-reveal style="max-width:640px;">
-            Behavioral signal observed. Resolved to a real contact. In your hands inside 24 hours. Every day. Over and over.
-          </p>
-        </div>
-
-        <div class="how-grid">
-          {steps.map((s) => (
-            <div class="how-step" data-reveal>
-              <span class="how-num mono">{s.n}</span>
-              <h3 class="how-title">{s.title}</h3>
-              <p class="how-body">{s.body}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- 6. EXPORT DESTINATIONS -->
-    <section class="section" id="exports" style="padding-top:0;">
-      <div class="container">
-        <div class="section-head">
-          <span class="eyebrow" data-reveal>Your list, your channels</span>
-          <h2 class="section-title" data-reveal>
-            Take the list <em class="gradient-text">anywhere</em> you run campaigns.
-          </h2>
-          <p class="lead" data-reveal style="max-width:640px;">
-            Export as CSV, or push to any ad platform via custom audience upload. Webhook available for bespoke CRM setups.
-          </p>
-        </div>
-
-        <div class="export-grid">
-          {exports_.map((e) => (
-            <div class="export-tile" data-reveal>
-              <span class="export-glyph" aria-hidden="true">
-                {e.kind === "meta" && (
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M4 20c0-6 3.5-10 8-10 3 0 5 2 7 6 2-4 4-6 7-6 4.5 0 8 4 8 10 0 5-3 8-6.5 8-3 0-5-2-7.5-6-2.5 4-4.5 6-7.5 6C7 28 4 25 4 20z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                )}
-                {e.kind === "tiktok" && (
-                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M17 3v14.5c0 2.5-2 4.5-4.5 4.5S8 20 8 17.5 10 13 12.5 13c.5 0 1 .1 1.5.3M17 3c.5 3 3 5.5 6 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                )}
-                {e.kind === "google" && (
-                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="10" stroke="currentColor" stroke-width="1.6"/><path d="M14 8v6l4 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-                )}
-                {e.kind === "youtube" && (
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="4" y="8" width="24" height="16" rx="4" stroke="currentColor" stroke-width="1.6"/><path d="M14 13l5 3-5 3v-6z" fill="currentColor"/></svg>
-                )}
-                {e.kind === "linkedin" && (
-                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="4" width="20" height="20" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M8 12v8M8 9v.01M12 20v-8M12 14c0-1.5 1-2.5 2.5-2.5S17 12.5 17 14v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-                )}
-                {e.kind === "pinterest" && (
-                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="10" stroke="currentColor" stroke-width="1.6"/><path d="M13 9c2.5 0 4 2 4 4.5S15.5 18 13.5 18c-1 0-1.8-.5-2-1.5L10 23" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-                )}
-                {e.kind === "csv" && (
-                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M7 4h10l4 4v16a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M17 4v4h4M9 14h10M9 18h10M9 22h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-                )}
-                {e.kind === "webhook" && (
-                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="1.6"/><circle cx="19" cy="19" r="3" stroke="currentColor" stroke-width="1.6"/><circle cx="8" cy="20" r="3" stroke="currentColor" stroke-width="1.6"/><path d="M12 11l6 6M9 17l-1 1M13 9l4-1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-                )}
-              </span>
-              <span class="export-label">{e.name}</span>
-            </div>
-          ))}
-        </div>
-
-        <p class="export-note" data-reveal>
-          Logos represent export destinations. Real Estate Intent is not affiliated with or endorsed by any platform shown.
-        </p>
-      </div>
-    </section>
-
-    {showPricing && (
-      <!-- 7. PRICING -->
-      <section class="section" id="pricing" style="padding-top:0;">
-        <div class="container">
-          <div class="section-head" style="text-align:center; align-items:center; margin-left:auto; margin-right:auto;">
-            <span class="eyebrow" data-reveal>Pricing</span>
-            <h2 class="section-title" data-reveal>Join the <em class="gradient-text">Founders Program</em>.</h2>
-            <p class="lead" data-reveal style="max-width:560px;">
-              Lock in $997 per month for the lifetime of your active subscription — normally $2,497. Start with a 7-day free trial, no credit card required.
-            </p>
-          </div>
-
-          <div class="plan-grid" data-billing="monthly" style="max-width:440px; margin-left:auto; margin-right:auto; grid-template-columns:1fr;">
-            {plans.map((p) => (
-              <article class="plan-card" data-featured={p.featured} data-reveal>
-                {p.featured && <span class="plan-badge">Most popular</span>}
-                <div>
-                  <h3 class="plan-name">{p.name}</h3>
-                  <p class="plan-summary">{p.summary}</p>
-                  <div class="plan-prices">
-                    <div class="plan-price plan-price-monthly">
-                      <span class="price">{p.monthly}</span>
-                      <span class="price-suffix">/ mo</span>
-                    </div>
-                  </div>
-                </div>
-
-                <ul class="plan-features">
-                  {p.features.map((f) => (
-                    <li>
-                      <span class="plan-check">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                      </span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-
-                <a href={p.cta.href} class={p.featured ? "btn btn-primary" : "btn btn-secondary"} style="width:100%;">
-                  {p.cta.label}
-                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </a>
-              </article>
-            ))}
-          </div>
-
-          <p class="seat-upsell" data-reveal>
-            Need more seats? Add additional users for <strong>$50 / mo each</strong>.
-          </p>
-
-          <div class="credit-packs credit-packs-simple" data-reveal>
-            <span class="eyebrow" style="color:var(--brand);">Need more this month?</span>
-            <h3 class="credit-packs-title">Top up with one-time credit packs.</h3>
-            <p class="credit-packs-note">No expiration. Use them whenever you need them.</p>
-          </div>
+        <img class="neighborhood" src="/art/district.svg" fetchpriority="high" width="920" height="555" alt="" />
+      </section>
+      <section class="example-section" id="sample" aria-labelledby="sample-title">
+        <div><p class="desk-kicker">Inside the product</p><h2 id="sample-title">See how many properties match.</h2><p>Choose an audience to compare three example cities. Each count is a distinct property, not a guaranteed customer.</p></div>
+        <div class="sample-result">
+          <label for="signal">Audience</label><select id="signal">{signals.map((s,i)=><option value={i}>{s.label}</option>)}</select>
+          <table aria-label="Example matching properties by city"><thead><tr><th scope="col">City</th><th scope="col">Matching properties</th></tr></thead><tbody>
+            {markets.map((city,i)=><tr><th scope="row">{city}</th><td data-total>{signals[0].totals[i].toLocaleString("en-US")}</td></tr>)}
+          </tbody></table>
+          <p id="sample-status" aria-live="polite">30-day snapshot ending {signals[0].date}.</p>
+          <noscript>Showing refinance intent. Enable JavaScript to change the audience.</noscript>
         </div>
       </section>
-    )}
-
-    <!-- 8. FINAL CTA -->
-    <section class="cta" id="cta">
-      <div class="cta-glow"></div>
-      <div class="container">
-        <div class="cta-inner">
-          <h2 class="cta-h2" data-reveal>
-            The signal is already there. <em data-reveal-em>You just need to see it.</em>
-          </h2>
-          <div style="display:flex; justify-content:center; margin-top:8px;">
-            <a href="https://app.realestateintent.com/signup" class="btn btn-primary">
-              Start 7-day free trial
-              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 9. FOOTER -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-row">
-          <Logo />
-          <nav class="footer-nav" aria-label="Footer">
-            <a href="#pricing">pricing</a>
-            <a href="https://app.realestateintent.com/login">sign in</a>
-            <a href="https://app.realestateintent.com/signup">start free trial</a>
-          </nav>
-          <div class="caption">powered by <a href="https://gonextlevel.ai" style="color:var(--text-2);">Go Next Level</a></div>
-        </div>
-        <div class="footer-legal">
-          <span>© 2026 Real Estate Intent</span>
-          <span>
-            <a href="/privacy">Privacy</a> ·
-            <a href="/terms">Terms</a> ·
-            <a href="/acceptable-use">Acceptable use</a> ·
-            <a href="/compliance">Compliance</a>
-          </span>
-        </div>
-      </div>
-    </footer>
-  </main>
-
-  <!-- GSAP CDN — used only for the CTA gradient reveal -->
-  <script is:inline src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script is:inline src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-
+      <section class="desk-plans" id="plans" aria-labelledby="plans-title"><p class="desk-kicker">Monthly plans</p><h2 id="plans-title">How far do you <em>work?</em></h2>
+        <p class="desk-intro">Choose the coverage that fits your business. Nationwide means geographic coverage, not unlimited exports.</p>
+        <div class="desk-plan-list" id="plan-comparison">{plans.map(p=><article><h3>{p.name}</h3><div><strong>{p.scope}</strong><p>{p.use}</p></div><div class="desk-price">${p.price}<small>/month</small></div></article>)}</div>
+        <div class="desk-launch">{signupOpen ? <a class="btn btn-primary" href="https://app.realestateintent.com/paid-signup">Choose a plan</a> : <strong>Paid signup isn’t open yet.</strong>}<span>Monthly data subscriptions, without a free trial. Website visitor tracking and enrichment aren’t included.</span></div>
+      </section>
+      <section class="desk-notes"><h2>Before you <em>reach out.</em></h2><div><p>An intent signal is a starting point for research. It isn’t proof of ownership, loan eligibility, consent to contact, or a guarantee someone will transact.</p><p>Already a member? <a href="https://app.realestateintent.com/login">Sign in or reset your password</a>. For account help, <a href="mailto:support@realestateintent.com">contact support</a>.</p></div></section>
+    </main>
+    <footer class="desk-footer"><Logo /><nav aria-label="Legal"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/acceptable-use">Acceptable use</a><a href="/compliance">Compliance</a></nav></footer>
+  </div>
+  <script id="market-signals" type="application/json" set:html={JSON.stringify(signals)} />
   <script>
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    // @ts-ignore
-    const gsap = (window as any).gsap;
-    // @ts-ignore
-    const ScrollTrigger = (window as any).ScrollTrigger;
-    if (gsap && ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
-
-    /* ===== Topbar scrolled state ===== */
-    const topbar = document.querySelector<HTMLElement>(".topbar");
-    const onScroll = () => {
-      if (!topbar) return;
-      topbar.classList.toggle("is-scrolled", window.scrollY > 4);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-
-    /* ===== Reveal (hero stagger + scroll-triggered) ===== */
-    const hero = document.querySelector(".hero");
-    const heroReveals = hero ? Array.from(hero.querySelectorAll<HTMLElement>("[data-reveal]")) : [];
-    const otherReveals = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]")).filter(
-      (el) => !(hero && hero.contains(el))
-    );
-
-    heroReveals.forEach((el) => el.classList.add("reveal"));
-    otherReveals.forEach((el) => el.classList.add("reveal"));
-
-    if (prefersReduced) {
-      document.querySelectorAll<HTMLElement>(".reveal").forEach((el) => el.classList.add("is-in"));
-    } else {
-      heroReveals.forEach((el, i) => {
-        (el as HTMLElement).style.transitionDelay = `${i * 90 + 100}ms`;
-        requestAnimationFrame(() => el.classList.add("is-in"));
-      });
-
-      if ("IntersectionObserver" in window) {
-        const io = new IntersectionObserver(
-          (entries) => {
-            for (const entry of entries) {
-              if (entry.isIntersecting) {
-                (entry.target as HTMLElement).classList.add("is-in");
-                io.unobserve(entry.target);
-              }
-            }
-          },
-          { threshold: 0.12, rootMargin: "0px 0px -60px 0px" }
-        );
-        otherReveals.forEach((el) => io.observe(el));
-      }
-    }
-
-    /* ===== Click-to-load video: replace poster with iframe only after click ===== */
-    document.querySelectorAll<HTMLButtonElement>("[data-yt]").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const id = btn.dataset.yt;
-        if (!id) return;
-        const params = new URLSearchParams({
-          autoplay: "1",
-          rel: "0",
-          modestbranding: "1",
-          playsinline: "1",
-          iv_load_policy: "3",
-          cc_load_policy: "0",
-        });
-        const iframe = document.createElement("iframe");
-        iframe.src = `https://www.youtube-nocookie.com/embed/${id}?${params.toString()}`;
-        iframe.title = "Real Estate Intent — platform walkthrough";
-        iframe.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
-        iframe.setAttribute("allowfullscreen", "");
-        iframe.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
-        iframe.style.cssText = "position:absolute;inset:0;width:100%;height:100%;border:0;display:block;";
-        btn.replaceWith(iframe);
-      });
+    const signal = document.querySelector<HTMLSelectElement>('#signal');
+    const samples = JSON.parse(document.querySelector('#market-signals')!.textContent!) as {date:string;totals:number[]}[];
+    signal?.addEventListener('change', () => {
+      const sample = samples[Number(signal.value)];
+      if (!sample) return;
+      document.querySelectorAll('[data-total]').forEach((cell,i) => {cell.textContent=sample.totals[i].toLocaleString('en-US')});
+      document.querySelector('#sample-status')!.textContent='30-day snapshot ending '+sample.date+'.';
     });
-
-    /* ===== Billing toggle (Monthly / Annual) ===== */
-    const billingGrid = document.querySelector<HTMLElement>(".plan-grid[data-billing]");
-    const billingButtons = document.querySelectorAll<HTMLButtonElement>("[data-billing-toggle] button[data-billing]");
-    if (billingGrid && billingButtons.length) {
-      billingButtons.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const mode = btn.dataset.billing || "monthly";
-          billingGrid.dataset.billing = mode;
-          billingButtons.forEach((b) => {
-            const isActive = b === btn;
-            b.classList.toggle("is-active", isActive);
-            b.setAttribute("aria-selected", isActive ? "true" : "false");
-          });
-        });
-      });
-    }
-
-    /* ===== CTA gradient reveal =====
-       Use the .cta section as the trigger so there is enough scroll room
-       for the reveal to complete before the user hits the page bottom. */
-    if (gsap && ScrollTrigger && !prefersReduced) {
-      const em = document.querySelector<HTMLElement>("[data-reveal-em]");
-      const ctaSection = document.querySelector<HTMLElement>(".cta");
-      if (em && ctaSection) {
-        ScrollTrigger.create({
-          trigger: ctaSection,
-          start: "top 85%",
-          end: "bottom bottom",
-          scrub: 0.4,
-          onUpdate: (self: any) => {
-            em.style.setProperty("--reveal", String(self.progress));
-          },
-          onLeave: () => {
-            em.style.setProperty("--reveal", "1");
-            em.classList.add("reveal-done");
-          },
-        });
-        // Belt-and-braces: if the user is already at the bottom (short viewport
-        // or they jumped via anchor), force-complete the reveal.
-        window.addEventListener("scroll", () => {
-          const atBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 4;
-          if (atBottom) {
-            em.style.setProperty("--reveal", "1");
-            em.classList.add("reveal-done");
-          }
-        }, { passive: true });
-      }
-    } else {
-      const em = document.querySelector<HTMLElement>("[data-reveal-em]");
-      if (em) {
-        em.style.setProperty("--reveal", "1");
-        em.classList.add("reveal-done");
-      }
-    }
   </script>
 </BaseLayout>
