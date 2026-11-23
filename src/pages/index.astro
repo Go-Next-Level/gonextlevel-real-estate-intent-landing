@@ -12,11 +12,10 @@ const signals = [
   { label: "General home sellers", date: "Oct 28, 2026", iso: "2026-10-28", totals: [689, 830, 865] },
 ];
 const markets = ["Tampa, FL", "Orlando, FL", "Austin, TX"];
-const signupOpen = import.meta.env.PUBLIC_REI_CITY_SIGNUP_OPEN === "true";
 const plans = [
-  {name:"Local", price:7, scope:"Up to 5 cities", use:"500 contacts per month."},
-  {name:"Multi-market", price:27, scope:"Up to 10 cities", use:"2,000 contacts per month."},
-  {name:"Nationwide", price:47, scope:"Across the U.S.", use:"3,500 contacts per month."},
+  {id:"local5",name:"Local", price:7, scope:"Up to 5 cities", use:"500 contacts per month."},
+  {id:"local10",name:"Multi-market", price:27, scope:"Up to 15 cities", use:"2,000 contacts per month."},
+  {id:"nationwide",name:"Nationwide", price:47, scope:"Across the U.S.", use:"3,500 contacts per month."},
 ];
 ---
 <BaseLayout title="Real Estate Intent | Find your market" description="Explore buyer, seller and mortgage intent by city. Preview property counts and compare monthly audience-data plans for real estate and mortgage professionals." canonicalUrl="https://realestateintent.com/">
@@ -44,16 +43,18 @@ const plans = [
         </div>
       </section>
       <section class="desk-plans" id="plans" aria-labelledby="plans-title"><p class="desk-kicker">Monthly plans</p><h2 id="plans-title">How far do you <em>work?</em></h2>
-        <p class="desk-intro">Choose the coverage that fits your business. Nationwide means geographic coverage, not unlimited exports.</p>
-        <div class="desk-plan-list" id="plan-comparison">{plans.map(p=><article><h3>{p.name}</h3><div><strong>{p.scope}</strong><p>{p.use}</p></div><div class="desk-price">${p.price}<small>/month</small></div></article>)}</div>
-        <div class="desk-launch">{signupOpen ? <a class="btn btn-primary" href="https://app.realestateintent.com/paid-signup">Choose a plan</a> : <strong>Paid signup isn’t open yet.</strong>}<span>Monthly data subscriptions, without a free trial. Website visitor tracking and enrichment aren’t included.</span></div>
+        <p class="desk-intro">Your selected cities apply across all your lists. Choose Nationwide to work anywhere in the U.S. without picking cities.</p>
+        <div class="desk-plan-list" id="plan-comparison">{plans.map(p=><article data-plan={p.id}><h3>{p.name}</h3><div><strong>{p.scope}</strong><p>{p.use}</p><p data-offer-note></p></div><div class="desk-price"><span data-price>${p.price}</span><small data-period>/month · regular</small></div></article>)}</div>
+        <div class="desk-launch"><strong id="signup-status" role="status">Showing regular monthly prices.</strong><a id="signup-link" class="btn btn-primary" href="https://app.realestateintent.com/paid-signup" hidden>Choose a plan</a><span>Monthly data subscriptions, without a free trial. Website visitor tracking and enrichment aren’t included.</span></div>
       </section>
       <section class="desk-notes"><h2>Before you <em>reach out.</em></h2><div><p>An intent signal is a starting point for research. It isn’t proof of ownership, loan eligibility, consent to contact, or a guarantee someone will transact.</p><p>Already a member? <a href="https://app.realestateintent.com/login">Sign in or reset your password</a>. For account help, <a href="mailto:support@realestateintent.com">contact support</a>.</p></div></section>
     </main>
     <footer class="desk-footer"><Logo /><nav aria-label="Legal"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/acceptable-use">Acceptable use</a><a href="/compliance">Compliance</a></nav></footer>
   </div>
   <script id="market-signals" type="application/json" set:html={JSON.stringify(signals)} />
+  <style>#signup-link[hidden]{display:none} [data-offer-note]:empty{display:none}</style>
   <script>
+    import "../scripts/plan-prices";
     const signal = document.querySelector<HTMLSelectElement>('#signal');
     const samples = JSON.parse(document.querySelector('#market-signals')!.textContent!) as {date:string;totals:number[]}[];
     signal?.addEventListener('change', () => {
