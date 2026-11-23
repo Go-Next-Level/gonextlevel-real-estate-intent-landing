@@ -1,4 +1,20 @@
 User-agent: *
 Allow: /
 
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+Sitemap: https://realestateintent.com/sitemap-index.xml
 Sitemap: https://realestateintent.com/sitemap.xml

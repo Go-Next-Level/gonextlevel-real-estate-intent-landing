@@ -6,9 +6,10 @@ import Topbar from '../components/Topbar.astro';
 <BaseLayout
   title="Page not found — Real Estate Intent"
   description="The page you're looking for doesn't exist."
+  noindex={true}
 >
   <Topbar />
-  <main class="notfound">
+  <main id="main-content" class="notfound">
     <div class="grid-bg"></div>
     <div class="hero-glow"></div>
     <div class="container nf-inner">

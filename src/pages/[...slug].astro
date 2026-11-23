@@ -1,0 +1,12 @@
+---
+import SeoContentPage from '../components/SeoContentPage.astro';
+import { seoPages, type SeoPage } from '../data/seoPages';
+
+export function getStaticPaths() {
+  return seoPages.map((page) => ({ params: { slug: page.slug }, props: { page } }));
+}
+
+const { page } = Astro.props as { page: SeoPage };
+---
+
+<SeoContentPage page={page} />
