@@ -839,7 +839,7 @@ const trustPages: SeoPage[] = [
     audience: 'Growth teams, brokerages, lenders, and operators', updated,
     claimIds: ['rei.delivery'],
     sections: [
-      { heading: 'Monthly plans', paragraphs: ['City slots belong to the subscription, not to each list. Nationwide removes the city restriction, not the monthly contact limit.'], bullets: ['Local: 5 cities and 500 contacts per month', 'Multi-market: 15 cities and 2,000 contacts per month', 'Nationwide: U.S. coverage and 3,500 contacts per month'] },
+      { heading: 'Monthly plans', paragraphs: ['Every plan lets you build and export lists. Your city selection applies across all your lists. Add a city to an unused slot anytime. A replacement takes effect at your next paid renewal and does not reset your contact usage.'], bullets: ['Local: up to 5 cities and 500 contacts per month. List building and exports only.', 'Multi-market: up to 15 cities and 2,000 contacts per month, plus email enrichment.', 'Nationwide: all U.S. cities and 3,500 contacts per month, with both email enrichment and Watchlist.'] },
       { heading: 'Evaluate value on usable outcomes', paragraphs: ['Do not compare intent products on nominal record price alone. Normalize required-field completeness, duplicate rate, permitted use, recency, match definition, workflow cost, and downstream business outcomes.'] },
       { heading: 'Before you subscribe', paragraphs: ['Review both the amount due today and the monthly renewal price. Promotions can apply to the first month only or continue while subscribed.'] },
     ],
