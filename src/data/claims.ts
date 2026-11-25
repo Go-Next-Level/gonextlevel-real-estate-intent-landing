@@ -21,7 +21,7 @@ export const claims: Claim[] = [
   {
     id: 'rei.delivery',
     subject: 'Real Estate Intent',
-    statement: 'Public product materials describe CSV exports, advertising audience destinations, and webhook delivery.',
+    statement: 'All self-serve plans include CSV exports for use in compatible CRMs, spreadsheets, and other approved workflows. Webhook delivery is not a self-serve plan feature.',
     sourceLabel: 'Real Estate Intent homepage',
     sourceUrl: 'https://realestateintent.com/',
     verifiedAt: '2026-10-13',

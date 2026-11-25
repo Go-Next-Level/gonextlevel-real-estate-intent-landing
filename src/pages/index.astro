@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import { SITE, organizationSchema, softwareSchema } from "../data/site";
 import Topbar from "../components/Topbar.astro";
+import { plans, sharedCityPolicy, sharedPlanBenefits } from "../data/plan-offer";
 import "../styles/market-desk.css";
 import "../styles/market-funnel.css";
 
@@ -13,17 +14,11 @@ const signals = [
   { label: "General home sellers", date: "Oct 28, 2026", iso: "2026-10-28", totals: [689, 830, 865] },
 ];
 const markets = ["Tampa, FL", "Orlando, FL", "Austin, TX"];
-const plans = [
-  {id:"local5",name:"Local", price:7, scope:"Up to 5 cities", use:"Build and export lists. 500 contacts per month."},
-  {id:"local10",name:"Multi-market", price:27, scope:"Up to 15 cities", use:"Build and export lists, plus email enrichment. 2,000 contacts per month."},
-  {id:"nationwide",name:"Nationwide", price:47, scope:"Across the U.S.", use:"Build and export lists, enrich contacts by email, and monitor them with Watchlist. 3,500 contacts per month."},
-];
 ---
 <BaseLayout title="Real Estate Intent | Find your market" description="Explore buyer, seller and mortgage intent by city. Preview property counts and compare monthly audience-data plans for real estate and mortgage professionals." canonicalUrl="https://realestateintent.com/" structuredData={{"@context":"https://schema.org","@graph":[organizationSchema,softwareSchema,{"@type":"WebSite","@id":SITE.url+"/#website",name:SITE.name,url:SITE.url,publisher:{"@id":SITE.url+"/#organization"}}]}}>
   <div class="market-desk">
-    <a class="skip-desk" href="#main">Skip to content</a>
     <Topbar />
-    <main id="main">
+    <main id="main-content">
       <section class="desk-hero" aria-labelledby="hero-title">
         <div class="desk-pitch">
           <p class="desk-kicker">Real Estate Intent</p><h1 id="hero-title">What's moving<br/>in <em>your market?</em></h1>
@@ -44,9 +39,9 @@ const plans = [
         </div>
       </section>
       <section class="desk-plans" id="plans" aria-labelledby="plans-title"><p class="desk-kicker">Monthly plans</p><h2 id="plans-title">How far do you <em>work?</em></h2>
-        <p class="desk-intro">Choose cities once for all your lists. Fill unused slots anytime. Replacing a city? The change takes effect at your next paid renewal. Nationwide includes every U.S. city.</p>
+        <p class="desk-intro" id="pricing">{sharedCityPolicy}</p>
         <div class="desk-plan-list" id="plan-comparison">{plans.map(p=><article data-plan={p.id}><h3>{p.name}</h3><div><strong>{p.scope}</strong><p>{p.use}</p><p data-offer-note></p></div><div class="desk-price"><span data-price>${p.price}</span><small data-period>/month · regular</small></div></article>)}</div>
-        <div class="desk-launch"><strong id="signup-status" role="status">Showing regular monthly prices.</strong><a id="signup-link" class="btn btn-primary" href="https://app.realestateintent.com/paid-signup" hidden>Choose a plan</a><span>Monthly subscriptions. No free trial.</span></div>
+        <div class="desk-launch"><strong id="signup-status" role="status">Showing regular monthly prices.</strong><a id="signup-link" class="btn btn-primary" href="https://app.realestateintent.com/paid-signup" hidden>Choose a plan</a><span>{sharedPlanBenefits}</span></div>
       </section>
       <section class="desk-notes"><h2>Before you <em>reach out.</em></h2><div><p>An intent signal is a starting point for research. It isn’t proof of ownership, loan eligibility, consent to contact, or a guarantee someone will transact.</p><p>Already a member? <a href="https://app.realestateintent.com/login">Sign in or reset your password</a>. For account help, <a href="mailto:support@realestateintent.com">contact support</a>.</p></div></section>
     </main>

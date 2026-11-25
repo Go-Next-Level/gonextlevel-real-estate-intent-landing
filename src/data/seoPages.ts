@@ -1,3 +1,5 @@
+import { plans, sharedCityPolicy, sharedPlanBenefits } from "./plan-offer";
+
 export interface PageSection {
   heading: string;
   paragraphs: string[];
@@ -66,7 +68,7 @@ function capability(input: {
         steps: [
           { title: 'Define', text: 'Choose the behavioral category, geography, recency window, and contact requirements that match the campaign.' },
           { title: 'Preview', text: 'Review the available audience count before creating an export or downstream activation.' },
-          { title: 'Activate', text: 'Move the resulting audience into an approved CSV, advertising, CRM, or webhook workflow.' },
+          { title: 'Activate', text: 'Download the audience as a CSV and import it into a compatible, approved campaign tool.' },
         ],
       },
       {
@@ -172,7 +174,7 @@ function comparison(input: {
       {
         heading: 'When to choose Real Estate Intent',
         paragraphs: ['Real Estate Intent is the more focused option when the primary job is building fresh, geographically filtered behavioral audiences and moving those records into an existing campaign stack.'],
-        bullets: [input.reiFit, 'The team wants CSV, advertising-audience, or webhook activation rather than a full replacement CRM.', 'Signal recency and a clear evidence timestamp are central to campaign prioritization.'],
+        bullets: [input.reiFit, 'The team wants CSV handoff for an existing CRM or campaign tool rather than a full replacement CRM.', 'Signal recency and a clear evidence timestamp are central to campaign prioritization.'],
       },
     ],
   };
@@ -187,7 +189,7 @@ const hubs: SeoPage[] = [
     audience: 'Growth, marketing operations, revenue operations, and data teams', updated,
     sections: [{ heading: 'One evidence chain, from behavior to activation', paragraphs: ['The platform separates four important jobs: detecting a relevant research pattern, resolving a usable record, filtering the audience for a specific market, and delivering it into an approved campaign workflow. Each layer should be evaluated independently.'] }],
     faqs: [
-      { question: 'Is Real Estate Intent a CRM?', answer: 'No. It is an intent-data and audience-activation layer designed to feed the CRM, ad platform, spreadsheet, or webhook workflow a team already uses.' },
+      { question: 'Is Real Estate Intent a CRM?', answer: 'No. It helps you build audiences and download CSV files for a compatible CRM, ad platform, or spreadsheet.' },
       { question: 'Can teams preview an audience before exporting?', answer: 'The public product walkthrough describes category, geography, recency, completeness, and audience-count previews before export.' },
     ],
     related: [{ label: 'Read the data methodology', href: '/data-methodology/' }, { label: 'Explore solutions', href: '/solutions/' }],
@@ -195,7 +197,7 @@ const hubs: SeoPage[] = [
       { eyebrow: '01 / Detect', title: 'Behavioral intent data', description: 'Understand the distinction between observed activity and modeled propensity.', href: '/platform/behavioral-intent-data/' },
       { eyebrow: '02 / Resolve', title: 'Identity resolution', description: 'See how a signal becomes a contactable record—and where uncertainty remains.', href: '/platform/identity-resolution/' },
       { eyebrow: '03 / Filter', title: 'Audience builder', description: 'Shape an audience by behavior, market, recency, and profile requirements.', href: '/platform/audience-builder/' },
-      { eyebrow: '04 / Deliver', title: 'Exports & webhooks', description: 'Move approved audiences into CSV, advertising, CRM, and webhook workflows.', href: '/platform/exports-and-webhooks/' },
+      { eyebrow: '04 / Deliver', title: 'CSV exports', description: 'Download an audience and import it into compatible CRM and campaign tools.', href: '/platform/exports-and-webhooks/' },
     ],
   },
   {
@@ -334,19 +336,19 @@ const capabilities: SeoPage[] = [
     related: [{ label: 'Data methodology', href: '/data-methodology/' }, { label: 'Behavioral intent data', href: '/platform/behavioral-intent-data/' }],
   }),
   capability({
-    slug: 'platform/exports-and-webhooks', eyebrow: 'Platform / Deliver', shortTitle: 'Exports & webhooks',
+    slug: 'platform/exports-and-webhooks', eyebrow: 'Platform / Deliver', shortTitle: 'CSV exports',
     title: 'Move intent into the systems that already run revenue.',
-    description: 'Deliver filtered real estate intent audiences through CSV, advertising-audience workflows, CRM processes, and webhooks.',
-    tldr: 'Real Estate Intent is designed as an upstream audience layer. Operators can move filtered records into CSV-based workflows, advertising destinations, CRM processes, or bespoke webhook integrations while keeping channel permissions and suppression responsibilities with the customer.',
+    description: 'Export filtered real estate intent audiences as CSV for compatible CRM, spreadsheet, and advertising tools.',
+    tldr: 'Download filtered records as CSV and import them into compatible tools. Your team remains responsible for channel permissions and suppression. Webhook delivery is not included in a self-serve plan; ask support about your integration needs before subscribing.',
     capability: 'audience delivery',
     problem: 'A list trapped in a dashboard creates little value. Revenue teams need a reliable, governed handoff into the platforms where audience creation, assignment, outreach, and measurement already happen.',
-    mechanism: 'The public site describes CSV, major advertising-audience destinations, and webhook availability. Exact native integrations and data mappings should be confirmed during implementation.',
+    mechanism: 'Export the list as a CSV, map its columns to the destination, and import the file using that system’s own tools.',
     output: 'The best activation design records the audience definition, export time, destination, owner, suppression status, and campaign identifier so later outcomes can be attributed to the correct cohort.',
     validate: ['Native integration versus manual upload', 'Field mapping and hashing requirements', 'Webhook authentication, retry, and failure handling', 'Export logs, deletion, and suppression controls'],
     faqs: [
       { question: 'Does Real Estate Intent replace a CRM?', answer: 'No. The platform provides audiences for downstream workflows. A CRM or campaign platform remains responsible for execution and lifecycle management.' },
       { question: 'Are ad-platform matches guaranteed?', answer: 'No. Match rates depend on the destination’s identity graph, the supplied identifiers, and platform policies.' },
-      { question: 'What should a webhook implementation include?', answer: 'At minimum: authenticated delivery, idempotency, documented field mapping, retry behavior, logging, failure alerts, and suppression handling.' },
+      { question: 'Can I send lists automatically by webhook?', answer: 'No self-serve tier includes automatic webhook delivery. CSV downloads are included on all three plans. Ask support if you need a separate integration.' },
     ],
     related: [{ label: 'Audience activation', href: '/use-cases/audience-activation/' }, { label: 'CRM enrichment', href: '/use-cases/crm-enrichment/' }],
   }),
@@ -541,12 +543,12 @@ const useCases: SeoPage[] = [
       { question: 'How should duplicates be handled?', answer: 'Define deterministic matching and merge rules, quarantine ambiguous matches, and retain an audit trail.' },
       { question: 'How long should intent fields remain active?', answer: 'Set a documented expiry or revalidation rule based on the signal type, campaign, and data-governance policy.' },
     ],
-    related: [{ label: 'Identity resolution', href: '/platform/identity-resolution/' }, { label: 'Exports & webhooks', href: '/platform/exports-and-webhooks/' }],
+    related: [{ label: 'Identity resolution', href: '/platform/identity-resolution/' }, { label: 'CSV exports', href: '/platform/exports-and-webhooks/' }],
   }),
   useCase({
     slug: 'use-cases/audience-activation', eyebrow: 'Use cases / Activation', shortTitle: 'Audience activation',
     title: 'Turn a filtered intent audience into a governed campaign.',
-    description: 'Activate real estate intent audiences through approved advertising, CSV, CRM, and webhook workflows.',
+    description: 'Export real estate intent audiences as CSV for approved advertising and CRM workflows.',
     tldr: 'Audience activation is the controlled movement of a defined intent cohort into a campaign destination. A mature workflow records criteria, destination, owner, matching method, suppression state, creative approval, and outcome metrics.',
     audience: 'Paid media, lifecycle, CRM, and revenue operations teams',
     definition: 'The value of intent data appears downstream. Activation connects the audience definition to an ad account, CRM segment, call workflow, or other approved system while preserving enough metadata to measure results and respond to opt-out or deletion requests.',
@@ -558,7 +560,7 @@ const useCases: SeoPage[] = [
       { question: 'Should raw files be retained indefinitely?', answer: 'No. Establish access, retention, deletion, and audit rules that match the organization’s security and privacy program.' },
       { question: 'How is activation quality measured?', answer: 'Track file acceptance, match rate, delivery, cost, engagement, downstream conversions, suppression, complaints, and cohort-level economics.' },
     ],
-    related: [{ label: 'Exports & webhooks', href: '/platform/exports-and-webhooks/' }, { label: 'Compliance', href: '/compliance/' }],
+    related: [{ label: 'CSV exports', href: '/platform/exports-and-webhooks/' }, { label: 'Compliance', href: '/compliance/' }],
   }),
 ];
 
@@ -574,12 +576,12 @@ const comparisons: SeoPage[] = [
     rows: [
       { factor: 'Core positioning', rei: 'Behavioral audience data and activation', competitor: 'Intelligence OS with intent audiences and workflow' },
       { factor: 'Real estate categories', rei: 'Buyer, seller, distressed-homeowner, and mortgage research', competitor: 'Buyer, seller, luxury, mortgage, refinance/HELOC, investor, and related audiences are publicly listed' },
-      { factor: 'Workflow', rei: 'Filter, preview, export, or deliver by webhook', competitor: 'Prioritization, drafting, CRM Lite, exports, pixel, and enrichment are publicly described' },
+      { factor: 'Workflow', rei: 'Filter, preview, and download CSV', competitor: 'Prioritization, drafting, CRM Lite, exports, pixel, and enrichment are publicly described' },
       { factor: 'Best fit', rei: 'Teams keeping their existing execution stack', competitor: 'Teams seeking data plus a broader daily operating layer' },
     ],
     faqs: [
       { question: 'Are Real Estate Intent and IntentGrid direct competitors?', answer: 'They overlap in real estate and mortgage intent audiences. Public materials indicate different breadth and workflow packaging, so buyers should compare the exact job they need.' },
-      { question: 'Which platform is better for an existing CRM stack?', answer: 'Real Estate Intent is intentionally positioned as an upstream audience layer. Confirm field mapping and webhook needs during evaluation.' },
+      { question: 'Which platform is better for an existing CRM stack?', answer: 'Real Estate Intent is an upstream audience layer. Check whether your CRM can import the CSV and which fields it needs.' },
       { question: 'Which has more audience categories?', answer: 'IntentGrid publicly lists a broader set of named real estate and mortgage audiences. Category naming does not by itself establish coverage or quality.' },
     ],
     related: [{ label: 'Intent data methodology', href: '/data-methodology/' }, { label: 'Best real estate intent platforms', href: '/alternatives/best-real-estate-intent-data-platforms/' }],
@@ -595,7 +597,7 @@ const comparisons: SeoPage[] = [
     rows: [
       { factor: 'Public emphasis', rei: 'Self-serve behavioral audience builder', competitor: 'Intent datasets and subscriptions' },
       { factor: 'Seller product', rei: 'Seller behavior is one of four primary categories', competitor: 'A dedicated, scored home-seller intent product is publicly documented' },
-      { factor: 'Delivery', rei: 'CSV, ad-audience destinations, and webhook are described', competitor: 'File access and subscription delivery are described' },
+      { factor: 'Delivery', rei: 'CSV download for compatible destinations', competitor: 'File access and subscription delivery are described' },
       { factor: 'Best fit', rei: 'Multi-category audience exploration', competitor: 'Buyers seeking a defined consumer dataset' },
     ],
     faqs: [
@@ -658,7 +660,7 @@ const comparisons: SeoPage[] = [
     rows: [
       { factor: 'Primary data', rei: 'Behavioral intent and resolved contacts', competitor: 'Property, owner, mortgage, distress, life-event, demographic, and related data are publicly described' },
       { factor: 'Research tools', rei: 'Audience filtering and preview', competitor: 'Property search, maps, profiles, comps, diligence, and list tools' },
-      { factor: 'Activation', rei: 'CSV, ad-audience, and webhook workflow', competitor: 'Built-in marketing plus extensive integrations are publicly described' },
+      { factor: 'Activation', rei: 'CSV download for CRM or ad audience import', competitor: 'Built-in marketing plus extensive integrations are publicly described' },
       { factor: 'Best fit', rei: 'Behavioral timing and audience activation', competitor: 'Comprehensive property intelligence and prospecting' },
     ],
     faqs: [
@@ -834,19 +836,19 @@ const trustPages: SeoPage[] = [
   {
     slug: 'pricing', kind: 'pricing', parentLabel: 'Home', parentHref: '/', eyebrow: 'Pricing',
     title: 'Choose your markets.', shortTitle: 'Pricing',
-    description: 'Compare city coverage, monthly contact allowances and current Real Estate Intent signup offers.',
-    tldr: 'Choose coverage for the cities you serve. Regular monthly prices are $7 for Local, $27 for Multi-market and $47 for Nationwide. See the plan comparison for current promotions and signup availability.',
+    description: 'Compare city coverage, unlimited contact and CSV exports, included tools, and current Real Estate Intent signup offers.',
+    tldr: 'Choose coverage for the cities you serve. See the plan comparison for current promotions and signup availability.',
     audience: 'Growth teams, brokerages, lenders, and operators', updated,
     claimIds: ['rei.delivery'],
     sections: [
-      { heading: 'Monthly plans', paragraphs: ['Every plan lets you build and export lists. Your city selection applies across all your lists. Add a city to an unused slot anytime. A replacement takes effect at your next paid renewal and does not reset your contact usage.'], bullets: ['Local: up to 5 cities and 500 contacts per month. List building and exports only.', 'Multi-market: up to 15 cities and 2,000 contacts per month, plus email enrichment.', 'Nationwide: all U.S. cities and 3,500 contacts per month, with both email enrichment and Watchlist.'] },
+      { heading: 'Monthly plans', paragraphs: [sharedPlanBenefits, sharedCityPolicy], bullets: plans.map(plan => `${plan.name}: $${plan.price}/month at regular price. ${plan.scope}. ${plan.use}`) },
       { heading: 'Evaluate value on usable outcomes', paragraphs: ['Do not compare intent products on nominal record price alone. Normalize required-field completeness, duplicate rate, permitted use, recency, match definition, workflow cost, and downstream business outcomes.'] },
       { heading: 'Before you subscribe', paragraphs: ['Review both the amount due today and the monthly renewal price. Promotions can apply to the first month only or continue while subscribed.'] },
     ],
     faqs: [
       { question: 'Is there a free trial?', answer: 'No. New city-based plans are monthly paid subscriptions.' },
       { question: 'Can I choose five different cities for every list?', answer: 'No. All lists in your Local or Multi-market workspace use the same licensed cities.' },
-      { question: 'Is Nationwide unlimited?', answer: 'It covers all U.S. cities and includes 3,500 contacts per month.' },
+      { question: 'Are contacts or CSV exports capped?', answer: 'No monthly contact or CSV export cap applies to any of the three plans. Local and Multi-market are limited to the cities in your subscription; Nationwide covers the U.S.' },
     ],
     related: [{ label: 'Compare plans and current offers', href: '/#plans' }, { label: 'Explore the platform', href: '/platform/' }],
   },
