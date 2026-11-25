@@ -26,7 +26,7 @@ export const footerNavigation = [
       { label: 'Behavioral intent data', href: '/platform/behavioral-intent-data/' },
       { label: 'Identity resolution', href: '/platform/identity-resolution/' },
       { label: 'Audience builder', href: '/platform/audience-builder/' },
-      { label: 'Exports & webhooks', href: '/platform/exports-and-webhooks/' },
+      { label: 'CSV exports', href: '/platform/exports-and-webhooks/' },
     ],
   },
   {
