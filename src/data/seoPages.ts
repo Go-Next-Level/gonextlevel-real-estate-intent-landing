@@ -841,7 +841,7 @@ const trustPages: SeoPage[] = [
     audience: 'Growth teams, brokerages, lenders, and operators', updated,
     claimIds: ['rei.delivery'],
     sections: [
-      { heading: 'Monthly plans', paragraphs: [sharedPlanBenefits, sharedCityPolicy], bullets: plans.map(plan => `${plan.name}: $${plan.price}/month at regular price. ${plan.scope}. ${plan.use}`) },
+      { heading: 'Monthly plans', paragraphs: [sharedPlanBenefits, sharedCityPolicy], bullets: plans.map(plan => `${plan.name}: $${plan.price}/month at regular price. ${plan.scope.replace(/\.$/, '')}. ${plan.use}`) },
       { heading: 'Evaluate value on usable outcomes', paragraphs: ['Do not compare intent products on nominal record price alone. Normalize required-field completeness, duplicate rate, permitted use, recency, match definition, workflow cost, and downstream business outcomes.'] },
       { heading: 'Before you subscribe', paragraphs: ['Review both the amount due today and the monthly renewal price. Promotions can apply to the first month only or continue while subscribed.'] },
     ],
